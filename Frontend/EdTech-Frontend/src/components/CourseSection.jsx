@@ -12,7 +12,7 @@ function CourseSection() {
     }))
 
     
-    console.log(courseDetails)
+
 
   return (
     <>

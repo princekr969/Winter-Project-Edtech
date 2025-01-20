@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function UserProfileDropDown({userDetail, setUserDetail}) {
-    console.log(userDetail)
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -16,7 +16,7 @@ function UserProfileDropDown({userDetail, setUserDetail}) {
         setUserDetail({...userDetail, loginStatus:false})
     }
 
-    console.log(userDetail.loginStatus)
+    
 
   return (
     <div className="relative inline-block">

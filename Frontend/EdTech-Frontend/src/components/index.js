@@ -8,6 +8,7 @@ import CourseSection from "./CourseSection";
 import UserProfileDropDown from "./UserProfileDropDown";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Cart from "./Cart";
 
 export 
 {
@@ -20,5 +21,7 @@ export
     Carousel, 
     CourseCard, 
     CourseSection, 
-    Footer
+    Footer,
+    Cart,
+   
 };

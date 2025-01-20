@@ -1,20 +1,23 @@
+import axios from "axios"
 
 export class AuthService {
     
-
+    url = "fetch endpoint"
     constructor(){
-        
-    };
+        console.log("object Created")
+    }
 
-    async createAccount({email, password, name}){
+    async createAccount({email, password, fname, lname, phoneNo}){
+
         try {
-            
+            const userAccount = await axios.post(url,
+                {email, password, fname, lname, phoneNo}
+            );
+            console.log('Data successfully sent:', userAccount.data);
 
             if(userAccount){
                 this.login({email, password})
-
             }else{
-                
                 return userAccount;
             }
         } catch (error) {
@@ -25,7 +28,10 @@ export class AuthService {
 
     async login({email, password}){
         try {
-            
+            const user = await axios.post(url,
+                {email, password}
+            );
+            console.log('Data successfully sent:', user.data);
 
         } catch (error) {
             console.log("Backend service :: login :: error", error);
