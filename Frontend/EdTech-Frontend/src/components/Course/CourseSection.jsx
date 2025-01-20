@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {CourseCard} from "./index.js"
+import {CourseCard} from "../index.js"
 import { use } from 'react'
 
 function CourseSection() {

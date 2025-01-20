@@ -17,7 +17,6 @@ function UserProfileDropDown({userDetail, setUserDetail}) {
     }
 
     
-
   return (
     <div className="relative inline-block">
 

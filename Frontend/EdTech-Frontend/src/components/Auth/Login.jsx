@@ -1,14 +1,30 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import authService from "../../services/auth.js"
+import {login as authLogin} from "../../store/authSlice.js"
+import {useDispatch} from "react-redux"
+import {useForm} from "react-hook-form"
 
 function Login() {
-    const [user, setUser] = useState({
-      email:"", password:""
-    }); 
-    
-    const signInHandler = () => {
-      setUser({email:"", password:""})
-      console.log(user)
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const {register, handleSubmit} = useForm();
+
+  const login = async (data) => {
+    setError("");
+    console.log(data);
+    try {
+      const userData = await authService.login(data);
+      if(userData){
+        const userData = await authService.getCurrentUser();
+        if(userData) dispatch(authLogin(userData));
+        navigate("/");
+      }
+    } catch (error) {
+        setError(error.message) 
+        
+      }
     }
   
   return (
@@ -75,59 +91,68 @@ function Login() {
           {/* Email login */}
 
           {/* Email field */}
-          <div className="mt-4">
-            <label
-              className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
-              htmlFor="LoggingEmailAddress"
-            >
-              Email Address
-            </label>
-
-            <input
-              id="LoggingEmailAddress"
-              className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
-              type="email"
-              value={user.email}
-              onChange={(e) => setUser({...user, email:e.target.value})}
-            />
-          </div>  
-
-          {/* Password field */}
-          <div className="mt-4">
-            <div className="flex justify-between">
+          <form onSubmit={handleSubmit(login)}>
+            <div className="mt-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
-                htmlFor="loggingPassword"
+                htmlFor="LoggingEmailAddress"
               >
-                Password
+                Email Address
               </label>
 
-              {/* Forget password link */}
-              <a
-                href="#"
-                className="text-xs text-gray-500 dark:text-gray-300 hover:underline"
-              >
-                Forget Password?
-              </a>
+              <input
+                id="LoggingEmailAddress"
+                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                type="email"
+              
+                {...register("email", {
+                  required: true,
+                  validate: {
+                      pattern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                      "Email address must be a valid address",
+                  }
+                })}
+              />
+            </div>  
+            <div className="mt-4">
+              <div className="flex justify-between">
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                  htmlFor="loggingPassword"
+                >
+                  Password
+                </label>
+
+                {/* Forget password link */}
+                <a
+                  href="#"
+                  className="text-xs text-gray-500 dark:text-gray-300 hover:underline"
+                >
+                  Forget Password?
+                </a>
+              </div>
+
+              {/* Password field */}
+              <input
+                id="loggingPassword"
+                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                type="password"
+                {...register("password", {
+                  required:true,
+                  maxLength:12
+                })}
+              />
             </div>
-
-            <input
-              id="loggingPassword"
-              className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
-              type="password"
-              value={user.password}
-              onChange={(e) => setUser({...user, password:e.target.value})}
-            />
-          </div>
-
-          <div className="mt-6">
-            <button 
-              className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-              onClick={signInHandler}
-            >
-              Sign In
-            </button>
-          </div>
+            <div className="mt-6">
+              <button 
+                type='submit'
+                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                
+              >
+                Sign In
+              </button>
+            </div>
+          </form>
 
           {/* SignUp link */}
           <div className="flex items-center gap-3 mt-4">

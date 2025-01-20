@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import {Cart, UserProfileDropDown} from "./index.js"
+import {Cart, UserProfileDropDown} from "../index.js"
 
 const Navbar = ({userDetail, setUserDetail}) => {
 

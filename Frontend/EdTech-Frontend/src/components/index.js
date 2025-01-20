@@ -1,14 +1,14 @@
 import About from "./About";
-import Navbar from "./Navbar";
+import Navbar from "./Navbar/Navbar";
 import HeroSection from "./HeroSection";
-import CourseCard from "./CourseCard";
+import CourseCard from "./Course/CourseCard";
 import Footer from "./Footer";
 import Carousel from "./Carousel";
-import CourseSection from "./CourseSection";
-import UserProfileDropDown from "./UserProfileDropDown";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import Cart from "./Cart";
+import CourseSection from "./Course/CourseSection";
+import UserProfileDropDown from "./Navbar/User-Profile/UserProfileDropDown";
+import Login from "./Auth/Login";
+import SignUp from "./Auth/SignUp";
+import Cart from "./Navbar/Cart/Cart";
 
 export 
 {
