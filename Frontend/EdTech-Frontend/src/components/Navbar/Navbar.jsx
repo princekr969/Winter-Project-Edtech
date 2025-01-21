@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {Cart, UserProfileDropDown} from "../index.js"
+import { logout } from '../../store/authSlice.js';
+import { useDispatch } from 'react-redux';
 
 const Navbar = ({userDetail, setUserDetail}) => {
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
   
   const signOutHandler = () => {
+
     setIsUserActive((prev) => !prev)
   }
 
@@ -24,7 +27,7 @@ const Navbar = ({userDetail, setUserDetail}) => {
             alt="EdTech Logo"
           />
           <span className="self-center text-2xl  font-bold whitespace-nowrap dark:text-white">
-            TechNova
+            EduMaxi
           </span>
         </Link>
 
@@ -78,7 +81,7 @@ const Navbar = ({userDetail, setUserDetail}) => {
 
         {/* Links */}
           <div
-            className={`items-center justify-between ${
+            className={`items-center  justify-between ${
               isNavbarOpen ? "block" : "hidden"
             } w-full md:flex md:w-auto md:order-1`}
             id="navbar-user"
