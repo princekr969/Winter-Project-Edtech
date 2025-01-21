@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'; // <-- import jsonwebtoken
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -19,8 +21,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     phoneNumber: {
-        type: String,
-        required: true
+        type: String
     },
     role: {
         type: String,
@@ -37,7 +38,50 @@ const userSchema = new mongoose.Schema({
     coursesEnrolled: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
-    }]
+    }],
+    refreshToken: {
+        type: String
+    }
 }, { timestamps: true });
 
-export const User = mongoose.model("User", userSchema);
+userSchema.pre("save", async function(next) {
+    if (!this.isModified("password")) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+userSchema.methods.isPasswordCorrect = async function(password) {
+    return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.generateAccessToken = function() {
+    return jwt.sign(
+        {
+            _id: this._id,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    );
+};
+
+userSchema.methods.generateRefreshToken = function() {
+    return jwt.sign(
+        {
+            _id: this._id,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    );
+};
+
+export const User = mongoose.model("User", userSchema, "users");
