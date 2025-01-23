@@ -25,7 +25,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
 const registerUser = asyncHandler(async (req, res) => {
     // Get user details from the frontend, including optional fields
-    const { firstName, lastName, email, password, phoneNumber, role, courses } = req.body;
+    const { firstName, lastName, email, password, phoneNumber } = req.body;
 
     // Check if the required fields are present
     if (!firstName || !lastName || !email || !password || !phoneNumber) {
@@ -38,23 +38,6 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User already exists");
     }
 
-    // Initialize profile picture to null
-    let profilePictureUrl = null;
-
-    // Check if a profile picture is provided in the request
-    if (req.files && req.files.profilePicture) {
-        const profilePicturePath = req.files.profilePicture[0].path;  // Assuming multer is used for file upload
-
-        // Upload the profile picture to Cloudinary
-        const uploadedPicture = await uploadOnCloudinary(profilePicturePath);
-
-        if (!uploadedPicture) {
-            throw new ApiError(400, "Profile picture upload failed");
-        }
-
-        // Save the Cloudinary URL
-        profilePictureUrl = uploadedPicture.secure_url;
-    }
 
     // Create the new user with optional fields, if provided
     const user = await User.create({
@@ -63,11 +46,7 @@ const registerUser = asyncHandler(async (req, res) => {
         email,
         password,
         phoneNumber,
-        role: role || "user",  // Set default role to 'user' if not provided
-        profilePicture: profilePictureUrl,  // Set the Cloudinary URL or null
-        courses: courses || []  // Default to empty array if not provided
     });
-
 
 
     // Fetch the created user without sensitive fields like password or refreshToken
@@ -79,9 +58,26 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // Return the created user in the response
-    return res.status(201).json(
-        new ApiResponse(200, createdUser, "User registered successfully")
+    const tokens = await generateAccessAndRefreshTokens(user._id);
+    const { accessToken, refreshToken } = tokens;
+
+
+    const options={
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+        new ApiResponse(
+            200,
+              {user:createdUser, accessToken, refreshToken},
+             "User logged in successfully")
     );
+    
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -93,7 +89,7 @@ const loginUser = asyncHandler(async (req, res) => {
     //send cookie
 
     const { email, password } = req.body;
-    console.log(req.body);
+    console.log("login",req.body);
     
     if (!email || !password) {
         throw new ApiError(400, "Email and password are required");
@@ -137,7 +133,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
 });
 
+
 const logoutUser = asyncHandler(async (req, res) => {
+    console.log(1);
+    
     await User.findByIdAndUpdate(
         req.user._id,
         {

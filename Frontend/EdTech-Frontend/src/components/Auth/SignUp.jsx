@@ -7,32 +7,40 @@ import {useForm} from "react-hook-form"
 
 
 function SignUp() {
+
   const {
     register, 
     handleSubmit, 
     watch,
-    formState: { errors },  
-  } = useForm();
+    formState: { errors } } = useForm();
+
   const password = watch("password")
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
+
   const create = async (data) => {
+
     setError("");
-    console.log(data);
+    console.log("signUp data",data);
+
     try {
       const userData = await authService.createAccount(data);
+      console.log("SignUp:", userData)
+      
+
       if(userData){
-        const userData = await authService.getCurrentUser();
-        if(userData) dispatch(login(userData));
+        // const userData = await authService.login();
+        dispatch(login(userData));
         navigate("/");
       }
     } catch (error) {
         setError(error) 
         console.log(error)
       }
-    }
+  }
+
   return (
   
       <div className="flex items-center w-full max-w-3xl p-8 mx-auto  lg:px-6 lg:w-1/2 ">
@@ -101,7 +109,7 @@ function SignUp() {
                 <input
                   type="text"
                   placeholder="John"
-                  {...register("fname", {
+                  {...register("firstName", {
                       required:true})}
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                 />
@@ -114,7 +122,7 @@ function SignUp() {
                 <input
                   type="text"
                   placeholder="Snow"
-                  {...register("lname", {
+                  {...register("lastName", {
                     required:true})}
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                 />
@@ -127,7 +135,7 @@ function SignUp() {
                 <input
                   type="text"
                   placeholder="XXXXX-XXXXX"
-                  {...register("number", {
+                  {...register("phoneNumber", {
                     required: true,
                     validate: {
                       pattern: (value) => /^\d{10}$/

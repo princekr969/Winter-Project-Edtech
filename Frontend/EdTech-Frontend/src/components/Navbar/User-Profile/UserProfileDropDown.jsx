@@ -1,20 +1,35 @@
 import React, { useState } from 'react'
+import { logout } from '../../../store/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import authService from '../../../services/auth';
 
-function UserProfileDropDown({userDetail, setUserDetail}) {
+
+
+function UserProfileDropDown() {
+
+  const userDetail = useSelector(state => state.auth.userData);
+  console.log("user profile",userDetail)
 
     const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDropdown = () => {
-      setIsOpen((prev) => !prev);
-    };
     
-    const closeDropdown = () => {
-      setIsOpen(false);
-    };
-
-    const handleSignout = (currentStatus) => {
-        setUserDetail({...userDetail, loginStatus:false})
+    const handleSignout = async () => {
+      
+      try {
+        const res = await authService.logout();
+        console.log(res);
+        useDispatch(logout())
+      } catch (error) {
+        console.log("sign out :: error ::",error)
+      }
     }
+  
+      const toggleDropdown = () => {
+        setIsOpen((prev) => !prev);
+      };
+      
+      const closeDropdown = () => {
+        setIsOpen(false);
+      };
 
     
   return (
@@ -48,11 +63,11 @@ function UserProfileDropDown({userDetail, setUserDetail}) {
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
             src="https://images.pexels.com/photos/30162929/pexels-photo-30162929/free-photo-of-dramatic-portrait-of-woman-in-leather-jacket.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt={userDetail.name}
+            alt={userDetail.firstName + userDetail.lastName}
           />
           <div className="mx-1">
             <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              {userDetail.name}
+              {userDetail.firstName + userDetail.lastName}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {userDetail.email}
@@ -92,7 +107,7 @@ function UserProfileDropDown({userDetail, setUserDetail}) {
         <a
           href="#"
           className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-          onClick={() => handleSignout(userDetail.loginStatus)}
+          onClick={handleSignout}
         >
           Sign Out
         </a>

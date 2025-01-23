@@ -9,7 +9,7 @@ function AuthLayout() {
 
       <div className="flex justify-center min-h-screen">
         
-        <div className="hidden mt-16 h-screen   lg:block ">
+        <div className="hidden mt-16 h-screen animate-slide-in-left lg:block ">
           <img className='w-full h-screen pb-7 pl-6' src={image}
           alt="" />
         </div>

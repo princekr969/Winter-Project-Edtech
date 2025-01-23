@@ -4,97 +4,37 @@ import img from "../../assets/heroimg.svg"
 
 function HeroSection() {
   return (
+    <div className="container py-16">
+      <div className="items-center w-lvw justify-center  lg:flex mt-28 px-5 md:px-16 lg:px-24 ">
+        {/* Left Section */}
+        <div className="w-full lg:w-1/2" >
+          <div className="lg:max-w-xl">
+            <h1 className="mb-4 animate-fade-in-down  font-extrabold leading-none tracking-tight text-gray-900  text-5xl dark:text-white">
+            Unlock Your Potential  <br /> {" "}
+              <span className="text-blue-500">with EduMaxi</span>
+            </h1>
+
+            <p className="mt-10 text-base animate-fade-in-up text-gray-600 dark:text-gray-400">
+              Discover the power of personalized learning. Our expert instructors provide customized guidance and support, allowing you to learn at your own pace, focus on your areas of strength, and overcome your challenges. Achieve your educational goals with greater efficiency and a deeper understanding
+            </p>
+
+            <button className="w-max animate-fade-in-up text-left px-5 py-2 mt-10 font-semibold text-md tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+              Explore <br/>Our Courses
+            </button>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-end max-lg:hidden animate-slide-in-right justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
+          <img
+            className="w-full h-full lg:max-w-3xl"
+            src={img}
+            alt="Catalogue"
+          />
+        </div>
+      </div>
+    </div>
     
-    <header className="relative mt-20 pt-10 overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600">
-            <div className="container mx-auto px-6 lg:px-20 py-16 flex flex-col-reverse lg:flex-row items-center">
-                {/* Left Section */}
-                <div className="text-white text-center lg:text-left">
-                    <h1 className="text-4xl lg:text-6xl font-extrabold tracking-tight leading-tight animate-fade-in-down">
-                    Unlock Your Potential with EduMaxi
-                    </h1>
-                    <p className="mt-4 text-lg lg:text-xl font-light animate-fade-in-up">
-                    Transform the way you learn with world-class courses, interactive tools, and personalized resources designed to help you excel in your education and beyond.
-     
-                    </p>
-                    <div className="mt-8 flex justify-center lg:justify-start gap-4 animate-fade-in-up">
-                        <a href="#" className="px-6 py-3 text-blue-600 bg-white rounded-lg shadow-lg font-medium hover:bg-gray-200 transition-all">
-                            Get Started
-                        </a>
-                        <a href="#" className="px-6 py-3 text-white border border-white rounded-lg font-medium hover:bg-blue-600 transition-all">
-                            Learn More
-                        </a>
-                    </div>
-                </div>
-                {/* Right Section */}
-                <div className="relative lg:w-1/2 w-full animate-slide-in-right">
-                    <img 
-                        src={img}
-                        alt="Hero Illustration" 
-                        className="w-full max-w-md lg:max-w-lg mx-auto"
-                    />
-                </div>
-            </div>
-
-            {/* Background Decorative Shapes */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 opacity-20 rounded-full blur-3xl animate-pulse"></div>
-            </div>
-
-            {/* Tailwind Animations */}
-            <style>
-                {`
-                    @keyframes fadeInDown {
-                        from {
-                            opacity: 0;
-                            transform: translateY(-20px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                    
-                    @keyframes fadeInUp {
-                        from {
-                            opacity: 0;
-                            transform: translateY(20px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-
-                    @keyframes slideInRight {
-                        from {
-                            opacity: 0;
-                            transform: translateX(50px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateX(0);
-                        }
-                    }
-
-                    .animate-fade-in-down {
-                        animation: fadeInDown 1s ease-out;
-                    }
-
-                    .animate-fade-in-up {
-                        animation: fadeInUp 1s ease-out;
-                    }
-
-                    .animate-slide-in-right {
-                        animation: slideInRight 1.2s ease-out;
-                    }
-
-                    .animate-pulse {
-                        animation: pulse 3s infinite;
-                    }
-                `}
-            </style>
-        </header>
   )
 }
 

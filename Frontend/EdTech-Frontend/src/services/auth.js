@@ -2,36 +2,37 @@ import axios from "axios"
 
 export class AuthService {
     
-    url = "fetch endpoint"
-    constructor(){
-        console.log("object Created")
-    }
-
-    async createAccount({email, password, fname, lname, phoneNo}){
+    endPoint = "/api/v1/users"
+    
+    async createAccount({email, password, firstName, lastName, phoneNumber}){
+        const url = this.endPoint + "/register";
+        console.log(url)
 
         try {
             const userAccount = await axios.post(url,
-                {email, password, fname, lname, phoneNo}
+                {email, password, firstName, lastName, phoneNumber}
             );
-            console.log('Data successfully sent:', userAccount.data);
+            console.log('Data successfully sent from signup:', userAccount.data.message);
 
             if(userAccount){
-                this.login({email, password})
+                return this.login({email, password})
             }else{
                 return userAccount;
             }
         } catch (error) {
             console.log("Backend service :: createAccount :: error", error);
-            
         }
+        
     };
 
     async login({email, password}){
+        const url = this.endPoint + "/login";
         try {
-            const user = await axios.post(url,
+            const userAccount = await axios.post(url,
                 {email, password}
             );
-            console.log('Data successfully sent:', user.data);
+            console.log('Data successfully sent from signin:', userAccount.data.message.user);
+            return userAccount.data.message.user;
 
         } catch (error) {
             console.log("Backend service :: login :: error", error);
@@ -40,6 +41,7 @@ export class AuthService {
     };
 
     async getCurrentUser(){
+        const url = this.endPoint + "/logout";
         try {
             
 
@@ -53,10 +55,13 @@ export class AuthService {
 
     async logout(){
         try {
-            
+            const url = this.endPoint + "/logout";
+            const res = await axios.post(url);
+            console.log('Data successfully sent from logout:', res);
+            return res;
         } catch (error) {
+
             console.log("Backend service :: logout :: error", error);
-            
         }
     }
 
