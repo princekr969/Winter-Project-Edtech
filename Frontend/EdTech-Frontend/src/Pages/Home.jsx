@@ -13,7 +13,6 @@ function Home() {
         {/* <Carousel/> */}
         <HeroSection/>
         <CourseSection/>
-        
        
     </>
   )

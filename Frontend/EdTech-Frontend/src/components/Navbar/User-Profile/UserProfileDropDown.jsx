@@ -20,7 +20,7 @@ function UserProfileDropDown() {
       const res = await authService.logout();
       console.log("logout:",res);
       dispatch(logout())
-      // navigate("/")
+  
     } catch (error) {
       console.log("sign out :: error ::",error)
     }
