@@ -9,12 +9,9 @@ const Navbar = () => {
 
   const [loader, setLoader] = useState(true)
   
-  
   const authStatus = useSelector(state => state.auth.status)
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
-  
-  
 
   return (
     

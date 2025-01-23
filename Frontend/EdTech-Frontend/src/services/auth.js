@@ -39,20 +39,7 @@ export class AuthService {
             
         }
     };
-
-    async getCurrentUser(){
-        const url = this.endPoint + "/logout";
-        try {
-            
-
-            if(currentUser) return currentUser
-            else return null
-
-        } catch (error) {
-            console.log("Backend service :: getCurrentUser :: error", error);
-        }
-    }
-
+    
     async logout(){
         try {
             const url = this.endPoint + "/logout";
@@ -64,6 +51,18 @@ export class AuthService {
             console.log("Backend service :: logout :: error", error);
         }
     }
+    
+    async getCurrentUser(){
+        const url = this.endPoint + "/logout";
+        try {
+            
+            
+
+        } catch (error) {
+            console.log("Backend service :: getCurrentUser :: error", error);
+        }
+    }
+
 
 };
 

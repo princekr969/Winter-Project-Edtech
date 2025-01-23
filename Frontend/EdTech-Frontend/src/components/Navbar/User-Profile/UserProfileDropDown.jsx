@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { logout } from '../../../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import authService from '../../../services/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -10,27 +11,30 @@ function UserProfileDropDown() {
   const userDetail = useSelector(state => state.auth.userData);
   console.log("user profile",userDetail)
 
-    const [isOpen, setIsOpen] = useState(false);
-    
-    const handleSignout = async () => {
-      
-      try {
-        const res = await authService.logout();
-        console.log(res);
-        useDispatch(logout())
-      } catch (error) {
-        console.log("sign out :: error ::",error)
-      }
-    }
-  
-      const toggleDropdown = () => {
-        setIsOpen((prev) => !prev);
-      };
-      
-      const closeDropdown = () => {
-        setIsOpen(false);
-      };
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+  const handleSignout = async () => {
+    
+    try {
+      const res = await authService.logout();
+      console.log("logout:",res);
+      dispatch(logout())
+      // navigate("/")
+    } catch (error) {
+      console.log("sign out :: error ::",error)
+    }
+  };
+  
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+  
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
     
   return (
     <div className="relative inline-block">
