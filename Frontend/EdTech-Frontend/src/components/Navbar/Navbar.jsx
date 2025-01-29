@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink,  } from 'react-router-dom';
 import {Cart, UserProfileDropDown} from "../index.js"
 import { logout } from '../../store/authSlice.js';
@@ -7,16 +7,41 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   const [loader, setLoader] = useState(true)
   
   const authStatus = useSelector(state => state.auth.status)
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setShowNavbar(false);
+      } else {
+        // Scrolling up
+        setShowNavbar(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+  
   return (
     
 
-    <nav className="bg-white fixed z-20  w-full top-0 start-0 border-b border-gray-200 dark:bg-gray-900">
+    <nav className={`bg-white fixed z-20  w-full top-0 start-0 border-b border-gray-200 dark:bg-gray-900 transition-transform duration-300 ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      }`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         
         {/* logo and text */}

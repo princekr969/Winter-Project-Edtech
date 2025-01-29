@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { HeroSection, Carousel, CourseSection } from '../components'
+import { HeroSection, Carousel, CourseSection} from '../components'
 
 
 
@@ -10,9 +10,12 @@ function Home() {
     console.log("user profile",userDetail)
   return (
     <>  
-        {/* <Carousel/> */}
-        <HeroSection/>
-        <CourseSection/>
+       
+
+          <HeroSection/>
+          <hr />
+          <CourseSection/>
+     
        
     </>
   )

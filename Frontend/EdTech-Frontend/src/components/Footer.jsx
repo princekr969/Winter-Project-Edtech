@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
-      <footer className="bg-white mx-auto py-6 rounded-lg shadow dark:bg-gray-900 px-5 md:px-16 lg:px-24">
+      <footer className="bg-white mx-auto rounded-lg shadow dark:bg-gray-900 px-5 md:px-16 lg:px-24">
         <div className="w-full max-w-screen-xl mx-auto py-4 md:py-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             
@@ -41,13 +41,9 @@ function Footer() {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
 
           {/* Bottom link */}
-          <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2025{" "}
-            <a href="#" className="hover:underline">
-              EdTech™
-            </a>
-            . All Rights Reserved.
-          </span>
+          <div className="container mx-auto px-4 text-center">
+            <p>&copy; {new Date().getFullYear()} EdTech Academy. All rights reserved.</p>
+          </div>
         </div>
       </footer>
   

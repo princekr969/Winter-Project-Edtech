@@ -1,51 +1,79 @@
-import React from 'react'
+import React from "react";
+import { ShoppingCart, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-function CourseCard({courseDetail}) {
-    
+export default function CourseCard({
+  id=1,
+  title,
+  description,
+  imageUrl,
+  type,
+  price,
+  author={
+    avatar: "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    name:"prince",
+  },
+}) {
   return (
-    <div className="p-3 max-w-80 bg-white border border-gray-200  shadow dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-    <img
-      className="w-full h-60 rounded-t-lg"
-      src={courseDetail.courseImage}
-      alt=""    
-    />
-  </a>
-  <div className="pt-2">
-    <a href="#">
-      <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {courseDetail.courseTitle}
-      </h5>
-    </a>
-    <p className="mb-3 font-light text-gray-700 dark:text-gray-400">
-      {courseDetail.mentors}
-    </p>
-
-    <p className=''>{courseDetail.courseDescription}</p>
-    <hr className='my-2'/>
-    <div className=' w-full text-xl font-bold mb-2'>₹{courseDetail.price}</div>
-    
-    <div className='flex justify-between gap-1'>
-
-        <a
-        href="#"
-        className="text-blue-700 inline-flex border border-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-8 py-3 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-        >
-        EXPLORE
+    <Link to={`./courses/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+      <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         
-        </a>
-        <a
-        href="#"
-        className="inline-flex items-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-        ADD TO CART
-        
-        </a>
-    </div>
-  </div>
-</div>
+        {/* {course image} */}
+        <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
+          <img
+            src={imageUrl}
+            alt=""
+            className="w-3/4 transition-transform duration-300 ease-in-out group-hover:scale-110"
+          />
 
-  )
+          {/* add to cart button */}
+          <button className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#4339F2] transition-colors duration-200 group">
+            <ShoppingCart className="w-4 h-4 text-[#4339F2] group-hover:text-gray-500 transition-colors duration-200" />
+          </button>
+        </div>
+        
+        
+        <div className="w-2/3 md:w-full flex flex-col">
+        {/* educator */}
+          <div className="flex items-center gap-2 mb-3">
+            <img
+              src={author.avatar}
+              alt={author.name}
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-[#14142B]">
+                {author.name}
+              </span>
+              <span className="text-xs text-[#6E7191]">{author.role}</span>
+            </div>
+          </div>
+
+          <h3 className="text-[#14142B] text-lg md:text-2xl font-semibold mb-2 md:mb-3 hover:text-[#4339F2] transition-colors duration-200">
+            {title}
+          </h3>
+          <p className="text-[#6E7191] text-sm md:text-base mb-3 md:mb-6 line-clamp-2 md:line-clamp-none">
+            {description}
+          </p>
+          <div className="flex flex-col gap-3 mt-auto">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2 group">
+                <div className="w-1 h-4 bg-[#4339F2] transition-all duration-200 group-hover:h-5"></div>
+                <span className="text-[#6E7191] text-sm md:text-base group-hover:text-[#4339F2] transition-colors duration-200">
+                  {type}
+                </span>
+              </div>
+              <span className="font-semibold text-sm md:text-base">
+                {price}
+              </span>
+            </div>
+            <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#4339F2]/10 rounded-full text-[#4339F2] hover:bg-[#4339F2] hover:text-white transition-all duration-300">
+              Explore Course
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
 }
-
-export default CourseCard

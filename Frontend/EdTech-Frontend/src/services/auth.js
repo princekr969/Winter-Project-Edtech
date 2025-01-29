@@ -1,11 +1,13 @@
 import axios from "axios"
 
 export class AuthService {
-    
-    endPoint = "/api/v1/users"
+
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+      }
     
     async createAccount({email, password, firstName, lastName, phoneNumber}){
-        const url = this.endPoint + "/register";
+        const url = this.baseUrl + "/register";
         console.log(url)
 
         try {
@@ -26,7 +28,7 @@ export class AuthService {
     };
 
     async login({email, password}){
-        const url = this.endPoint + "/login";
+        const url = this.baseUrl + "/login";
         try {
             const userAccount = await axios.post(url,
                 {email, password}
@@ -42,7 +44,7 @@ export class AuthService {
     
     async logout(){
         try {
-            const url = this.endPoint + "/logout";
+            const url = this.baseUrl + "/logout";
             const res = await axios.post(url);
             console.log('Data successfully sent from logout:', res);
             return res;
@@ -53,7 +55,7 @@ export class AuthService {
     }
     
     async getCurrentUser(){
-        const url = this.endPoint + "/logout";
+        const url = this.baseUrl + "/logout";
         try {
             
             
@@ -66,6 +68,6 @@ export class AuthService {
 
 };
 
-const authService = new AuthService();
+const authService = new AuthService("/api/v1/users");
 
 export default authService
