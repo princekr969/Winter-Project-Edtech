@@ -15,7 +15,7 @@ export default function CourseCard({
   },
 }) {
   return (
-    <Link to={`./courses/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+    <Link to={`./course/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         
         {/* {course image} */}

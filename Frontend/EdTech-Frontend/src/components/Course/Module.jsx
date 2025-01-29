@@ -1,15 +1,13 @@
 import React, { useContext } from 'react'
 import { useState } from 'react';
 import { ChevronDown, PlayCircle, ChevronUp } from 'lucide-react';
-import ModuleContext from '../../Context/moduleContext';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { ModuleContext } from '../../Context/ModuleContext';
 
 function Module({module, index}) {
     const [openModule, setOpenModule] = useState(null);
-    const {setSelectedLesson} = useContext(ModuleContext);
-    console.log("1")
-
+    const {setSelectedLesson, selectedLesson} = useContext(ModuleContext);
+    console.log(selectedLesson)
   return (
     <div
         key={index}
@@ -39,8 +37,8 @@ function Module({module, index}) {
         <div className="bg-gray-50   border-t border-gray-200">
         {module.lessons.map((lesson, lessonIndex) => (
            
-            <Link
-                to={"./video"}
+            <Link 
+                to={"/video"}
                 key={lessonIndex}
                 onClick={() => setSelectedLesson(lesson)}
                 className="w-full text-left  text-sm hover:bg-gray-50 rounded-md transition-colors duration-150"

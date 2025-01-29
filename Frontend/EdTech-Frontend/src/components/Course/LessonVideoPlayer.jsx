@@ -1,8 +1,8 @@
-import React, { useState, useContext, createContext } from 'react';
+import React, { useState, useContext, createContext, useEffect } from 'react';
 import { ChevronDown, ChevronUp, BookOpen, PlayCircle, GraduationCap } from 'lucide-react';
 import Module from './Module';
-import ModuleContext from '../../Context/moduleContext.js';
-import ModuleContextProvider from "./../../Context/ModuleContextProvider"
+import {ModuleContext, ModuleContextProvider} from '../../Context/ModuleContext.jsx';
+
 
 const courses = [
     {
@@ -34,29 +34,27 @@ const courses = [
     }
     ]
 
-
 function LessonVideoPlayer() {
     const [expandedModule, setExpandedModule] = useState(1);
     const {selectedLesson} = useContext(ModuleContext);
-    console.log("1",selectedLesson)
-    // const [selectedLesson, setSelectedLesson] = useState({
-    //     title: "Getting Started",
-    //     videoUrl: "https://example.com/video1"
-    // });
-    console.log(selectedLesson)
-
+   
+ 
   const toggleModule = (moduleId) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
+  }, []);
   
   return (
-   
+    
+
         <div className="min-h-screen bg-gray-50">
         <header className="bg-white shadow-sm">
             <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center">
             <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" />
-            <h1 className="text-2xl font-bold text-gray-900">EduTech Learning Platform</h1>
+            <h1 className="text-2xl font-bold text-gray-900">EduMaxi Learning Platform</h1>
             </div>
         </header>
 
@@ -86,7 +84,7 @@ function LessonVideoPlayer() {
                 </div>
                 <div className="divide-y">
                     {courses[0].modules.map((module, index) => (
-                    <Module module={module} index={index}/>
+                      <Module module={module} index={index}/>
                     ))}
                 </div>
                 </div>
@@ -94,6 +92,7 @@ function LessonVideoPlayer() {
             </div>
         </div>
         </div>
+
     
   );
 }

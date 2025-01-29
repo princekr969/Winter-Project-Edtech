@@ -10,29 +10,39 @@ import {HomePage} from "./Pages/index.js"
 import Layout from './Layout/Layout.jsx'
 import AuthLayout from './Layout/AuthLayout.jsx'
 import CoursePage from './Pages/CoursePage.jsx'
+import { ModuleContextProvider } from './Context/ModuleContext.jsx'
 
 const router = createBrowserRouter(
 createRoutesFromElements(
+ 
 
     <Route path="/" element={<Layout/>}>
       <Route path='' element={<HomePage/>}></Route>
       <Route path='courses' element={<CoursePage/>}></Route>
-      <Route path='courses/:id' element={<CoursePreview/>}></Route>
-      <Route path='courses/video' element={<LessonVideoPlayer/>}></Route>
       <Route path='about' element={<About/>}></Route>
+      
+        <Route>
+          <Route path='course/:id' element={<CoursePreview/>}></Route>
+          <Route path='/video' element={<LessonVideoPlayer/>}></Route>
+        </Route>
+      
       <Route path="user/" element={<AuthLayout/>}>
         <Route path='signin' element={<Login/>}></Route>
         <Route path='signup' element={<SignUp/>}></Route>
       </Route>
     </Route>
+ 
   )
 )
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router}/>
-    </Provider>,
+     <ModuleContextProvider>
+
+      <Provider store={store}>
+        <RouterProvider router={router}/>
+      </Provider>,
+     </ModuleContextProvider>
   
   </StrictMode>,
 )

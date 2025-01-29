@@ -34,7 +34,7 @@ export default function App() {
   ];
 
   return (
-    <div className=" min-h-screen  px-5 md:px-16 lg:px-24 py-10 ">
+    <div className=" min-h-screen px-5 md:px-16 lg:px-24 py-10 ">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div>
