@@ -1,3 +1,5 @@
 import HomePage from "./HomePage";
+import CoursesPage from "./CoursePage";
+import AboutPage from "./AboutPage"
 
-export {HomePage};
+export {HomePage, CoursesPage, AboutPage};

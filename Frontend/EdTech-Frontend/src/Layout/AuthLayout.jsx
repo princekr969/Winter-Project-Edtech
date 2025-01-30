@@ -13,14 +13,9 @@ function AuthLayout() {
           <img className='w-full h-screen pb-7 pl-6' src={image}
           alt="" />
         </div>
-
-      
-
-            <Outlet/>
-     
+        <Outlet/>
       </div>
     </div>
-  
   )
 }
 

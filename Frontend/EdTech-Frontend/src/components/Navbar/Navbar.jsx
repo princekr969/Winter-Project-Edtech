@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink,  } from 'react-router-dom';
 import {Cart, UserProfileDropDown} from "../index.js"
+import { GraduationCap } from 'lucide-react';
 import { logout } from '../../store/authSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +38,6 @@ const Navbar = () => {
   }, [lastScrollY]);
   
   return (
-    
 
     <nav className={`bg-white fixed z-20  w-full top-0 start-0 border-b border-gray-200 dark:bg-gray-900 transition-transform duration-300 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
@@ -46,11 +46,7 @@ const Navbar = () => {
         
         {/* logo and text */}
         <Link to="/" className="flex items-center  rtl:space-x-reverse">
-          <img
-            src="https://imgs.search.brave.com/Ev0x9E59alL_ahQpdL-Y_FifZ7Yz4dpNbxAVCJUFiGY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9keW5h/bWljLmJyYW5kY3Jv/d2QuY29tL2Fzc2V0/L2xvZ28vODE5OGEy/YWYtNTVmMC00MzI0/LTlmMzYtNjU2NzZh/NWJkY2MyL2xvZ28t/c2VhcmNoLWdyaWQt/MXg_bG9nb1RlbXBs/YXRlVmVyc2lvbj0x/JnY9NjM4NTc5MjQ3/NDAyMjMwMDAw"
-            className="h-10"
-            alt="EdTech Logo"
-          />
+        <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" />
           <span className="self-center text-2xl  font-bold whitespace-nowrap dark:text-white">
             EduMaxi
           </span>

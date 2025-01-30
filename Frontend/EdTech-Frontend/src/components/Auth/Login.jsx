@@ -4,6 +4,7 @@ import authService from "../../services/auth.js"
 import {login as authLogin} from "../../store/authSlice.js"
 import {useDispatch} from "react-redux"
 import {useForm} from "react-hook-form"
+import { GraduationCap } from 'lucide-react'
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ function Login() {
       }
     } catch (error) {
         setError(error.message) 
-        
       }
     }
   
@@ -33,11 +33,7 @@ function Login() {
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-6 lg:w-1/2">
           <div className='w-full'>
           <div className="flex justify-center mx-auto">
-            <img
-              className="w-auto h-7 sm:h-8"
-              src="https://merakiui.com/images/logo.svg"
-              alt=""
-            />
+          <GraduationCap className="h-10 w-10 text-indigo-600 mr-3" />
           </div>
 
           <p className="mt-3 mb-10 text-2xl md:text-4xl font-bold text-center text-gray-600 dark:text-gray-200">
@@ -147,7 +143,6 @@ function Login() {
               <button 
                 type='submit'
                 className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-                
               >
                 Sign In
               </button>

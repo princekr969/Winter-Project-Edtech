@@ -5,13 +5,11 @@ import authService from '../../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 
-
 function UserProfileDropDown() {
 
   const userDetail = useSelector(state => state.auth.userData);
   console.log("user profile",userDetail)
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const handleSignout = async () => {

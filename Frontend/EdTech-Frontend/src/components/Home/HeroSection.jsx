@@ -1,11 +1,13 @@
 import React from 'react'
 import img from "../../assets/heroimg.svg"
 
+import { NavLink, Link } from 'react-router-dom'
+
 
 
 function HeroSection() {
   return (
-        <div className="items-center bg-white mt-32 px-5 md:px-16 lg:px-24 py-5 justify-center lg:flex   ">
+        <div className="items-center bg-gradient-to-b from-indigo-50 to-white  mt-20 px-5 md:px-16 lg:px-24 pt-20 sm:pt-24 justify-center lg:flex   ">
           {/* Left Section */}
           <div className="w-full lg:w-1/2" >
             <div className="lg:max-w-xl">
@@ -18,9 +20,9 @@ function HeroSection() {
                 Discover the power of personalized learning. Our expert instructors provide customized guidance and support, allowing you to learn at your own pace, focus on your areas of strength, and overcome your challenges. Achieve your educational goals with greater efficiency and a deeper understanding
               </p>
 
-              <button className="w-max animate-fade-in-up text-left px-5 py-2 mt-10 font-semibold text-md tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+              <Link to={"/courses"} className="w-max block max-w-fit animate-fade-in-up text-left px-5 py-2 mt-10 font-semibold text-md tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                 Explore <br/>Our Courses
-              </button>
+              </Link>
             </div>
           </div>
 

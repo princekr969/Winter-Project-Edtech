@@ -11,11 +11,11 @@ export default function CourseCard({
   price,
   author={
     avatar: "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    name:"prince",
+    name:"prin",
   },
 }) {
   return (
-    <Link to={`./course/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+    <Link to={`/course/preview/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         
         {/* {course image} */}
@@ -23,7 +23,7 @@ export default function CourseCard({
           <img
             src={imageUrl}
             alt=""
-            className="w-3/4 transition-transform duration-300 ease-in-out group-hover:scale-110"
+            className="w-full h-full object-cover"
           />
 
           {/* add to cart button */}
@@ -52,7 +52,7 @@ export default function CourseCard({
           <h3 className="text-[#14142B] text-lg md:text-2xl font-semibold mb-2 md:mb-3 hover:text-[#4339F2] transition-colors duration-200">
             {title}
           </h3>
-          <p className="text-[#6E7191] text-sm md:text-base mb-3 md:mb-6 line-clamp-2 md:line-clamp-none">
+          <p className="text-[#6E7191] text-sm md:text-base mb-3 md:mb-6 overflow-hidden max-h-16 md:max-h-24">
             {description}
           </p>
           <div className="flex flex-col gap-3 mt-auto">

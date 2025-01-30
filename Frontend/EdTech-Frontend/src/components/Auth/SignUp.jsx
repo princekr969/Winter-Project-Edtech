@@ -4,6 +4,7 @@ import authService from "../../services/auth.js"
 import {login} from "../../store/authSlice.js"
 import {useDispatch} from "react-redux"
 import {useForm} from "react-hook-form"
+import { GraduationCap } from 'lucide-react'
 
 
 function SignUp() {
@@ -47,11 +48,7 @@ function SignUp() {
         <div className="w-full max-lg:mt-16 ">
 
             <div className="flex  mx-auto">
-              <img
-                className="w-auto h-7 sm:h-8"
-                src="https://merakiui.com/images/logo.svg"
-                alt="logo"
-                />
+            <GraduationCap className="h-10 w-10 text-indigo-600 mr-3" />
             </div>
             <h1 className=' mt-3 mb-10 text-2xl md:text-4xl text-gray-600 font-bold'>Sign up and start learning</h1>
 

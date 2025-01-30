@@ -9,51 +9,31 @@ import {
   Users2,
 } from "lucide-react";
 import {Module} from "./../index.js" 
-import { ModuleContextProvider } from "../../Context/ModuleContext.jsx";
+
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CoursePreview = () => {
-  
-    const courses = [
-        {
-          title: "Brand & Identity Design for Marketers",
-          description:"Lorem ipsum dolor sit amet, consectetere adipiscing elit. Feugiat feugiat congue viverra facilisis.",
-          imageUrl:
-            "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          type: "Beginner",
-          price: "₹ 399.00",
+    const {id} = useParams();
+    console.log(typeof id)
+
+    const {courses} = useSelector(state => state.courses)
     
-           modules: [
-            {
-              id: 1,
-              title: "Introduction to Programming",
-              lessons: [
-                { id: 1, title: "Getting Started", videoUrl: "https://example.com/video1" },
-                { id: 2, title: "Basic Concepts", videoUrl: "https://example.com/video2" },
-              ]
-            },
-            {
-              id: 2,
-              title: "Advanced Topics",
-              lessons: [
-                { id: 3, title: "Data Structures", videoUrl: "https://example.com/video3" },
-                { id: 4, title: "Algorithms", videoUrl: "https://example.com/video4" },
-              ]
-            }
-        ]
-        }
-        ]
+    const course = courses.filter(course => course.id===Number(id))
+   
+
     useEffect(() => {
       window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
     }, []);
   return (
-    <ModuleContextProvider>
+    
 
       <div className="min-h-screen bg-gray-50 mt-26">
         {/* Hero Section */}
         <div className="relative h-[500px]">
           <div className="absolute inset-0">
             <img
-              src={courses[0].imageUrl}
+              src={course[0].imageUrl}
               alt="Course hero"
               className="w-full h-full object-cover"
             />
@@ -65,10 +45,10 @@ const CoursePreview = () => {
                 Professional Certificate
               </span>
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                {courses[0].title}
+                {course[0].title}
               </h1>
               <p className="mt-6 text-xl text-gray-100 max-w-3xl">
-                {courses[0].description}
+                {course[0].description}
               </p>
             </div>
           </div>
@@ -110,7 +90,7 @@ const CoursePreview = () => {
               <section className="bg-white rounded-lg shadow-sm p-6 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Course Overview</h2>
                 <p className="text-gray-600 mb-6">
-                  {courses[0].description}
+                  {course[0].description}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -131,18 +111,18 @@ const CoursePreview = () => {
               <section className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-6">Curriculum</h2>
                 <div className="space-y-4">
-                  {courses[0].modules.map((module, index) => (
-                  <Module module={module} index={index}/>
+                  {course[0].modules.map((module, index) => (
+                  <Module module={module} index={index} courseId={id}/>
                   ))}
                 </div>
               </section>
             </div>
 
             {/* Right Column - Course Card */}
-            <div className="lg:col-span-1">
+            <div className=" lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                 <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-blue-600">{courses[0].price}</div>
+                  <div className="text-5xl font-bold text-blue-600">{course[0].price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
                 <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mb-4">
@@ -170,7 +150,7 @@ const CoursePreview = () => {
           </div>
         </div>
       </div>
-    </ModuleContextProvider>
+  
   );
 };
 
