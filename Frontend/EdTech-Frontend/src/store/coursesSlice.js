@@ -10,7 +10,7 @@ const initialState = {
         "Lorem ipsum dolor sit amet, consectetere adipiscing elit. Feugiat feugiat congue viverra facilisis.",
       imageUrl:
         "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      type: "Beginner",
+      type: "",
       price: "₹ 399.00",
       category: 'cloud',
       author:{

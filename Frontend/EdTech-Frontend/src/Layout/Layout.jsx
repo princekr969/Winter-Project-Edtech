@@ -1,17 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import  { Navbar, Footer } from '../components/index.js'
+import Cookies from "js-cookie"
 
 function Layout() {
-  const [userDetail, setUserDetail] = useState({
-      name:"Dane",
-      email:"dne@gmail.com",
-      loginStatus:true
-  })
-  
+
   return (
     <>
-        <Navbar userDetail={userDetail} setUserDetail={setUserDetail}/>
+        <Navbar/>
         <Outlet/>
         <Footer/>
     </>

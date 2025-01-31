@@ -29,7 +29,6 @@ function SignUp() {
     try {
       const userData = await authService.createAccount(data);
       console.log("SignUp:", userData)
-      
 
       if(userData){
         // const userData = await authService.login();

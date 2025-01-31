@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { logout } from '../../../store/authSlice';
+import { logout } from '../../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import authService from '../../../services/auth';
-import { useNavigate } from 'react-router-dom';
+import authService from '../../services/auth';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 
 function UserProfileDropDown() {
@@ -79,12 +79,12 @@ function UserProfileDropDown() {
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        <a
-          href="#"
+        <NavLink
+          to={"./user/dashboard"}
           className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
           View profile
-        </a>
+        </NavLink>
 
         <a
           href="#"

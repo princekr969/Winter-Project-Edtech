@@ -1,14 +1,12 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
 import { ChevronDown, ChevronUp, BookOpen, PlayCircle, GraduationCap } from 'lucide-react';
-import Module from './Module';
-
+import Module from '../components/Course/Module';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 
-
-function LessonVideoPlayer() {
+function CourseVideoPlayerPage() {
     const {courseId, lessonId, moduleId} = useParams()
     const [expandedModule, setExpandedModule] = useState(1);
     const [videoUrl, setVideoUrl] = useState("");
@@ -95,6 +93,6 @@ function LessonVideoPlayer() {
   );
 }
 
-export default LessonVideoPlayer;
+export default CourseVideoPlayerPage;
 
 

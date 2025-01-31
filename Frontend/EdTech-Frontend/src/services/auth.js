@@ -54,12 +54,12 @@ export class AuthService {
         }
     }
     
-    async getCurrentUser(){
-        const url = this.baseUrl + "/logout";
+    async getCurrentUser(refreshToken){
         try {
-            
-            
-
+            const url = this.baseUrl + "/refresh-Token";
+            const userAccount = await axios.post(url, {refreshToken});
+            console.log('Data successfully sent from  getCurrentUser:', userAccount.data.message.user);
+            return userAccount.data.message.user;
         } catch (error) {
             console.log("Backend service :: getCurrentUser :: error", error);
         }

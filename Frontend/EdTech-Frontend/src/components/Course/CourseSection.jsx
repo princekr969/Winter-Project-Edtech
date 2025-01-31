@@ -14,7 +14,7 @@ export default function App() {
     if (screenWidth >= 768 && screenWidth < 1024) {
       setVisibleCourses(4); 
     }else {
-      setVisibleCourses(5); 
+      setVisibleCourses(3); 
     }
   };
 

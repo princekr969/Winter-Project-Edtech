@@ -1,20 +1,21 @@
 import AboutSection from "./About/AboutSection";
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./Navbar";
 import HeroSection from "./Home/HeroSection";
 import CourseCard from "./Course/CourseCard";
 import Footer from "./Footer";
 import Carousel from "./Home/Carousel";
 import CourseSection from "./Course/CourseSection";
-import UserProfileDropDown from "./Navbar/User-Profile/UserProfileDropDown";
+import UserProfileDropDown from "./User-Profile/UserProfileDropDown";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
-import Cart from "./Navbar/Cart/Cart";
-import CoursePreview from "./Course/CoursePreview";
+import Cart from "./Cart/Cart";
 import Module from "./Course/Module";
-import LessonVideoPlayer from "./Course/lessonVideoPlayer";
 import CourseHeroSection from "./Course/CourseHeroSection";
 import AboutPageHeroSection from "./About/AboutPageHeroSection";
-
+import CourseList  from "./UserDashboard/CourseList";
+import CourseEditor from "./UserDashboard/CourseEditor";
+import Sidebar from "./UserDashboard/SideBar";
+import Profile from "./UserDashboard/Profile";
 
 export 
 {
@@ -29,11 +30,12 @@ export
     CourseSection, 
     Footer,
     Cart,
-    CoursePreview,
     Module,
-    LessonVideoPlayer,
     CourseHeroSection,
     AboutPageHeroSection,
-  
+    CourseEditor,
+    CourseList,
+    Sidebar,
+    Profile
    
 };

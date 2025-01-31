@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  BookOpen,
-  Clock,
-  Globe,
-  PlayCircle,
-  Star,
-  Trophy,
-  Users2,
-} from "lucide-react";
-import {Module} from "./../index.js" 
-
+import {BookOpen,Clock,Globe,PlayCircle,Star,Trophy, Users2} from "lucide-react";
+import {Module} from "../components/index.js" 
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const CoursePreview = () => {
+const CourseViewPage = () => {
     const {id} = useParams();
     console.log(typeof id)
 
@@ -154,4 +145,4 @@ const CoursePreview = () => {
   );
 };
 
-export default CoursePreview;
+export default CourseViewPage;

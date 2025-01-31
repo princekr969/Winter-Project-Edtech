@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink,  } from 'react-router-dom';
-import {Cart, UserProfileDropDown} from "../index.js"
+import {Cart, UserProfileDropDown} from "./index.js"
 import { GraduationCap } from 'lucide-react';
-import { logout } from '../../store/authSlice.js';
+import { logout } from '../store/authSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  const [loader, setLoader] = useState(true)
-  
+  const [lastScrollY, setLastScrollY] = useState(0);  
   const authStatus = useSelector(state => state.auth.status)
-
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
 
   useEffect(() => {

@@ -1,11 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authSlice from './authSlice';
 import coursesSlice from './coursesSlice.js'
-import { saveState, loadState } from './../utils/localStorage.js';
 
 
 // Load the persisted state
-const persistedState = loadState();
+// const persistedState = loadState();
 
 const store = configureStore({
     reducer: {
@@ -13,11 +12,11 @@ const store = configureStore({
         courses: coursesSlice
     },
     
-    preloadedState: persistedState, // Initialize store with persisted state
+    // preloadedState: persistedState, // Initialize store with persisted state
 });
 
-store.subscribe(() => {
-    saveState(store.getState());
-});
+// store.subscribe(() => {
+//     saveState(store.getState());
+// });
 
 export default store;
