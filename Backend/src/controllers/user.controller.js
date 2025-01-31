@@ -219,10 +219,108 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 })
 
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    throw new ApiError(400, "Current password and new password are required");
+  }  
+
+  const user = await User.findById(req.user._id);
+
+  if(!user)
+  {
+    throw new ApiError(404, "User not found");
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(oldPassword);
+
+  if(!isPasswordValid)
+  {
+    throw new ApiError(401, "Invalid password");
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, "Password changed successfully"));
+
+})
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+  
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, req.user, "User retrieved successfully"));
+})
+
+const updateAccountDetails = asyncHandler(async (req, res) => {
+  const { firstName, lastName, email } = req.body;
+
+  if (!firstName || !lastName || !email) {
+    throw new ApiError(400, "First name, last name, and email are required");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        firstName,
+        lastName,
+        email,
+      },
+    },
+    {
+      new: true,
+    }).select("-password -refreshToken");
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, {user},"Account details updated successfully"));
+})
+
+const updateProfilePicture = asyncHandler(async (req, res) => {
+    const profilePicturePath = req.file.path;
+
+    if(!profilePicturePath)
+    {
+        throw new ApiError(400, "Profile picture is required");
+    }
+
+    const pfp = await uploadOnCloudinary(profilePicturePath);
+
+    if(!pfp.url)
+    {
+        throw new ApiError(500, "Failed to upload profile picture");
+    }
+   const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: { 
+                profilePicture: pfp.url
+            }
+        },
+        {
+            new: true
+        }
+    ).select("-password -refreshToken");
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,{user},"Profile picture updated successfully"));
+})
+
 
 export { 
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateAccountDetails,
+    updateProfilePicture
  };
