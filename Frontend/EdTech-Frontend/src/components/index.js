@@ -8,14 +8,17 @@ import CourseSection from "./Course/CourseSection";
 import UserProfileDropDown from "./User-Profile/UserProfileDropDown";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
-import Cart from "./Cart/Cart";
+import Cart from "./Cart/CartIcon";
 import Module from "./Course/Module";
 import CourseHeroSection from "./Course/CourseHeroSection";
 import AboutPageHeroSection from "./About/AboutPageHeroSection";
 import CourseList  from "./UserDashboard/CourseList";
-import CourseEditor from "./UserDashboard/CourseEditor";
 import Sidebar from "./UserDashboard/SideBar";
 import Profile from "./UserDashboard/Profile";
+import CreatedCourseList from "./UserDashboard/CreatedCourseList";
+import PurchasedCoursesList from "./UserDashboard/PurchasedCoursesList";
+import Dashboard from "./UserDashboard/Dashboard";
+import CartDropdown from "./Cart/CartDropDown";
 
 export 
 {
@@ -33,9 +36,11 @@ export
     Module,
     CourseHeroSection,
     AboutPageHeroSection,
-    CourseEditor,
     CourseList,
     Sidebar,
-    Profile
-   
+    Profile,
+    CreatedCourseList,
+    PurchasedCoursesList,
+    Dashboard,
+    CartDropdown
 };

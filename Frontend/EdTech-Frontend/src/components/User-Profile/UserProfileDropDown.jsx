@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { logout } from '../../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import authService from '../../services/auth';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 
 function UserProfileDropDown() {
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
   const userDetail = useSelector(state => state.auth.userData);
   console.log("user profile",userDetail)
 
   const dispatch = useDispatch()
 
   const handleSignout = async () => {
-    
     try {
       const res = await authService.logout();
       console.log("logout:",res);
       dispatch(logout())
-  
+      navigate("/")
     } catch (error) {
       console.log("sign out :: error ::",error)
     }
+  
   };
   
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +35,28 @@ function UserProfileDropDown() {
   const closeDropdown = () => {
     setIsOpen(false);
   };
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
     
+  useEffect(() => {
+      const handleScroll = () => setIsOpen(false);
+      window.addEventListener("scroll", handleScroll);
+
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+  useEffect(() => {
+      setIsOpen(false);
+    }, [location])
   return (
     <div className="relative inline-block">
 
@@ -50,17 +73,18 @@ function UserProfileDropDown() {
                 src="https://images.pexels.com/photos/30162929/pexels-photo-30162929/free-photo-of-dramatic-portrait-of-woman-in-leather-jacket.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="user photo"
             />
-            </button>
+      </button>
 
     {/* Dropdown menu */}
     {isOpen && (
       <div
+        ref={dropdownRef}
         onClick={closeDropdown}
-        className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800"
+        className="absolute right-0 z-50 top-14 w-56 mt-2 overflow-hidden bg-white rounded-md shadow-xl border-gray-200"
       >
-        <a
-          href="#"
-          className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+        <Link
+          to={"/user/dashboard"}
+          className="flex items-center p-4 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
@@ -75,30 +99,46 @@ function UserProfileDropDown() {
               {userDetail.email}
             </p>
           </div>
-        </a>
+        </Link>
 
+        <hr className="border-gray-200 dark:border-gray-700" />
         <hr className="border-gray-200 dark:border-gray-700" />
 
         <NavLink
-          to={"./user/dashboard"}
+          to={"/user/profile"}
           className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
           View profile
         </NavLink>
+        <NavLink
+          to={"/cart"}
+          className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          My cart
+        </NavLink>
 
+        <hr className="border-gray-200 dark:border-gray-700" />
+        <hr className="border-gray-200 dark:border-gray-700" />
+        <NavLink
+          to={"/user/purchased"}
+          className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          Subscriptions
+        </NavLink>
+        <NavLink
+          to={"/user/created"}
+          className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          My Courses
+        </NavLink>
+        <hr className="border-gray-200 dark:border-gray-700" />
+        <hr className="border-gray-200 dark:border-gray-700" />
         <a
           href="#"
           className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
           Settings
         </a>
-
-        <hr className="border-gray-200 dark:border-gray-700" />
-
-
-       
-
-        <hr className="border-gray-200 dark:border-gray-700" />
 
         <a
           href="#"

@@ -10,17 +10,15 @@ const CourseViewPage = () => {
 
     const {courses} = useSelector(state => state.courses)
     
-    const course = courses.filter(course => course.id===Number(id))
-   
+    const course = courses.filter(course => course.id===id)
+   console.log(course)
 
     useEffect(() => {
-      window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
+      window.scrollTo(0, 0);
     }, []);
   return (
     
-
       <div className="min-h-screen bg-gray-50 mt-26">
-        {/* Hero Section */}
         <div className="relative h-[500px]">
           <div className="absolute inset-0">
             <img
@@ -113,7 +111,7 @@ const CourseViewPage = () => {
             <div className=" lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                 <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-blue-600">{course[0].price}</div>
+                  <div className="text-5xl font-bold text-blue-600">₹{course[0].price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
                 <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mb-4">

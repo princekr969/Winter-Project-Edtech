@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Users, Target, Lightbulb } from 'lucide-react';
 import { AboutPageHeroSection, AboutSection } from '../components';
@@ -33,6 +34,10 @@ function App() {
     }
   ];
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
+  }, []);
+  
   return (
     <div className="min-h-screen bg-gray-50">
       

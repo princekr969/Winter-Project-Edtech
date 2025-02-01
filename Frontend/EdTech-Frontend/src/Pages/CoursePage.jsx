@@ -35,8 +35,8 @@ function CoursesPage() {
   };
 
   useEffect(() => {
-        window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
-      }, []);
+    window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
+  }, []);
   return (
     <div>
       <CourseHeroSection id={courseSectionId}/>

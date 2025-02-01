@@ -1,5 +1,5 @@
-import React, { useState, useContext, createContext, useEffect } from 'react';
-import { ChevronDown, ChevronUp, BookOpen, PlayCircle, GraduationCap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {BookOpen, PlayCircle, GraduationCap } from 'lucide-react';
 import Module from '../components/Course/Module';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
@@ -7,26 +7,22 @@ import { useParams } from 'react-router-dom';
 
 
 function CourseVideoPlayerPage() {
-    const {courseId, lessonId, moduleId} = useParams()
-    const [expandedModule, setExpandedModule] = useState(1);
-    const [videoUrl, setVideoUrl] = useState("");
-    const [selectedLesson, setSelectedLesson] = useState({
-       
-    });
+  const {courseId, lessonId, moduleId} = useParams()
+  const [expandedModule, setExpandedModule] = useState(1);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [selectedLesson, setSelectedLesson] = useState({});
 
   const {courses} = useSelector(state => state.courses);
-  const course = courses.filter(course => course.id === Number(courseId))
-  const activeModule = course[0].modules.filter(module => module.id === Number(moduleId))
-  const activeLesson = activeModule[0].lessons.filter(lesson => lesson.id === Number(lessonId))
+  const course = courses.filter(course => course.id === courseId)
+  const activeModule = course[0].modules.filter(module => module.id === moduleId)
+  const activeLesson = activeModule[0].lessons.filter(lesson => lesson.id === lessonId)
   console.log("courses",course)
+  console.log("courses_title",course[0].title)
   console.log("module", activeModule)
   console.log("lesson", activeLesson)
 
-  
-
   const toggleModule = (moduleId) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
-    
   };
 
   useEffect(() => {
@@ -39,13 +35,11 @@ function CourseVideoPlayerPage() {
   }, [activeLesson]);
   
   return (
-    
-
         <div className="min-h-screen bg-gray-50 mt-24">
           <header className="bg-white shadow-sm">
               <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center">
               <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" />
-              <h1 className="text-2xl font-bold text-gray-900">EduMaxi Learning Platform</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{course[0].title}</h1>
               </div>
           </header>
 
@@ -78,7 +72,7 @@ function CourseVideoPlayerPage() {
                     Course Modules
                     </h3>
                 </div>
-                <div className=" flex gap-2 flex-col m-2">
+                <div className=" flex gap-2 flex-col p-2 m-2">
                     {course[0].modules.map((module, index) => (
                       <Module module={module} index={index} courseId={courseId}/>
                     ))}
