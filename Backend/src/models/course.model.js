@@ -9,7 +9,7 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
+    imageUrl: {
         type: String,
         required: true
     },
@@ -23,12 +23,7 @@ const courseSchema = new mongoose.Schema({
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
-    duration: {
-        type: Number, // duration in hours
-        required: true
+        ref: "User"
     },
     studentsEnrolled: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -40,22 +35,28 @@ const courseSchema = new mongoose.Schema({
         max: 5,
         default: 0
     },
+    author:{
+        avatar: { type: String },
+        name: { type: String }
+    },
+    modules: [{
+        id:{type: Number},
+        title: { type: String, required: true },
+        lessons: [{
+            id: { type: Number },
+            title: { type: String, required: true },
+            videoUrl: { type: String, required: true }
+        }]
+    }],
     reviews: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         rating: { type: Number, min: 1, max: 5 },
         comment: { type: String },
         date: { type: Date, default: Date.now }
     }],
-    tags: [{
+   tags: [{
         type: String
     }],
-    videos: [{
-        title: { type: String, required: true }, // Title of the video
-        url: { type: String, required: true }, // URL where the video is hosted
-        duration: { type: Number, required: true }, // Duration of the video in minutes
-        isDemo: { type: Boolean, default: false }, // If true, video is free for everyone
-        isPaid: { type: Boolean, default: false } // If true, video is available only for paid users
-    }]
 }, { timestamps: true });
 
 export const Course = mongoose.model("Course", courseSchema);
