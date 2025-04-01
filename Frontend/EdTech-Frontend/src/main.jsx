@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown} from './components/index.js'
+import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown, Otp} from './components/index.js'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'

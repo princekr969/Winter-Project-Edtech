@@ -64,8 +64,19 @@ export class AuthService {
             console.log("Backend service :: getCurrentUser :: error", error);
         }
     }
-
-
+    
+    async otpVerify({otpValue, email}){
+        try {
+            const url = this.baseUrl + "/verifyUser";
+            console.log("otpvalue",otpValue, email)
+            const userAccount = await axios.post(url, {otpValue, email});
+            console.log('Data successfully sent:', userAccount);
+            return userAccount;
+        } catch (error) {
+            console.log("Backend service :: getCurrentUser :: error", error);
+        }
+    }
+  
 };
 
 const authService = new AuthService("/api/v1/users");

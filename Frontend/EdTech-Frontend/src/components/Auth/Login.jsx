@@ -1,34 +1,138 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import authService from "../../services/auth.js"
 import {login as authLogin} from "../../store/authSlice.js"
 import {useDispatch} from "react-redux"
 import {useForm} from "react-hook-form"
-import { GraduationCap } from 'lucide-react'
+import { GraduationCap, KeySquare } from 'lucide-react'
+
+let email = ""
+
+function OtpModal({ isOpen, onClose }) {
+  const [otp, setOtp] = useState(['', '', '', '']);
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  
+  const inputRefs = Array(4).fill(null).map(() => React.useRef(null));
+
+  const handleChange = (index, value) => {
+    if (value.length <= 1 && /^[0-9]*$/.test(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+
+      if (value && index < 3) {
+        inputRefs[index + 1].current?.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs[index - 1].current?.focus();
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const otpValue = otp.join('');
+    setError("")
+    if (otpValue.length === 4) {
+      alert(`OTP Submitted: ${otpValue}`);
+      try {
+        const userData = authService.otpVerify({otpValue, email})
+        if(userData) dispatch(authLogin(userData));
+        navigate("/")
+      } catch (error) {
+        setError(error)
+      }
+      setOtp(['', '', '', '']);
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+        
+        <div className="flex items-center justify-center mb-8">
+          <KeySquare className="w-12 h-12 text-indigo-600" />
+        </div>
+        
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          Enter Verification Code
+        </h1>
+        <p className="text-center text-gray-600 mb-8">
+          Please enter the 4-digit code sent to your device
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div className="flex justify-center gap-4 mb-8">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                ref={inputRefs[index]}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                className="w-14 h-14 text-center text-2xl font-semibold border-2 rounded-lg 
+                          focus:border-indigo-500 focus:outline-none transition-colors
+                          bg-gray-50 text-gray-800"
+              />
+            ))}
+          </div>
+
+          <button
+            type="submit"
+            disabled={otp.some(digit => !digit)}
+            className="w-full py-3 px-6 text-white bg-indigo-600 rounded-lg
+                     hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                     focus:ring-indigo-500 focus:ring-offset-2 transition-colors
+                     disabled:bg-gray-300 disabled:cursor-not-allowed"
+          >
+            Verify Code
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 
 function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
-  const {register, handleSubmit} = useForm();
+  const {register, handleSubmit} = useForm();  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   const login = async (data) => {
     setError("");
-    console.log(data);
+    setIsModalOpen(true);
     try {
       const userData = await authService.login(data);
       if(userData){
-        
-        if(userData) dispatch(authLogin(userData));
-        navigate("/");
+        email = userData.email;
       }
     } catch (error) {
         setError(error.message) 
       }
     }
-  
-  return (
-      <>
+    
+    return (   <>
       
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-6 lg:w-1/2">
           <div className='w-full'>
@@ -166,6 +270,10 @@ function Login() {
           </div>
 
         </div>
+
+        <OtpModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}/>
         </>
 
   )

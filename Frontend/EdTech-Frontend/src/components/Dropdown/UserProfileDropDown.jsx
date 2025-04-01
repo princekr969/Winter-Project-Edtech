@@ -6,6 +6,7 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 
 function UserProfileDropDown() {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -26,8 +27,6 @@ function UserProfileDropDown() {
   
   };
   
-  const [isOpen, setIsOpen] = useState(false);
-
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
@@ -70,7 +69,7 @@ function UserProfileDropDown() {
             <span className="sr-only">Open user menu</span>
             <img
                 className="w-8 h-8 rounded-full"
-                src="https://images.pexels.com/photos/30162929/pexels-photo-30162929/free-photo-of-dramatic-portrait-of-woman-in-leather-jacket.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                src={userDetail.avatar}
                 alt="user photo"
             />
       </button>
@@ -88,7 +87,7 @@ function UserProfileDropDown() {
         >
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-            src="https://images.pexels.com/photos/30162929/pexels-photo-30162929/free-photo-of-dramatic-portrait-of-woman-in-leather-jacket.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={userDetail.avatar}
             alt={userDetail.firstName + userDetail.lastName}
           />
           <div className="mx-1">

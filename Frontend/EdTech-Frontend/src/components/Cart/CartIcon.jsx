@@ -1,8 +1,12 @@
 import { ShoppingCart } from 'lucide-react'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 
-function CartIcon({isOpen, onClose}) {
-    const [cartCount, setCartCount] = useState(5)
+function CartIcon({isOpen, onClose, itemCount}) {
+    const [cartCount, setCartCount] = useState()
+    const totalItems = useSelector(state => state.cart.totalItems)
+    
+    useEffect(() => setCartCount(totalItems), [totalItems])
 
   return (
     <div>

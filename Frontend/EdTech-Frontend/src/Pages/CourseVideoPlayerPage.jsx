@@ -9,13 +9,14 @@ import { useParams } from 'react-router-dom';
 function CourseVideoPlayerPage() {
   const {courseId, lessonId, moduleId} = useParams()
   const [expandedModule, setExpandedModule] = useState(1);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [selectedLesson, setSelectedLesson] = useState({});
 
   const {courses} = useSelector(state => state.courses);
+  console.log("preview:", courses)
   const course = courses.filter(course => course.id === courseId)
   const activeModule = course[0].modules.filter(module => module.id === moduleId)
   const activeLesson = activeModule[0].lessons.filter(lesson => lesson.id === lessonId)
+  const selectedLesson = activeLesson[0];
+  const videoUrl = activeLesson[0].videoUrl
   console.log("courses",course)
   console.log("courses_title",course[0].title)
   console.log("module", activeModule)
@@ -26,13 +27,8 @@ function CourseVideoPlayerPage() {
   };
 
   useEffect(() => {
-    setSelectedLesson(activeLesson[0])
-    setVideoUrl(activeLesson[0].videoUrl)
-    console.log("set",selectedLesson)
-    console.log(activeLesson)
     window.scrollTo(0, 0);
-    
-  }, [activeLesson]);
+  }, []);
   
   return (
         <div className="min-h-screen bg-gray-50 mt-24">

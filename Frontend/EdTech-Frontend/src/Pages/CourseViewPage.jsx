@@ -9,7 +9,7 @@ const CourseViewPage = () => {
     console.log(typeof id)
 
     const {courses} = useSelector(state => state.courses)
-    
+    console.log("course preview",courses)
     const course = courses.filter(course => course.id===id)
    console.log(course)
 

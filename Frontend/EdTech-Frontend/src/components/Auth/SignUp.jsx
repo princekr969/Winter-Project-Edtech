@@ -31,13 +31,13 @@ function SignUp() {
       console.log("SignUp:", userData)
 
       if(userData){
-        // const userData = await authService.login();
+        const userData = await authService.login();
         dispatch(login(userData));
         navigate("/");
       }
     } catch (error) {
         setError(error) 
-        console.log(error)
+        console.log("error:::",error)
       }
   }
 

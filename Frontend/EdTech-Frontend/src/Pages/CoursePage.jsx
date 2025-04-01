@@ -14,17 +14,13 @@ const categories = [
 ];
 
 
-const stats = [
-  { icon: BookOpen, label: 'Total Courses', value: '500+' },
-  { icon: Users2, label: 'Active Students', value: '50,000+' },
-  { icon: Star, label: 'Expert Instructors', value: '100+' },
-];
-
 function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [visibleCourses, setVisibleCourses] = useState(6);
   const {courses} = useSelector(state => state.courses)
   const courseSectionId = "mainCourseContent"
+
+  console.log("course-page",courses)
 
   const filteredCourses = selectedCategory === 'all'
     ? courses
@@ -35,15 +31,14 @@ function CoursesPage() {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0); // This will scroll to the top of the page when it loads
+    window.scrollTo(0, 0);
   }, []);
   return (
     <div>
       <CourseHeroSection id={courseSectionId}/>
     
-      {/* Main Content */}
       <div id={courseSectionId}  className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-5">
-        {/* Category Navigation */}
+      
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Explore Our Courses</h2>
           <div className="flex flex-wrap gap-2">

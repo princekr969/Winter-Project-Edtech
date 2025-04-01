@@ -4,8 +4,8 @@ import { GraduationCap } from 'lucide-react'
 
 function Footer() {
   return (
-      <footer className="bg-white mx-auto rounded-lg shadow dark:bg-gray-900 px-5 md:px-16 lg:px-24">
-        <div className="w-full max-w-screen-xl mx-auto py-4 md:py-8">
+      <footer className="bg-white mx-auto  px-5 md:px-16 lg:px-24">
+        <div className="w-full max-w-screen-xl mx-auto py-2 md:py-4">
           <div className="sm:flex sm:items-center sm:justify-between">
             
             <Link

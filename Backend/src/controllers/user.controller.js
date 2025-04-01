@@ -335,8 +335,13 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         {
             throw new ApiError(404, "User not found");
         }
+        console.log(req.body);
+        
+           console.log(req.body.otp);
+           console.log(user.otp);
            
-        if(Number(req.body.otp)!==Number(user.otp))
+           
+        if(Number(req.body.otpValue)!=Number(user.otp))
         {
             throw new ApiError(400, "Invalid OTP");
         }

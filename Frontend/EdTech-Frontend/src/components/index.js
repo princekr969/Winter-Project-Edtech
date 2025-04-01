@@ -5,7 +5,7 @@ import CourseCard from "./Course/CourseCard";
 import Footer from "./Footer";
 import Carousel from "./Home/Carousel";
 import CourseSection from "./Course/CourseSection";
-import UserProfileDropDown from "./User-Profile/UserProfileDropDown";
+import UserProfileDropDown from "./Dropdown/UserProfileDropDown";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
 import Cart from "./Cart/CartIcon";
@@ -18,7 +18,9 @@ import Profile from "./UserDashboard/Profile";
 import CreatedCourseList from "./UserDashboard/CreatedCourseList";
 import PurchasedCoursesList from "./UserDashboard/PurchasedCoursesList";
 import Dashboard from "./UserDashboard/Dashboard";
-import CartDropdown from "./Cart/CartDropDown";
+import CartDropdown from "./Dropdown/CartDropDown";
+import CartItem from "./Cart/CartItem";
+import Otp from "./Auth/Otp";
 
 export 
 {
@@ -42,5 +44,7 @@ export
     CreatedCourseList,
     PurchasedCoursesList,
     Dashboard,
-    CartDropdown
+    CartDropdown,
+    CartItem,
+    Otp
 };
