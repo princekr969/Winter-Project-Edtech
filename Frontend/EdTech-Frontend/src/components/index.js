@@ -20,7 +20,6 @@ import PurchasedCoursesList from "./UserDashboard/PurchasedCoursesList";
 import Dashboard from "./UserDashboard/Dashboard";
 import CartDropdown from "./Dropdown/CartDropDown";
 import CartItem from "./Cart/CartItem";
-import Otp from "./Auth/Otp";
 
 export 
 {
@@ -46,5 +45,5 @@ export
     Dashboard,
     CartDropdown,
     CartItem,
-    Otp
+    
 };

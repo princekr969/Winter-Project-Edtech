@@ -11,7 +11,6 @@ function UserProfileDropDown() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const userDetail = useSelector(state => state.auth.userData);
-  console.log("user profile",userDetail)
 
   const dispatch = useDispatch()
 
@@ -56,6 +55,8 @@ function UserProfileDropDown() {
   useEffect(() => {
       setIsOpen(false);
     }, [location])
+
+    
   return (
     <div className="relative inline-block">
 

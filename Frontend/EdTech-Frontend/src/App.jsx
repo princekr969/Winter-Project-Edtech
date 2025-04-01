@@ -228,7 +228,7 @@ function App() {
       
       try {
         const res = await authService.getCurrentUser(refreshToken)
-        console.log("res",res)
+        console.log("App.js",res)
         if(res){     
           dispatch(login(res))
         }else{

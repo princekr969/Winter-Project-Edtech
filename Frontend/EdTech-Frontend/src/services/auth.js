@@ -68,12 +68,14 @@ export class AuthService {
     async otpVerify({otpValue, email}){
         try {
             const url = this.baseUrl + "/verifyUser";
-            console.log("otpvalue",otpValue, email)
+            console.log("otpValue",otpValue, email)
             const userAccount = await axios.post(url, {otpValue, email});
-            console.log('Data successfully sent:', userAccount);
-            return userAccount;
+            console.log('Data successfully sent:', userAccount.data.message.user);
+
+            return userAccount.data.message.user;
         } catch (error) {
-            console.log("Backend service :: getCurrentUser :: error", error);
+            console.log("Backend service :: otpVerification :: error", error);
+            return "";
         }
     }
   

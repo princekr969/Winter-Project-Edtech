@@ -95,7 +95,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 function PurchasedCoursesList() {
   const courses = useSelector(state => state.courses.courses)
-  const purchasedCoursesId = useSelector(state => state.auth.userData.purchasedCourses);
+  const purchasedCoursesId = useSelector(state => state.auth.userData.coursesEnrolled);
   const purchasedCourseIdSet = new Set(purchasedCoursesId.map(item => item.id));
   
   const purchasedCourses = courses.filter(course => purchasedCourseIdSet.has(course.id));

@@ -35,17 +35,20 @@ function OtpModal({ isOpen, onClose }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const otpValue = otp.join('');
     setError("")
     if (otpValue.length === 4) {
-      alert(`OTP Submitted: ${otpValue}`);
       try {
-        const userData = authService.otpVerify({otpValue, email})
-        if(userData) dispatch(authLogin(userData));
-        navigate("/")
+        const userData = await authService.otpVerify({otpValue, email})
+        if(userData){
+          dispatch(authLogin(userData));
+          navigate("/")
+        } 
+
       } catch (error) {
+        console.log("error", error)
         setError(error)
       }
       setOtp(['', '', '', '']);
@@ -113,19 +116,21 @@ function OtpModal({ isOpen, onClose }) {
 
 
 function Login() {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
   const {register, handleSubmit} = useForm();  
   const [isModalOpen, setIsModalOpen] = useState(false);
   
 
   const login = async (data) => {
     setError("");
-    setIsModalOpen(true);
+    setLoading(true)
     try {
       const userData = await authService.login(data);
       if(userData){
-        email = userData.email;
+        email = data.email;
+        setIsModalOpen(true);
+        setLoading(false)
       }
     } catch (error) {
         setError(error.message) 
@@ -244,12 +249,38 @@ function Login() {
               />
             </div>
             <div className="mt-6">
-              <button 
-                type='submit'
-                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-              >
-                Sign In
-              </button>
+              
+                <button 
+                  type='submit'
+                  className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                >
+                  {(loading) ?
+                    <div className="flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 mr-2 text-white animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 01-8 8z"
+                      ></path>
+                    </svg>
+                    Processing...
+                  </div>
+                  : "Sign In"}
+                </button>
+              
             </div>
           </form>
 

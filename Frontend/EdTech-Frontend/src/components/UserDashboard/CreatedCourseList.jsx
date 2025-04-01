@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 function CreatedCourseList() {
   
   const courses = useSelector(state => state.courses.courses)
-  const createdCoursesId = useSelector(state => state.auth.userData.purchasedCourses);
+  const createdCoursesId = useSelector(state => state.auth.userData.courses);
   const createdCourseIdSet = new Set(createdCoursesId.map(item => item.id));
   const createdCourses = courses.filter(course => createdCourseIdSet.has(course.id));
   

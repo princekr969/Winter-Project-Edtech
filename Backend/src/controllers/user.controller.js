@@ -337,11 +337,11 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         }
         console.log(req.body);
         
-           console.log(req.body.otp);
+           console.log(req.body.otpValue);
            console.log(user.otp);
            
            
-        if(Number(req.body.otpValue)!=Number(user.otp))
+        if(Number(req.body.otpValue)!==Number(user.otp))
         {
             throw new ApiError(400, "Invalid OTP");
         }
@@ -349,7 +349,6 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         const { accessToken, refreshToken } = tokens;
     
         const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
-    
         const options={
             httpOnly: true,
             secure: true
