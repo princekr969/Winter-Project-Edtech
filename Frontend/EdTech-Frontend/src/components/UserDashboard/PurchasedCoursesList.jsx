@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import CourseList from './CourseList'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import authService from '../../services/auth';
+import Cookies from "js-cookie" 
 
 // const user = {
 //     id: '1',
@@ -94,15 +96,35 @@ import { useDispatch, useSelector } from 'react-redux'
 //   };
 
 function PurchasedCoursesList() {
+  
+  const refreshToken = Cookies.get("refreshToken");
   const courses = useSelector(state => state.courses.courses)
-  const purchasedCoursesId = useSelector(state => state.auth.userData.coursesEnrolled);
+  const [purchasedCoursesId, setPurchasedCoursesId] = useState([]);
   const purchasedCourseIdSet = new Set(purchasedCoursesId.map(item => item.id));
   
   const purchasedCourses = courses.filter(course => purchasedCourseIdSet.has(course.id));
 
-  return (
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      try {
+        const res = await authService.getCurrentUser(refreshToken)
+        console.log("purchased",res)
+        if(res){     
+          setPurchasedCoursesId(res.coursesEnrolled)
+        }
+      } catch (error) {
+        console.log("refreshToken:",error);
+      }
+    }
+    
+    fetchData();
+    
+  }, [])
+
+  return (purchasedCourseIdSet.size!==0)?(
     <CourseList type={'purchased'} courses={purchasedCourses}/>
-  )
+  ):(<p className="text-gray-600">You are not enrolled in any course.</p>)
 }
 
 export default PurchasedCoursesList

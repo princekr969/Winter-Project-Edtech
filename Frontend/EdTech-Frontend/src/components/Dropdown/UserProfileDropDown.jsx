@@ -3,6 +3,7 @@ import { logout } from '../../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import authService from '../../services/auth';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import avatar from "./..//../assets/avatar.svg"
 
 
 function UserProfileDropDown() {
@@ -63,14 +64,14 @@ function UserProfileDropDown() {
     {/* Dropdown toggle button */}
      <button
             type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             id="user-menu-button"
             onClick={toggleDropdown}
             >
             <span className="sr-only">Open user menu</span>
             <img
                 className="w-8 h-8 rounded-full"
-                src={userDetail.avatar}
+                src={userDetail.avatar || avatar}
                 alt="user photo"
             />
       </button>
@@ -88,7 +89,7 @@ function UserProfileDropDown() {
         >
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-            src={userDetail.avatar}
+            src={userDetail.avatar || avatar}
             alt={userDetail.firstName + userDetail.lastName}
           />
           <div className="mx-1">

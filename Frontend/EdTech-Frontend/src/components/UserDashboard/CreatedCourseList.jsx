@@ -3,15 +3,36 @@ import CourseList from './CourseList'
 import { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import authService from '../../services/auth';
+import Cookies from "js-cookie" 
 
 
 function CreatedCourseList() {
-  
+  const refreshToken = Cookies.get("refreshToken");
   const courses = useSelector(state => state.courses.courses)
-  const createdCoursesId = useSelector(state => state.auth.userData.courses);
+  const [createdCoursesId, setCreatedCoursesId] = useState([]);
   const createdCourseIdSet = new Set(createdCoursesId.map(item => item.id));
   const createdCourses = courses.filter(course => createdCourseIdSet.has(course.id));
   
+
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      try {
+        const res = await authService.getCurrentUser(refreshToken)
+        console.log("Created course",res)
+        if(res){     
+          setCreatedCoursesId(res.courses)
+        }
+      } catch (error) {
+        console.log("refreshToken:",error);
+      }
+    }
+    
+    fetchData();
+    
+  }, [])
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
