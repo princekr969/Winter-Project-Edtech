@@ -11,13 +11,12 @@ const getAllCourses = asyncHandler(async (req, res) => {
 })    
 
 const addCourse = asyncHandler(async (req, res) => {
-    const {title, description, imageUrl, price, category} = req.body;
+    const {title, description, price, category} = req.body;
 
     const course = await Course.create({
         courseId: Date.now(),
         title,
         description,
-        imageUrl,
         price,
         category,
         owner: req.user._id
@@ -48,7 +47,6 @@ const updateCourse = asyncHandler(async (req, res) => {
     const course = await Course.findByIdAndUpdate(courseId,{
         title: req.body.title,
         description: req.body.description,
-        imageUrl: req.body.imageUrl,
         price: req.body.price,
         category: req.body.category
     },{new: true});

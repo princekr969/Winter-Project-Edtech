@@ -132,6 +132,8 @@ const loginUser = asyncHandler(async (req, res) => {
         text: `Your verification code is ${otp}`,
     })
     user.otp = otp;
+    console.log(otp);
+    
     await user.save();
 
     res
