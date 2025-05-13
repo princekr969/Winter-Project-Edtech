@@ -21,16 +21,16 @@ const coursesAvailable =  [{
       id: '1',
       title: "Introduction to Programming",
       lessons: [
-        { id: '1', title: "Getting Started", videoUrl: "https://youtu.be/RiZL2j5mIPw?si=gPv5meQGQf_cfbNL" },
-        { id: '2', title: "Basic Concepts", videoUrl: "https://youtu.be/RiZL2j5mIPw?si=gPv5meQGQf_cfbNL" },
+        { id: '1', title: "Getting Started", videoUrl: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
+        { id: '2', title: "Basic Concepts", videoUrl: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
       ]
     },
     {
       id: '2',
       title: "Advanced Topics",
       lessons: [
-        { id: '3', title: "Data Structures", videoUrl: "https://youtu.be/RiZL2j5mIPw?si=gPv5meQGQf_cfbNL" },
-        { id: '4', title: "Algorithms", videoUrl: "https://youtu.be/RiZL2j5mIPw?si=gPv5meQGQf_cfbNL" },
+        { id: '3', title: "Data Structures", videoUrl: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
+        { id: '4', title: "Algorithms", videoUrl: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
       ]
     }
   ]
@@ -54,16 +54,16 @@ const coursesAvailable =  [{
       id: '1',
       title: "Introduction to Digital Marketing",
       lessons: [
-        { id: '1', title: "What is Digital Marketing?", videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk" },
-        { id: '2', title: "Setting Goals", videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk" },
+        { id: '1', title: "What is Digital Marketing?", videoUrl: "https://www.youtube.com/watch?v=RNh8VHc8qkk" },
+        { id: '2', title: "Setting Goals", videoUrl: "https://www.youtube.com/watch?v=RNh8VHc8qkk" },
       ]
     },
     {
       id: '2',
       title: "SEO and Content Strategy",
       lessons: [
-        { id: '3', title: "SEO Basics", videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk" },
-        { id: '4', title: "Content Planning", videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk" },
+        { id: '3', title: "SEO Basics", videoUrl: "https://www.youtube.com/watch?v=RNh8VHc8qkk" },
+        { id: '4', title: "Content Planning", videoUrl: "https://www.youtube.com/watch?v=RNh8VHc8qkk" },
       ]
     }
   ]
@@ -87,16 +87,16 @@ const coursesAvailable =  [{
       id: '1',
       title: "Frontend Development",
       lessons: [
-        { id: '1', title: "HTML and CSS Basics", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=Fp-OrsQtzePYyRks" },
-        { id: '2', title: "JavaScript for Beginners", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=Fp-OrsQtzePYyRks" },
+        { id: '1', title: "HTML and CSS Basics", videoUrl: "https://www.youtube.com/watch?v=tVzUXW6siu0&list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w&index=2" },
+        { id: '2', title: "JavaScript for Beginners", videoUrl: "https://www.youtube.com/watch?v=tVzUXW6siu0&list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w&index=2" },
       ]
     },
     {
       id: '2',
       title: "Backend Development",
       lessons: [
-        { id: '3', title: "Introduction to Node.js", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=Fp-OrsQtzePYyRks" },
-        { id: '4', title: "Working with Databases", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=Fp-OrsQtzePYyRks" },
+        { id: '3', title: "Introduction to Node.js", videoUrl: "https://www.youtube.com/watch?v=tVzUXW6siu0&list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w&index=2" },
+        { id: '4', title: "Working with Databases", videoUrl: "https://www.youtube.com/watch?v=tVzUXW6siu0&list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w&index=2" },
       ]
     }
   ]
@@ -120,16 +120,16 @@ const coursesAvailable =  [{
       id: '1',
       title: "Data Science Fundamentals",
       lessons: [
-        { id: '1', title: "Introduction to Data Science", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=mPGJMlrlECW5UpLV" },
-        { id: '2', title: "Data Cleaning and Preparation", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=mPGJMlrlECW5UpLV" },
+        { id: '1', title: "Introduction to Data Science", videoUrl: "https://www.youtube.com/watch?v=uIUvpJdYgSA" },
+        { id: '2', title: "Data Cleaning and Preparation", videoUrl: "https://www.youtube.com/watch?v=uIUvpJdYgSA" },
       ]
     },
     {
       id: '2',
       title: "Machine Learning Techniques",
       lessons: [
-        { id: '3', title: "Supervised Learning", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=mPGJMlrlECW5UpLV" },
-        { id: '4', title: "Unsupervised Learning", videoUrl: "https://youtu.be/qDDyuDMJ8-o?si=mPGJMlrlECW5UpLV" },
+        { id: '3', title: "Supervised Learning", videoUrl: "https://www.youtube.com/watch?v=uIUvpJdYgSA" },
+        { id: '4', title: "Unsupervised Learning", videoUrl: "https://www.youtube.com/watch?v=uIUvpJdYgSA" },
       ]
     }
   ]
@@ -153,16 +153,16 @@ const coursesAvailable =  [{
       id: '1',
       title: "Camera Basics",
       lessons: [
-        { id: '1', title: "Camera Settings", videoUrl: "https://youtu.be/9CvwbW9UhJc?si=VeqpOGaep4FK7kVB" },
-        { id: '2', title: "Lighting Techniques", videoUrl: "https://youtu.be/9CvwbW9UhJc?si=VeqpOGaep4FK7kVB" },
+        { id: '1', title: "Camera Settings", videoUrl: "https://www.youtube.com/watch?v=yhAmMUi2NmM" },
+        { id: '2', title: "Lighting Techniques", videoUrl: "https://www.youtube.com/watch?v=yhAmMUi2NmM" },
       ]
     },
     {
       id: '2',
       title: "Post-Processing & Editing",
       lessons: [
-        { id: '3', title: "Editing Photos in Lightroom", videoUrl: "https://youtu.be/9CvwbW9UhJc?si=VeqpOGaep4FK7kVB" },
-        { id: '4', title: "Advanced Editing in Photoshop", videoUrl: "https://youtu.be/9CvwbW9UhJc?si=VeqpOGaep4FK7kVB" },
+        { id: '3', title: "Editing Photos in Lightroom", videoUrl: "https://www.youtube.com/watch?v=yhAmMUi2NmM" },
+        { id: '4', title: "Advanced Editing in Photoshop", videoUrl: "https://www.youtube.com/watch?v=yhAmMUi2NmM" },
       ]
     }
   ]

@@ -4,6 +4,7 @@ import Module from '../components/Course/Module';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ScrollToTop from '../utils/scrollButton';
 
 
 function CourseVideoPlayerPage() {
@@ -31,17 +32,17 @@ function CourseVideoPlayerPage() {
   }, []);
   
   return (
-        <div className="min-h-screen bg-gray-50 mt-24">
-          <header className="bg-white shadow-sm">
-              <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">{course[0].title}</h1>
-              </div>
-          </header>
-
+    <>
+        <div className="min-h-screen bg-gray-50">
+    
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            
             <div className="lg:col-span-3">
+            <header className="bg-white shadow-sm">
+              <div className="max-w-7xl mx-auto px-4 py-4 flex items-center">
+              <h1 className="text-xl lg:text-2xl font-bold text-gray-900">{course[0].title}</h1>
+              </div>
+            </header>
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="aspect-w-16 aspect-h-9 bg-gray-800">
                 {videoUrl ? (
@@ -77,6 +78,8 @@ function CourseVideoPlayerPage() {
             </div>
         </div>
         </div>
+        <ScrollToTop/>
+    </>
 
     
   );

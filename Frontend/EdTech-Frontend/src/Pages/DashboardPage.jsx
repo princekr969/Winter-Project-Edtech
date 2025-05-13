@@ -3,12 +3,6 @@ import { Sidebar } from '../components/index';
 import { Outlet } from 'react-router-dom';
 
 function DashboardPage() {
-    
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
 
   return (
     <div className="flex max-sm:flex-col min-h-screen mt-20 sm:mb-3 bg-gray-50">

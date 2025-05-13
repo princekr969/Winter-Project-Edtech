@@ -8,7 +8,7 @@ function CourseHeroSection({id}) {
       };
 
   return (
-    <div className=" bg-gradient-to-b from-indigo-50 to-white mt-20">
+    <div className=" bg-gradient-to-b from-indigo-50 to-white">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Background Pattern */}

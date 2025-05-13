@@ -89,15 +89,15 @@ function UserProfileDropDown() {
         >
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-            src={userDetail.avatar || avatar}
-            alt={userDetail.firstName + userDetail.lastName}
+            src={userDetail?.avatar || avatar}
+            alt={userDetail?.firstName + userDetail?.lastName}
           />
           <div className="mx-1">
             <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              {userDetail.firstName +" " + userDetail.lastName}
+              {userDetail?.firstName +" " + userDetail?.lastName}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {userDetail.email}
+              {userDetail?.email}
             </p>
           </div>
         </Link>

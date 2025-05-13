@@ -1,13 +1,13 @@
-import React from 'react'
 import img from "../../assets/heroimg.svg"
 
-import { NavLink, Link } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 
 
 
 function HeroSection() {
   return (
-        <div className="items-center bg-gradient-to-b from-indigo-50 to-white  mt-20 px-5 md:px-16 lg:px-24 pt-20 sm:pt-24 justify-center lg:flex   ">
+        <div className="items-center bg-gradient-to-b from-indigo-50 to-white px-5 md:px-16 lg:px-24 pt-20 sm:pt-24 justify-center lg:flex   ">
+
           {/* Left Section */}
           <div className="w-full lg:w-1/2" >
             <div className="lg:max-w-xl">

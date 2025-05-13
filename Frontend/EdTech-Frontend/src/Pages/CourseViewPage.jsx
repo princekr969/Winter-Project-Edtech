@@ -3,6 +3,7 @@ import {BookOpen,Clock,Globe,PlayCircle,Star,Trophy, Users2} from "lucide-react"
 import {Module} from "../components/index.js" 
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ScrollToTop from "../utils/scrollButton.jsx";
 
 const CourseViewPage = () => {
     const {id} = useParams();
@@ -17,7 +18,7 @@ const CourseViewPage = () => {
       window.scrollTo(0, 0);
     }, []);
   return (
-    
+    <>
       <div className="min-h-screen bg-gray-50 mt-26">
         <div className="relative h-[500px]">
           <div className="absolute inset-0">
@@ -139,6 +140,8 @@ const CourseViewPage = () => {
           </div>
         </div>
       </div>
+      <ScrollToTop/>
+    </>
   
   );
 };

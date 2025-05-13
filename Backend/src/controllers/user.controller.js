@@ -125,12 +125,28 @@ const loginUser = asyncHandler(async (req, res) => {
     // generate a otp of 4 digits
     const otp = Math.floor(1000 + Math.random() * 9000);
 
-    const mail =  await transporter.sendMail({
+    const mail = await transporter.sendMail({
         from: process.env.EMAIL,
         to: email,
-        subject: "Email verification",
-        text: `Your verification code is ${otp}`,
-    })
+        subject: 'Email Verification',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+             <h1 style="text-align: center; color: #2c3e50;">EduMaxi</h1>
+            <h2 style="text-align: center; color: #333;">Verify Your Email</h2>
+            <p>Hello,</p>
+            <p>Please use the following One-Time Password (OTP) to verify your email address:</p>
+            <div style="text-align: center; margin: 30px 0;">
+                <span style="display: inline-block; padding: 12px 24px; font-size: 24px; letter-spacing: 12px; background-color: #fff; border: 1px dashed #ccc; border-radius: 8px;">
+                ${otp}
+                </span>
+            </div>
+            <p>This code is valid for the next 10 minutes. Do not share it with anyone.</p>
+            <p style="color: #888; font-size: 12px;">If you didn’t request this, please ignore this email.</p>
+            <p>Best regards,<br/>Your Company Name</p>
+            </div>
+        `,
+    });
+
     user.otp = otp;
     console.log(otp);
     
@@ -353,7 +369,8 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
         const options={
             httpOnly: true,
-            secure: true
+            secure: false, //! change karna hai https k liye 
+            sameSite: "Lax"
         }
     
         return res

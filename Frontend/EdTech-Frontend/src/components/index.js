@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import HeroSection from "./Home/HeroSection";
 import CourseCard from "./Course/CourseCard";
 import Footer from "./Footer";
-import Carousel from "./Home/Carousel";
 import CourseSection from "./Course/CourseSection";
 import UserProfileDropDown from "./Dropdown/UserProfileDropDown";
 import Login from "./Auth/Login";
@@ -29,7 +28,6 @@ export
     SignUp, 
     HeroSection, 
     UserProfileDropDown, 
-    Carousel, 
     CourseCard, 
     CourseSection, 
     Footer,

@@ -29,9 +29,12 @@ export class AuthService {
 
     async login({email, password}){
         const url = this.baseUrl + "/login";
-        try {
+        try {   
             const userAccount = await axios.post(url,
-                {email, password}
+                {email, password},
+                {
+                    withCredentials: true
+                }
             );
             console.log('Data successfully sent from signin:', userAccount.data.message.user);
             return userAccount.data.message.user;
@@ -45,7 +48,9 @@ export class AuthService {
     async logout(){
         try {
             const url = this.baseUrl + "/logout";
-            const res = await axios.post(url);
+            const res = await axios.post(url,{},{
+                withCredentials:true
+            });
             console.log('Data successfully sent from logout:', res);
             return res;
         } catch (error) {
@@ -57,7 +62,9 @@ export class AuthService {
     async getCurrentUser(refreshToken){
         try {
             const url = this.baseUrl + "/refresh-Token";
-            const userAccount = await axios.post(url, {refreshToken});
+            const userAccount = await axios.post(url, {refreshToken}, {
+                withCredentials:true
+            });
             console.log('Data successfully sent from  getCurrentUser:', userAccount.data.message.user);
             return userAccount.data.message.user;
         } catch (error) {
@@ -69,7 +76,7 @@ export class AuthService {
         try {
             const url = this.baseUrl + "/verifyUser";
             console.log("otpValue",otpValue, email)
-            const userAccount = await axios.post(url, {otpValue, email});
+            const userAccount = await axios.post(url, {otpValue, email},{withCredentials:true});
             console.log('Data successfully sent:', userAccount.data.message.user);
 
             return userAccount.data.message.user;
@@ -81,6 +88,6 @@ export class AuthService {
   
 };
 
-const authService = new AuthService("/api/v1/users");
+const authService = new AuthService("http://localhost:8012/api/v1/users");
 
 export default authService

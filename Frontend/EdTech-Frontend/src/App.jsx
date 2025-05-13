@@ -58,9 +58,10 @@ function App() {
 
       
   useEffect(() => {
+    
     const fetchData = async () => {
-      
       try {
+        setLoading(true);
         const res = await authService.getCurrentUser(refreshToken)
         console.log("App.js",res)
         if(res){     
@@ -74,9 +75,9 @@ function App() {
         setLoading(false)
       }
     }
-    
+
     fetchData();
-    
+
   }, [])
   
   return !loading ? (

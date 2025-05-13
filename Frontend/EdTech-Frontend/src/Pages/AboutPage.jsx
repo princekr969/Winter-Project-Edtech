@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Users, Target, Lightbulb } from 'lucide-react';
 import { AboutPageHeroSection, AboutSection } from '../components';
+import ScrollToTop from '../utils/scrollButton';
 
 function App() {
   const fadeIn = {
@@ -39,6 +40,7 @@ function App() {
   }, []);
   
   return (
+    <>
     <div className="min-h-screen bg-gray-50">
       
       <AboutPageHeroSection/>
@@ -85,6 +87,8 @@ function App() {
         </div>
       </motion.section>
     </div>
+    <ScrollToTop/>
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import { Users2, Star, BookOpen, } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { CourseCard } from '../components';
 import {CourseHeroSection} from '../components';
+import ScrollToTop from '../utils/scrollButton';
 
 const categories = [
   { id: 'all', name: 'All Courses' },
@@ -34,6 +35,7 @@ function CoursesPage() {
     window.scrollTo(0, 0);
   }, []);
   return (
+    <>
     <div>
       <CourseHeroSection id={courseSectionId}/>
     
@@ -80,6 +82,8 @@ function CoursesPage() {
         )}
       </div>
     </div>
+    <ScrollToTop/>
+    </>
   );
 }
 
