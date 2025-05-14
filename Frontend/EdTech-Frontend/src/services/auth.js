@@ -12,7 +12,10 @@ export class AuthService {
 
         try {
             const userAccount = await axios.post(url,
-                {email, password, firstName, lastName, phoneNumber}
+                {email, password, firstName, lastName, phoneNumber},
+                {
+                    withCredentials:true,
+                }
             );
             console.log('Data successfully sent from signup:', userAccount.data.message);
 

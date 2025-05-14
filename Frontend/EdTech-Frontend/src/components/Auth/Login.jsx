@@ -130,12 +130,14 @@ function Login() {
       if(userData){
         email = data.email;
         setIsModalOpen(true);
-        setLoading(false)
       }
-    } catch (error) {
+    }catch (error) {
         setError(error.message) 
+    }finally{
+          setLoading(false)
       }
     }
+
     
     return (   <>
       
@@ -231,7 +233,7 @@ function Login() {
                 {/* Forget password link */}
                 <a
                   href="#"
-                  className="text-xs text-gray-500 dark:text-gray-300 hover:underline"
+                  className="text-xs text-blue-500 hover:underline"
                 >
                   Forget Password?
                 </a>
@@ -289,7 +291,7 @@ function Login() {
             <p className='text-gray-500'>Don't have an account?</p>
            
             <Link
-              to="/user/signup"
+              to="/auth/signup"
               className="text-md text-blue-500 dark:text-gray-400 hover:underline"
             >
                Sign up

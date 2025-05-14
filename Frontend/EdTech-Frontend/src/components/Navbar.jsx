@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import avatar from "./../assets/avatar.svg"
 
-
 const Navbar = () => {
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
@@ -62,9 +61,9 @@ const Navbar = () => {
 
         {/* Login signup btn */}
           {!authStatus  && <div className='flex gap-2 max-sm:hidden '>
-              <Link to={"/auth/signin"} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center
+              <Link to={"/auth/signin"} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center
               ">Log In</Link>
-              <Link to={"/auth/signup"} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ">Sign Up</Link>
+              <Link to={"/auth/signup"} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ">Sign Up</Link>
           </div>}
 
         {/* Small screen links */}
@@ -131,9 +130,9 @@ const Navbar = () => {
               
               <li>
                   {!authStatus && <div className='flex sm:hidden justify-center gap-3'>
-                    <Link to={"/auth/signin"} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log In</Link>
+                    <Link to={"/auth/signin"} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log In</Link>
 
-                    <Link to={"/auth/signup"} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</Link>
+                    <Link to={"/auth/signup"} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</Link>
                 </div>}
               </li>
             </ul>

@@ -9,6 +9,8 @@ import { GraduationCap } from 'lucide-react'
 
 function SignUp() {
 
+  const [loading, setLoading] = useState(false)
+  
   const {
     register, 
     handleSubmit, 
@@ -27,18 +29,20 @@ function SignUp() {
     console.log("signUp data",data);
 
     try {
+      setLoading(true);
       const userData = await authService.createAccount(data);
       console.log("SignUp:", userData)
 
       if(userData){
-        const userData = await authService.login();
-        dispatch(login(userData));
-        navigate("/");
+        // dispatch(login(userData)); 
+        navigate("/auth/signin");
       }
     } catch (error) {
         setError(error) 
         console.log("error:::",error)
-      }
+    }finally{
+      setLoading(false);
+    }
   }
 
   return (
@@ -196,24 +200,36 @@ function SignUp() {
                 
               </div>
     
-              <button
-                type='submit'
-               className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                <span>Sign Up </span>
-    
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 rtl:-scale-x-100"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+              <button 
+                  type='submit'
+                  className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+                  {(loading) ?
+                    <div className="flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 mr-2 text-white animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 01-8 8z"
+                      ></path>
+                    </svg>
+                    Processing...
+                  </div>
+                  : "Sign Up"}
+                </button>
             </form>
             {errors.confirmPassword && <p className="text-red-500 mt-1 text-sm">{errors.confirmPassword.message}</p>}
             {errors.email && <p className="text-red-500 mt-1 text-sm">{errors.email.message}</p>}

@@ -18,7 +18,7 @@ const ScrollToTop = () => {
   };
 
 return (
-    <button button
+    <button
     onClick={scrollToTop}
     className={`fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all transform hover:scale-110 ${
         showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'

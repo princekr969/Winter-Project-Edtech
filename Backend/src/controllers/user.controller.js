@@ -37,6 +37,38 @@ const generateAccessAndRefreshTokens = async (userId) => {
     }
 };
 
+const sendVerificationMail = async (email) => {
+    
+    try {
+        const otp = Math.floor(1000 + Math.random() * 9000);
+        const mail = await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Email Verification',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+                 <h1 style="text-align: center; color: #2c3e50;">EduMaxi</h1>
+                <h2 style="text-align: center; color: #333;">Verify Your Email</h2>
+                <p>Hello,</p>
+                <p>Please use the following One-Time Password (OTP) to verify your email address:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <span style="display: inline-block; padding: 12px 24px; font-size: 24px; letter-spacing: 12px; background-color: #fff; border: 1px dashed #ccc; border-radius: 8px;">
+                    ${otp}
+                    </span>
+                </div>
+                <p>This code is valid for the next 10 minutes. Do not share it with anyone.</p>
+                <p style="color: #888; font-size: 12px;">If you didn’t request this, please ignore this email.</p>
+                <p>Best regards,<br/>Your Company Name</p>
+                </div>
+            `,
+        });
+        console.log("verification mail", otp)
+        return otp;
+    } catch (error) {
+        return 0
+    }
+}
+
 const registerUser = asyncHandler(async (req, res) => {
     // Get user details from the frontend, including optional fields
     const { firstName, lastName, email, password, phoneNumber } = req.body;
@@ -52,7 +84,6 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User already exists");
     }
 
-
     // Create the new user with optional fields, if provided
     const user = await User.create({
         firstName,
@@ -61,7 +92,6 @@ const registerUser = asyncHandler(async (req, res) => {
         password,
         phoneNumber,
     });
-
 
     // Fetch the created user without sensitive fields like password or refreshToken
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
@@ -72,27 +102,28 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // Return the created user in the response
-    const tokens = await generateAccessAndRefreshTokens(user._id);
-    const { accessToken, refreshToken } = tokens;
+    // const tokens = await generateAccessAndRefreshTokens(user._id);
+    // const { accessToken, refreshToken } = tokens;
 
 
-    const options={
-        httpOnly: true,
-        secure: true
-    }
+    // const options={
+    //     httpOnly: true,
+    //     secure: true
+    // }
 
     return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+    // .cookie("accessToken", accessToken, options)
+    // .cookie("refreshToken", refreshToken, options)
     .json(
         new ApiResponse(
             200,
-              {user:createdUser, accessToken, refreshToken},
+              {user:createdUser},
              "User logged in successfully")
     );
     
 });
+
 
 const loginUser = asyncHandler(async (req, res) => {
     //req body -> data
@@ -123,32 +154,14 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid password");
     }
     // generate a otp of 4 digits
-    const otp = Math.floor(1000 + Math.random() * 9000);
+    console.log("Hello")
+    const otp = await sendVerificationMail(email)
 
-    const mail = await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: email,
-        subject: 'Email Verification',
-        html: `
-            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
-             <h1 style="text-align: center; color: #2c3e50;">EduMaxi</h1>
-            <h2 style="text-align: center; color: #333;">Verify Your Email</h2>
-            <p>Hello,</p>
-            <p>Please use the following One-Time Password (OTP) to verify your email address:</p>
-            <div style="text-align: center; margin: 30px 0;">
-                <span style="display: inline-block; padding: 12px 24px; font-size: 24px; letter-spacing: 12px; background-color: #fff; border: 1px dashed #ccc; border-radius: 8px;">
-                ${otp}
-                </span>
-            </div>
-            <p>This code is valid for the next 10 minutes. Do not share it with anyone.</p>
-            <p style="color: #888; font-size: 12px;">If you didn’t request this, please ignore this email.</p>
-            <p>Best regards,<br/>Your Company Name</p>
-            </div>
-        `,
-    });
-
+    if(otp === 0){
+        throw new ApiError(500, "Failed to send OTP verification mail");
+    }
     user.otp = otp;
-    console.log(otp);
+    console.log("OTP",otp);
     
     await user.save();
 
@@ -158,7 +171,6 @@ const loginUser = asyncHandler(async (req, res) => {
         new ApiResponse(200,{user}, "OTP sent successfully")
     )
     
-
 });
 
 // const uploadProfilePicture = asyncHandler(async (req, res) => {
@@ -244,9 +256,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
          throw new ApiError(401, "Unauthorized");
      }
  
- 
- 
- 
      if(user.refreshToken !== incomingRefreshToken)
      {
          throw new ApiError(401, "Refresh Token is expired or used");
@@ -257,7 +266,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      const { accessToken, refreshToken } = tokens;
      const options={
          httpOnly: true,
-         secure: true
+         secure: false
      } 
  
      return res
@@ -265,7 +274,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      .cookie("accessToken", accessToken, options)
      .cookie("refreshToken", refreshToken, options)
      .json(new ApiResponse(200, {accessToken, refreshToken,user},"Access token refreshed successfully"));
- 
  
  
    } catch (error) {
@@ -306,7 +314,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  
+
 
   return res
   .status(200)
@@ -355,9 +363,8 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         }
         console.log(req.body);
         
-           console.log(req.body.otpValue);
-           console.log(user.otp);
-           
+        console.log(req.body.otpValue);
+        console.log(user.otp);
            
         if(Number(req.body.otpValue)!==Number(user.otp))
         {
@@ -365,14 +372,18 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         }
         const tokens = await generateAccessAndRefreshTokens(user._id);
         const { accessToken, refreshToken } = tokens;
+
+        if(!user.isVerified){
+            user.isVerified = true;
+            await user.save()
+        }
     
         const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
         const options={
             httpOnly: true,
-            secure: false, //! change karna hai https k liye 
-            sameSite: "Lax"
+            secure: true,
         }
-    
+
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)

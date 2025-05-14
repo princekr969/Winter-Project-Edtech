@@ -8,7 +8,7 @@ import {initializeEnrolledCourses, initializeCourses} from './store/coursesSlice
 import {initializeCart} from './store/cartSlice.js'
 import { Footer, Navbar } from './components/index.js'
 import { Outlet } from 'react-router-dom'
-
+import Loader from './utils/Loader.jsx'
 
 
 function App() {
@@ -90,7 +90,7 @@ function App() {
         <Footer />
       </div>
     </div>
-  ) : Loader()
+  ) : <Loader/>
 }
 
 export default App
