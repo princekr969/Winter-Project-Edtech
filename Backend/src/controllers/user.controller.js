@@ -5,6 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import nodemailer from "nodemailer";
 // import { uploadOnCloudinary } from "../utils/cloudinary.js";  // Import the Cloudinary utility
 import jwt from "jsonwebtoken";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 
 const transporter = nodemailer.createTransport({
@@ -391,34 +392,18 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
 })
 
 const updateProfilePicture = asyncHandler(async (req, res) => {
-//     const profilePicturePath = req.file.path;
-
-//     if(!profilePicturePath)
-//     {
-//         throw new ApiError(400, "Profile picture is required");
-//     }
-
-//     const pfp = await uploadOnCloudinary(profilePicturePath);
-
-//     if(!pfp.url)
-//     {
-//         throw new ApiError(500, "Failed to upload profile picture");
-//     }
-//    const user = await User.findByIdAndUpdate(
-//         req.user._id,
-//         {
-//             $set: { 
-//                 profilePicture: pfp.url
-//             }
-//         },
-//         {
-//             new: true
-//         }
-//     ).select("-password -refreshToken");
-
-//     return res
-//     .status(200)
-//     .json(new ApiResponse(200,{user},"Profile picture updated successfully"));
+    
+    if(!req.file)
+    {
+        throw new ApiError(400, "Profile picture is required");
+    }
+    const result = await uploadToCloudinary(req.file.path);
+    console.log(1);
+    
+    console.log(req.user);
+    req.user.profilePicture = result.secure_url;
+    await req.user.save();
+    return res.status(200).json(new ApiResponse(200, "Profile picture updated successfully", req.user));
 })
 
 
