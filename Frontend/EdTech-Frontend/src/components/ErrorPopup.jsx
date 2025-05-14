@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertCircle, X } from 'lucide-react';
 
 function ErrorPopup({ message,
      type = 'error', 
-     isVisible, 
-     onClose, 
      duration = 3000
     }) {
-
+    
+    const [isVisible, setIsVisible]  = useState(true)
+    const onClose = () => {
+      setIsVisible(false)
+    }
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -21,7 +23,7 @@ function ErrorPopup({ message,
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 animate-slide-in">
+    <div className="fixed top-20 right-4 z-50 animate-slide-in">
       <div className={`
         flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg
         ${type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : ''}

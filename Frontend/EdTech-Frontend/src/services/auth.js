@@ -8,24 +8,24 @@ export class AuthService {
     
     async createAccount({email, password, firstName, lastName, phoneNumber}){
         const url = this.baseUrl + "/register";
-        console.log(url)
 
         try {
-            const userAccount = await axios.post(url,
+            const userAccount = await axios.post(
+                url,
                 {email, password, firstName, lastName, phoneNumber},
-                {
-                    withCredentials:true,
-                }
+                {withCredentials:true,}
             );
             console.log('Data successfully sent from signup:', userAccount.data.message);
-
-            if(userAccount){
-                return this.login({email, password})
-            }else{
-                return userAccount;
-            }
+            return userAccount;
+            
         } catch (error) {
-            console.log("Backend service :: createAccount :: error", error);
+            if(error.response){
+                console.log("Backend service :: createAccount :: error", error.response.data);
+                return error.response.data;
+            }else{
+                console.log("Backend service :: createAccount :: error", error.message);
+                return {message: "Something went wrong"};
+            }
         }
         
     };
@@ -33,17 +33,22 @@ export class AuthService {
     async login({email, password}){
         const url = this.baseUrl + "/login";
         try {   
-            const userAccount = await axios.post(url,
+            const userAccount = await axios.post(
+                url,
                 {email, password},
-                {
-                    withCredentials: true
-                }
+                {withCredentials: true}
             );
-            console.log('Data successfully sent from signin:', userAccount.data.message.user);
-            return userAccount.data.message.user;
+            console.log('Data successfully sent from signin:', userAccount);
+            return userAccount.data;
 
         } catch (error) {
-            console.log("Backend service :: login :: error", error);
+            if(error.response){
+                console.log("Backend service :: login :: error", error.response.data);
+                return error.response.data;
+            }else{
+                console.log("Backend service :: login :: error", error.message);
+                return {message: "Something went wrong"};
+            }
             
         }
     };
@@ -51,14 +56,22 @@ export class AuthService {
     async logout(){
         try {
             const url = this.baseUrl + "/logout";
-            const res = await axios.post(url,{},{
-                withCredentials:true
-            });
+            const res = await axios.post(
+                url,
+                {},
+                {withCredentials:true});
+
             console.log('Data successfully sent from logout:', res);
             return res;
-        } catch (error) {
 
-            console.log("Backend service :: logout :: error", error);
+        } catch (error) {
+            if(error.response){
+                console.log("Backend service :: logout :: error", error.response.data);
+                return error.response.data;
+            }else{
+                console.log("Backend service :: logout :: error", error.message);
+                return {message: "Something went wrong"};
+            }
         }
     }
     
@@ -69,9 +82,15 @@ export class AuthService {
                 withCredentials:true
             });
             console.log('Data successfully sent from  getCurrentUser:', userAccount.data.message.user);
-            return userAccount.data.message.user;
+            return userAccount.data;
         } catch (error) {
-            console.log("Backend service :: getCurrentUser :: error", error);
+            if(error.response){
+                console.log("Backend service :: getCurrentUser :: error", error.response.data);
+                return error.response.data;
+            }else{
+                console.log("Backend service :: getCurrentUser :: error", error.message);
+                return {message: "Something went wrong"};
+            }
         }
     }
     
@@ -84,8 +103,51 @@ export class AuthService {
 
             return userAccount.data.message.user;
         } catch (error) {
-            console.log("Backend service :: otpVerification :: error", error);
+            if(error.response){
+                console.log("Backend service :: otpVerify :: error", error.response.data);
+            }else{
+                console.log("Backend service :: otpVerify :: error", error.message);
+            }
+
             return "";
+        }
+    }
+
+    async forgetPassword(email){
+        try {
+            const url = this.baseUrl + "/forget-password";
+            const userAccount = await axios.post(url, {email},{withCredentials:true});
+            console.log(userAccount)
+            return userAccount.data
+        } catch (error) {
+            if(error.response){
+                console.log("Backend service :: forgetPassword :: error", error.response.data);
+                return error.response.data
+            }else{
+                console.log("Backend service :: forgetPassword :: error", error.message);
+                return {message: "Something went wrong"};
+            }
+
+            
+        }
+    }
+
+    async resetPassword(password, token){
+        try {
+            const url = this.baseUrl + `/reset/password/${token}`;
+            const userAccount = await axios.post(url, {password},{withCredentials:true});
+            console.log(userAccount)
+            return userAccount.data
+        } catch (error) {
+            if(error.response){
+                console.log("Backend service :: resetPassword :: error", error.response.data);
+                return error.response.data
+            }else{
+                console.log("Backend service :: resetPassword :: error", error.message);
+                return {message: "Something went wrong"};
+            }
+
+            
         }
     }
   

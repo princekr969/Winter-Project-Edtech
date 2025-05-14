@@ -1,5 +1,6 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import crypto from "crypto";
 import { User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import nodemailer from "nodemailer";
@@ -145,14 +146,14 @@ const loginUser = asyncHandler(async (req, res) => {
 
     if(!user)
     {
-        throw new ApiError(404, "User not found");
+        throw new ApiError(404, "Invalid email");
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
 
     if(!isPasswordValid)
     {
-        throw new ApiError(401, "Invalid password");
+        throw new ApiError(401, "Incorrect password");
     }
     // generate a otp of 4 digits
     console.log("Hello")
@@ -173,6 +174,95 @@ const loginUser = asyncHandler(async (req, res) => {
     )
     
 });
+
+
+const forgetPassword = async (req, res) => {
+
+        // get email
+        // find user based on email
+        // reset token + reset expiry => Date.now + 10*60*100 
+        // user.save()
+        // send mail => design url
+
+        const {email} = req.body;
+        if(!email){
+            throw new ApiError(400, "Field must not be empty");
+        }
+
+        const user = await User.findOne({ email });
+
+        if(!user)
+        {
+            throw new ApiError(404, "Invalid email");
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        user.resetPasswordToken = token
+        user.resetPasswordExpires = (Date.now() + 10*60*1000)
+
+        await user.save();
+        
+        const mailOption = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: "Reset Your Password",
+            text: `You requested to reset your password. Click the following link to proceed: localhost:5173/forget-password/${token}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+                    <h2>Reset Your Password</h2>
+                    <p>Hello,</p>
+                    <p>You requested a password reset. Click the button below to set a new password:</p>
+                    <a href="http://localhost:5173/forget-password/${token}" 
+                        style="display: inline-block; padding: 10px 20px; margin: 10px 0; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+                        Reset Password
+                    </a>
+                    <p>If you did not request this, you can safely ignore this email.</p>
+                    <p>Thanks,<br/>The Team</p>
+                </div>
+            `
+        };
+
+
+    await transporter.sendMail(mailOption)
+
+    return res.status(200).json(
+        new ApiResponse(200,{user}, "Check your Email")
+    ) 
+}
+
+const resetPassword = async (req, res) => {
+    
+        // collect token from params
+        // password from req.body
+        const {token} = req.params;
+        const {password} = req.body;
+        
+
+        try {
+            const user = await User.findOne({
+                resetPasswordToken: token,
+                resetPasswordExpires: {$gt: Date.now()}
+            })
+
+            if(!user){
+                throw new ApiError(400, "Invalid token or reset time expired");
+            }
+
+            user.password = password;
+            user.resetPasswordExpires = undefined;
+            user.resetPasswordToken = undefined;
+
+            await user.save();
+
+            res.status(200).json(
+                new ApiResponse(200,{user}, "Password reset successfully")
+            )
+
+        } catch (error) {
+            throw new ApiError(500, "Failed to reset password");
+        }
+    
+}
 
 // const uploadProfilePicture = asyncHandler(async (req, res) => {
 //     const userId = req.user._id;
@@ -235,8 +325,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
-
+    const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
     if(!incomingRefreshToken)
     {
         throw new ApiError(401, "Unauthorized");
@@ -427,5 +516,7 @@ export {
     getCurrentUser,
     updateAccountDetails,
     updateProfilePicture,
-    sendOTPVerificationEmail
+    sendOTPVerificationEmail,
+    forgetPassword,
+    resetPassword
  };

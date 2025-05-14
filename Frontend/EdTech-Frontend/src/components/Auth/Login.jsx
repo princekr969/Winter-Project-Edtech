@@ -5,6 +5,8 @@ import {login as authLogin} from "../../store/authSlice.js"
 import {useDispatch} from "react-redux"
 import {useForm} from "react-hook-form"
 import { GraduationCap, KeySquare } from 'lucide-react'
+import ErrorPopup from '../ErrorPopup.jsx'
+import ForgetPasswordEmailForm from './ForgetPasswordEmail.jsx'
 
 let email = ""
 
@@ -120,6 +122,7 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const {register, handleSubmit} = useForm();  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [forgetPassword, setForgetPassword] = useState(false);
   
 
   const login = async (data) => {
@@ -127,15 +130,23 @@ function Login() {
     setLoading(true)
     try {
       const userData = await authService.login(data);
-      if(userData){
+      console.log("userData", userData)
+  
+      if(userData.success){
         email = data.email;
         setIsModalOpen(true);
+      }else{
+        setError(userData.message);
       }
     }catch (error) {
         setError(error.message) 
     }finally{
-          setLoading(false)
+          setLoading(false) 
       }
+    }
+
+    const handleForgetPassword = () => {
+      setForgetPassword(true);
     }
 
     
@@ -232,8 +243,9 @@ function Login() {
 
                 {/* Forget password link */}
                 <a
-                  href="#"
-                  className="text-xs text-blue-500 hover:underline"
+                
+                  onClick={handleForgetPassword}
+                  className="text-xs cursor-pointer text-blue-500 hover:underline"
                 >
                   Forget Password?
                 </a>
@@ -307,7 +319,16 @@ function Login() {
         <OtpModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}/>
-        </>
+        {(error !== "")?<ErrorPopup
+          message={error}
+        />:null}
+
+        <ForgetPasswordEmailForm
+          onClose={() => {setForgetPassword(false)}}
+          isOpen={forgetPassword}
+        />
+        </> 
+
 
   )
 }

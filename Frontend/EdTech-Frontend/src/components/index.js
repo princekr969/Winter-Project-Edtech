@@ -19,6 +19,8 @@ import PurchasedCoursesList from "./UserDashboard/PurchasedCoursesList";
 import Dashboard from "./UserDashboard/Dashboard";
 import CartDropdown from "./Dropdown/CartDropDown";
 import CartItem from "./Cart/CartItem";
+import ErrorPopup from "./ErrorPopup.jsx"
+import ForgetPasswordForm from "./Auth/ForgetPassword.jsx";
 
 export 
 {
@@ -43,5 +45,6 @@ export
     Dashboard,
     CartDropdown,
     CartItem,
-    
+    ErrorPopup,
+    ForgetPasswordForm
 };

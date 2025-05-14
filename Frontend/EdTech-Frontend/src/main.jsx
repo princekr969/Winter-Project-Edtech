@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown} from './components/index.js'
+import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown, ForgetPasswordForm} from './components/index.js'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
@@ -11,7 +11,8 @@ import AuthLayout from './Layout/AuthLayout.jsx'
 
 const router = createBrowserRouter(
 createRoutesFromElements(
- 
+  <Route>
+
     <Route path="/" element={<App/>}>
       <Route path='' element={<HomePage/>}></Route>
       <Route path='courses' element={<CoursesPage/>}></Route>
@@ -31,8 +32,11 @@ createRoutesFromElements(
       <Route path="auth/" element={<AuthLayout/>}>
         <Route path='signin' element={<Login/>}></Route>
         <Route path='signup' element={<SignUp/>}></Route>
+
       </Route>
     </Route>
+      <Route path='forget-password/:token' element={<ForgetPasswordForm/>}></Route>
+  </Route>
  
   )
 )
