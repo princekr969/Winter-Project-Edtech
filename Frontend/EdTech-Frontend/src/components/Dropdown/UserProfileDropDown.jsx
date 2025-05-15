@@ -71,7 +71,7 @@ function UserProfileDropDown() {
             <span className="sr-only">Open user menu</span>
             <img
                 className="w-8 h-8 rounded-full"
-                src={userDetail.avatar || avatar}
+                src={userDetail.profilePicture || avatar}
                 alt="user photo"
             />
       </button>

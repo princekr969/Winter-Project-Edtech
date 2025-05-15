@@ -8,8 +8,6 @@ if (!fs.existsSync(tempDir)) {
 }
 
 
-
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, tempDir);  // Use the existing temp directory

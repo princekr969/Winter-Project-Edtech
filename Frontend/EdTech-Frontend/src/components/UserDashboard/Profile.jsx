@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Camera, Book, Award, GraduationCap, Briefcase, Calendar, MapPin, Languages, Target, Users, BookOpen, Trophy, Star, Clock } from 'lucide-react';
 import avatar from "./../../assets/avatar.svg"
 import authService from '../../services/auth';
-import Cookies from "js-cookie" 
-
+import {useSelector } from 'react-redux';
+import Loader from '../../utils/Loader';
 
 export default function Profile() {
 
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const refreshToken = Cookies.get("refreshToken");
-  
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const userData = useSelector((state) => state.auth.userData);
+  console.log("Profile", userData)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setEditing(false);
   };
 
-  const handleProfileAvatar = (e) => {
+  const handleProfileAvatar = async (e) => {
     const img = e.target.files[0];
     // Preview the image
     if (img) {
@@ -25,6 +27,19 @@ export default function Profile() {
         setFormData({ ...formData, avatar: reader.result });
       };
       reader.readAsDataURL(img);
+    }
+
+    try {
+      setAvatarUploading(true);
+      const formData = new FormData();
+      formData.append("profilePicture", img);
+      const userData = await authService.uploadProfilePic(formData)
+      console.log(userData);
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setAvatarUploading(false)
+      window.location.reload(); 
     }
   };
 
@@ -38,24 +53,12 @@ export default function Profile() {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      
-      try {
-        const res = await authService.getCurrentUser(refreshToken)
-        console.log("Profile",res)
-        if(res){     
-          setFormData(res);
-        }
-      } catch (error) {
-        console.log("refreshToken:",error);
-      }
+    if(userData){
+      setFormData(userData);
     }
-    
-    fetchData();
-    
-  }, [])
+  }, [userData])
 
-  return (
+  return (formData)?(
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
@@ -68,7 +71,7 @@ export default function Profile() {
             <div className="relative -mt-16 mb-8">
               <div className="relative inline-block">
                 <img
-                  src={formData.avatar || avatar}
+                  src={formData.profilePicture || avatar}
                   alt={formData.name}
                   className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
                 />
@@ -85,7 +88,27 @@ export default function Profile() {
                       htmlFor="file-upload" 
                       className="absolute bottom-0 right-0 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 cursor-pointer transition"
                     >
-                      <Camera className="w-5 h-5" />
+                      {(avatarUploading)?(<svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                      ></path>
+                    </svg>
+                  ) : (<Camera className="w-5 h-5" />)}
                     </label>
                   </>
                 )}
@@ -115,19 +138,20 @@ export default function Profile() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium  text-gray-700 mb-1">Email</label>
                     <input
                       type="email"
+                      readOnly
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border rounded-lg bg-slate-100"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone No.</label>
                     <input
-                      type="Number"
+                      type="text"
                       value={formData.phoneNumber}
                       onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
@@ -246,5 +270,5 @@ export default function Profile() {
         </div>
       </div>
     </div>
-  );
+  ):(<Loader/>);
 }

@@ -5,7 +5,8 @@ import authService from "../../services/auth";
 const ForgetPasswordEmailForm = ({isOpen, onClose}) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [popUp, setPopUp] = useState(false)
+  const [popUp, setPopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ const ForgetPasswordEmailForm = ({isOpen, onClose}) => {
       setError("Please enter a valid email.");
     } else {
       try {
+        setLoading(true);
         const res = await authService.forgetPassword(email);
         setPopUp(true);
         console.log("res", res);
@@ -28,11 +30,17 @@ const ForgetPasswordEmailForm = ({isOpen, onClose}) => {
         console.log(res)
       } catch (error) {
         setError(error.message)
+      }finally{
+        setLoading(false);
       }
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) return (
+    <>
+      {(popUp)?<ErrorPopup type="success" duration={5000} message={"Check you email"}/>:null}
+    </>
+  );
 
   return (
     <>
@@ -59,12 +67,35 @@ const ForgetPasswordEmailForm = ({isOpen, onClose}) => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition"
           >
-            Submit
+            {(loading) ?
+                    <div className="flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 mr-2 text-white animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 01-8 8z"
+                      ></path>
+                    </svg>
+                    Processing...
+                  </div>
+                  : "Submit"}
           </button>
         </form>
       </div>
     </div>
-    {(popUp)?<ErrorPopup type="success" duration={10000} message={"Check you email"}/>:null}
     </>
 
   );

@@ -23,7 +23,7 @@ function App() {
   //   userCart = useSelector(state => state.auth.userData.cart);
   //   userEnrolledCourseId = useSelector(state => state.auth.userData.purchasedCourses);
   // }
-
+  console.log("app")
   const Loader = () => {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100">

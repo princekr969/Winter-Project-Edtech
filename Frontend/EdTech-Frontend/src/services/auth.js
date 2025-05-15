@@ -150,6 +150,25 @@ export class AuthService {
             
         }
     }
+
+    async uploadProfilePic(formData){
+        try {
+            const url = this.baseUrl + "/update-profile-picture";
+            const userAccount = await axios.post(url, formData,{withCredentials:true});
+            console.log("profile upload",userAccount.data)
+            return userAccount.data
+        } catch (error) {
+            if(error.response){
+                console.log("Backend service :: uploadProfilePic :: error", error.response.data);
+                return error.response.data
+            }else{
+                console.log("Backend service :: uploadProfilePic :: error", error.message);
+                return {message: "Something went wrong"};
+            }
+            
+        }
+    }
+
   
 };
 

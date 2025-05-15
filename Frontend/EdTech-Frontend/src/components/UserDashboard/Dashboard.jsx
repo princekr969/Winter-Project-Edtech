@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  BookOpen, 
-  GraduationCap, 
-} from 'lucide-react';
-import authService from '../../services/auth';
-import Cookies from "js-cookie" 
+import { useEffect, useState } from 'react';
+import { BookOpen, GraduationCap} from 'lucide-react';
+import { useSelector } from 'react-redux';
+import Loader from '../../utils/Loader';
 
 
 function Dashboard() {
 
   const [user, setUser] = useState({});
-  const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const refreshToken = Cookies.get("refreshToken");
-
-    useEffect(() => {
-      const fetchData = async () => {
-        
-        try {
-          const res = await authService.getCurrentUser(refreshToken)
-          console.log("Dashboard",res)
-          if(res){     
-            setUser(res);
-            setEnrolledCourses(res.coursesEnrolled)
-            setCourses(res.courses);
-          }
-        } catch (error) {
-          console.log("refreshToken:",error);
-        }
-      }
-      
-      fetchData();
-      
-    }, [])
+  const userData = useSelector((state) => state.auth.userData)
+  
+  useEffect(() => {
+    if(userData){
+      setUser(userData);
+      console.log("dashboard", userData)
+    }
+  }, [userData])
     
-  return (
+  return (user)?(
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
  
       <div className="flex justify-between items-center">
@@ -53,7 +35,7 @@ function Dashboard() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Active Courses</p>
-              <p className="text-xl font-bold text-gray-800">{enrolledCourses.length}</p>
+              <p className="text-xl font-bold text-gray-800">{user.coursesEnrolled?.length}</p>
             </div>
           </div>
         </div>
@@ -64,14 +46,14 @@ function Dashboard() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Courses Created</p>
-              <p className="text-xl font-bold text-gray-800">{courses.length}</p>
+              <p className="text-xl font-bold text-gray-800">{user.courses?.length}</p>
             </div>
           </div>
         </div>
     
       </div>
     </div>
-  );
+  ):(<Loader/>);
 }
 
 export default Dashboard;

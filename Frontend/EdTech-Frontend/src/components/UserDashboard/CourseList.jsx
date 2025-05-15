@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import CourseCard from '../Course/CourseCard';
 import { Link } from 'react-router-dom';
 
-function CourseList({courses, type}) {
-  
+function CourseList({courses=[], type}) {
+  console.log("courseList", courses)
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map((course, index) => (
