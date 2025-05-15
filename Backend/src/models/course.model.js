@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
-    courseId: {
-        type: Number,
-        required: true
-    },
     title: {
         type: String,
         required: true
@@ -39,19 +35,19 @@ const courseSchema = new mongoose.Schema({
         max: 5,
         default: 0
     },
-    author:{
-        avatar: { type: String },
-        name: { type: String }
-    },
-    modules: [{
-        id:{type: Number},
-        title: { type: String, required: true },
-        lessons: [{
-            id: { type: Number },
-            title: { type: String, required: true },
-            videoUrl: { type: String, required: true }
-        }]
-    }],
+    // author:{
+    //     avatar: { type: String },
+    //     name: { type: String }
+    // },
+    // modules: [{
+    //     id:{type: Number},
+    //     title: { type: String, required: true },
+    //     lessons: [{
+    //         id: { type: Number },
+    //         title: { type: String, required: true },
+    //         videoUrl: { type: String, required: true }
+    //     }]
+    // }],
     reviews: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         rating: { type: Number, min: 1, max: 5 },

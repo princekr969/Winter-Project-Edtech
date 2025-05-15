@@ -21,7 +21,7 @@ function CreatedCourseList() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">My Courses</h2>
         <Link
-          to={`/course/editor/q1sf2fg`}
+          to={`/add-new-course`}
           className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
         >
           Create New Course

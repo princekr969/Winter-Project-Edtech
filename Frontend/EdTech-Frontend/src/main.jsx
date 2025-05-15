@@ -8,6 +8,7 @@ import store from './store/store'
 import "./index.css"
 import {HomePage, CoursesPage, AboutPage, DashboardPage, CourseEditorPage, CourseVideoPlayerPage, CourseViewPage, CartPage} from "./Pages/index.js"
 import AuthLayout from './Layout/AuthLayout.jsx'
+import AddNewCourse from './Pages/AddNewCourse.jsx'
 
 const router = createBrowserRouter(
 createRoutesFromElements(
@@ -24,8 +25,9 @@ createRoutesFromElements(
         <Route path='purchased' element={<PurchasedCoursesList/>}></Route>
         <Route path='created' element={<CreatedCourseList/>}></Route>
       </Route>
+      <Route path='add-new-course' element={<AddNewCourse/>}></Route>
       <Route path='course/'>
-        <Route path='editor/:id' element={<CourseEditorPage/>}></Route>
+        <Route path='create' element={<CourseEditorPage/>}></Route>
         <Route path='preview/:id' element={<CourseViewPage/>}></Route>
         <Route path='video/:courseId/:moduleId/:lessonId' element={<CourseVideoPlayerPage/>}></Route>
       </Route>

@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import { Course } from "../models/course.model.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
+
 
 const getAllCourses = asyncHandler(async (req, res) => {
     const courses = await Course.find();
@@ -12,20 +14,42 @@ const getAllCourses = asyncHandler(async (req, res) => {
 
 const addCourse = asyncHandler(async (req, res) => {
     const {title, description, price, category} = req.body;
+    console.log("req come");
+
+    if (!req.file) {
+        throw new ApiError(400, "Course image is required");
+    }
+
+    const result = await uploadToCloudinary(req.file.path);
+    console.log("12");
 
     const course = await Course.create({
-        courseId: Date.now(),
         title,
         description,
         price,
         category,
+        imageUrl: result.secure_url,
         owner: req.user._id
     });
+
+
+    console.log("creator",req.user.courses);
+    console.log("course",course)
+
+    const user =  await User.findByIdAndUpdate(
+    req.user._id,
+    { $push: { courses: course._id } },
+    { new: true }
+  );
+
+  console.log("user", user);
+
     if(!course)
     {
         throw new ApiError(500, "something went wrong");
     }
-    res.json(new ApiResponse(201, "success", course));
+
+    return res.json(new ApiResponse(201, "success", course));
 })
 
 const deleteCourse = asyncHandler(async (req, res) => {
