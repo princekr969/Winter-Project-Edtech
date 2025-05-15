@@ -13,8 +13,10 @@ function CreatedCourseList() {
   useEffect(() => {
     if(userData){
       setCourses(userData.courses);
+      console.log(courses)
     }
   }, [userData])
+
 
   return (courses)? (
     <div className="space-y-6">
@@ -28,7 +30,7 @@ function CreatedCourseList() {
         </Link>
       </div>
 
-      <CourseList type={'created'} courses={courses}/>
+      <CourseList type={'created'}/>
       
     </div>
   ):<Loader/>

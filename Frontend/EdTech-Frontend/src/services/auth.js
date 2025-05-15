@@ -168,6 +168,24 @@ export class AuthService {
             
         }
     }
+    
+    async getUserById(userId){
+        try {
+            const url = this.baseUrl + "/get-user";
+            const userAccount = await axios.post(url, {userId},{withCredentials:true});
+            console.log("getUserById",userAccount.data)
+            return userAccount.data
+        } catch (error) {
+            if(error.response){
+                console.log("Backend service :: getUserById :: error", error.response.data);
+                return error.response.data
+            }else{
+                console.log("Backend service :: getUserById :: error", error.message);
+                return {message: "Something went wrong"};
+            }
+            
+        }
+    }
 
   
 };

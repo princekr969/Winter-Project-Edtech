@@ -170,7 +170,7 @@ const coursesAvailable =  [{
 ]
 
 const initialState = {
-  courses: [...coursesAvailable],
+  courses: [],
   enrolledCourses: [],
   loading: false,
   error: null,

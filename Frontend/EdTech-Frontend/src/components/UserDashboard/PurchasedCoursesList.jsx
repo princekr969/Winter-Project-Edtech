@@ -110,7 +110,7 @@ function PurchasedCoursesList() {
   return (enrolledCourses)?(
     <>
     {(enrolledCourses.length!==0)?(
-    <CourseList type={'purchased'} courses={enrolledCourses}/>
+    <CourseList type={'purchased'}/>
   ):(<p className="text-gray-600">You are not enrolled in any course.</p>)}
     </>
 ):(<Loader/>)

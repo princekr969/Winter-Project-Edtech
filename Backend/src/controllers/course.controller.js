@@ -10,7 +10,7 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 const getAllCourses = asyncHandler(async (req, res) => {
     const courses = await Course.find();
     res.json(new ApiResponse(200, "success", courses));
-})    
+})   
 
 const getCourseById = asyncHandler(async (req, res) => {
     const course = await Course.findById(req.params.id);
@@ -20,6 +20,25 @@ const getCourseById = asyncHandler(async (req, res) => {
     }
     res.json(new ApiResponse(200, "success", course));
 })
+
+const getCoursesByIds = asyncHandler(async (req, res) => {
+    const { courseIds } = req.body;
+
+    if (!Array.isArray(courseIds) || courseIds.length === 0) {
+        throw new ApiError(400, "courseIds must be a non-empty array");
+    }
+
+    const courses = await Course.find({
+        _id: { $in: courseIds },
+    });
+
+    if (!courses || courses.length === 0) {
+        throw new ApiError(404, "No courses found for the provided IDs");
+    }
+
+    res.json(new ApiResponse(200, "success", courses));
+});
+
 
 const addCourse = asyncHandler(async (req, res) => {
     const {title, description, price, category} = req.body;
@@ -96,5 +115,5 @@ const updateCourse = asyncHandler(async (req, res) => {
 
 
 
-export {getAllCourses, addCourse, deleteCourse, updateCourse, getCourseById}
+export {getAllCourses, addCourse, deleteCourse, updateCourse, getCourseById, getCoursesByIds}
 

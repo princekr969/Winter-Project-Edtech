@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ShoppingCart, ChevronRight, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import authService from "../../services/auth";
 
 const RatingStars = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -29,7 +30,7 @@ const RatingStars = ({ rating }) => {
 };
 
 const CourseCard = ({
-  id = 1,
+  _id = 1,
   title,
   description,
   imageUrl,
@@ -39,9 +40,36 @@ const CourseCard = ({
     avatar: "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     name: "prince",
   },
+  owner='',
 }) => {
+  const [ownerData, setOwnerData] = useState({avatar:"", name:""});
+  console.log("ownerData", ownerData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await authService.getUserById(owner);
+        console.log("userData card",userData.message.profilePicture);
+        if(userData){
+          setOwnerData({
+            avatar:userData.message.profilePicture,
+            name:`${userData.message.firstName} ${userData.message.lastName}`
+          })
+        }
+        
+        
+      } catch (error) {
+        console.log("card::userFetch error", error)
+      }
+    }
+
+    if(owner){
+      fetchData();
+    }
+  }, [])
+  console.log('owner_id', owner)
   return (
-    <Link to={`/course/preview/${id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+    <Link to={`/course/preview/${_id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
           <img src={imageUrl} alt="" className="w-full h-full object-cover" />
@@ -51,9 +79,9 @@ const CourseCard = ({
         </div>
         <div className="w-2/3 md:w-full flex flex-col">
           <div className="flex items-center gap-2 mb-3">
-            <img src={author.avatar} alt={author.name} className="w-8 h-8 rounded-full object-cover" />
+            <img src={ownerData.avatar} alt={ownerData.name} className="w-8 h-8 rounded-full object-cover" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-[#14142B]">{author.name}</span>
+              <span className="text-sm font-medium text-[#14142B]">{ownerData.name}</span>
               <span className="text-xs text-[#6E7191]">{author.role}</span>
             </div>
           </div>

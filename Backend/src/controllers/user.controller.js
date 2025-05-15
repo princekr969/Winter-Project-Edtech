@@ -403,12 +403,23 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
 })
 
-const getCurrentUser = asyncHandler(async (req, res) => {
+const getUserById = asyncHandler(async (req, res) => {
+    const {userId} = req.body;
 
+    if(!userId){
+        throw new ApiError(400, "user id is required");
+    }
+    const user = await User.findById(userId).select("-password -refreshToken");
+
+    if(!user){
+        throw new ApiError(400, "Invalid user id");
+    }
+    
+    console.log("UserId", user);
 
   return res
   .status(200)
-  .json(new ApiResponse(200, req.user, "User retrieved successfully"));
+  .json(new ApiResponse(200, user, "User retrieved successfully"));
 })
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -513,7 +524,7 @@ export {
     logoutUser,
     refreshAccessToken,
     changeCurrentPassword,
-    getCurrentUser,
+    getUserById,
     updateAccountDetails,
     updateProfilePicture,
     sendOTPVerificationEmail,

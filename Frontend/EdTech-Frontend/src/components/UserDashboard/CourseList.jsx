@@ -1,10 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CourseCard from '../Course/CourseCard';
 import { Link } from 'react-router-dom';
+import Loader from '../../utils/Loader';
+import { useSelector } from 'react-redux';
+import courseService from '../../services/course';
 
-function CourseList({courses=[], type}) {
-  console.log("courseList", courses)
-  return (
+function CourseList({type}) {
+  const [courses, setCourses] = useState([]);
+  const userData = useSelector((state) => state.auth.userData);
+
+    useEffect(() => {
+
+      const fetchData = async () => {
+        if(userData){
+            try {
+              let coursesIds = [];
+
+              if(type==='created'){
+                coursesIds = [...userData.courses]
+              }else{
+                coursesIds = [...userData.coursesEnrolled]
+              }
+              console.log("courseId", coursesIds)
+              const createdCourses = await courseService.getCoursesByIds(coursesIds)
+              if(createdCourses.success){
+                setCourses(createdCourses.data);
+              }
+              console.log("response", createdCourses)
+            } catch (error) {
+              console.log('CourseListError', error)
+            }
+        }
+      }
+      fetchData();
+    }, [userData])
+  
+  return (courses)?(
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map((course, index) => (
         <div className='flex flex-col gap-2'>
@@ -21,7 +52,7 @@ function CourseList({courses=[], type}) {
         
       ))}
     </div>
-  );
+  ):<Loader/>;
 }
 
 export default CourseList;

@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HeroSection, CourseSection, AboutSection} from '../components'
 import ScrollToTop from '../utils/scrollButton';
+import courseService from '../services/course';
+import { initializeCourses } from '../store/coursesSlice';
 
 
 function Home() {
-  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const courses = await courseService.getAllCourse();
+        if(courses.data){
+          dispatch(initializeCourses(courses.data))
+        }
+        console.log("Homepage courses", courses);
+        
+      } catch (error) {
+        console.log("HomePageError", error)
+      }
+    }
+
+    fetchData()
+  }, [])
   return (
     <>  
           <HeroSection/>
