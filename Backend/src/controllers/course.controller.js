@@ -12,6 +12,15 @@ const getAllCourses = asyncHandler(async (req, res) => {
     res.json(new ApiResponse(200, "success", courses));
 })    
 
+const getCourseById = asyncHandler(async (req, res) => {
+    const course = await Course.findById(req.params.id);
+    if(!course)
+    {
+        throw new ApiError(404, "Course not found");
+    }
+    res.json(new ApiResponse(200, "success", course));
+})
+
 const addCourse = asyncHandler(async (req, res) => {
     const {title, description, price, category} = req.body;
     console.log("req come");
@@ -85,5 +94,7 @@ const updateCourse = asyncHandler(async (req, res) => {
 
 
 
-export {getAllCourses, addCourse, deleteCourse, updateCourse}
+
+
+export {getAllCourses, addCourse, deleteCourse, updateCourse, getCourseById}
 
