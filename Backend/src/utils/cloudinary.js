@@ -29,3 +29,27 @@ export const uploadToCloudinary = async (localFilePath, folder = 'profile_photos
         throw error;
     }
 };
+
+export const uploadVideoToCloudinary = async (localFilePath, folder = 'videos') => {
+    try {
+        if (!fs.existsSync(localFilePath)) {
+            throw new Error('Video file not found at path: ' + localFilePath);
+        }
+
+        const result = await cloudinary.uploader.upload(localFilePath, {
+            folder,
+            resource_type: 'video' // Important for video uploads
+        });
+
+        // Clean up local file after upload
+        fs.unlinkSync(localFilePath);
+
+        return result;
+    } catch (error) {
+        // Ensure cleanup even on failure
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
+        throw error;
+    }
+};

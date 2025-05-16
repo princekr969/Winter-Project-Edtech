@@ -49,8 +49,6 @@ const addCourse = asyncHandler(async (req, res) => {
     }
 
     const result = await uploadToCloudinary(req.file.path);
-    console.log("12");
-
     const course = await Course.create({
         title,
         description,
@@ -60,9 +58,6 @@ const addCourse = asyncHandler(async (req, res) => {
         owner: req.user._id
     });
 
-
-    console.log("creator",req.user.courses);
-    console.log("course",course)
 
     const user =  await User.findByIdAndUpdate(
     req.user._id,
@@ -110,6 +105,7 @@ const updateCourse = asyncHandler(async (req, res) => {
 
     res.json(new ApiResponse(200, "success", course));
 })
+
 
 
 

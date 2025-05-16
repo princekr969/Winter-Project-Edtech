@@ -16,6 +16,6 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-export const uploadMultiple = multer({ storage: storage }).array('videos', 10); // 'videos' is the field name, 10 is the max number of files
+
 
 export const upload = multer({ storage: storage });

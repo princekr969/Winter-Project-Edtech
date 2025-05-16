@@ -18,10 +18,12 @@ app.use(cookieParser())
 //routes import
 import userRoutes from "./routes/user.routes.js"
 import courseRoutes from "./routes/course.routes.js"
+import lessonRoutes from "./routes/lesson.routes.js"
 
 //routes declaration
 app.use("/api/v1/users", userRoutes)
 app.use("/api/v1/course", courseRoutes)
+app.use("/api/v1/lesson", lessonRoutes)
 app.get("/", (req, res) => {
     console.log("hello");
     
