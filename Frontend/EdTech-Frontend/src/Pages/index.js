@@ -4,8 +4,9 @@ import AboutPage from "./AboutPage";
 import DashboardPage from "./DashboardPage";
 import CourseVideoPlayerPage from "./CourseVideoPlayerPage";
 import CourseViewPage from "./CourseViewPage";
-import CourseEditorPage from "./CourseEditorPage";
 import CartPage from "./CartPage";
+import CourseEditor from "./CourseEditor/AddNewCourse";
+import CourseEditorPage from "./CourseEditor/CourseEditiorPage";
 
 export {
     HomePage,
@@ -15,5 +16,6 @@ export {
     CourseVideoPlayerPage, 
     CourseViewPage, 
     CourseEditorPage,
-    CartPage
+    CartPage,
+    CourseEditor
 };

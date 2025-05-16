@@ -6,24 +6,14 @@ import Loader from '../../utils/Loader';
 
 
 function CreatedCourseList() {
-  const userData = useSelector(state => state.userData)
-  const [courses, setCourses] = useState([]);
-  console.log("courses", userData);
+  const id = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  useEffect(() => {
-    if(userData){
-      setCourses(userData.courses);
-      console.log(courses)
-    }
-  }, [userData])
-
-
-  return (courses)? (
+  return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">My Courses</h2>
         <Link
-          to={`/add-new-course`}
+          to={`/course/edit/${id}`}
           className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
         >
           Create New Course
@@ -33,7 +23,7 @@ function CreatedCourseList() {
       <CourseList type={'created'}/>
       
     </div>
-  ):<Loader/>
+  )
 }
 
 export default CreatedCourseList

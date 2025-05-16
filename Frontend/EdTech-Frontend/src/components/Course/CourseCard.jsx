@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { ShoppingCart, ChevronRight, Star } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import { ShoppingCart, ChevronRight, Star, EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 import authService from "../../services/auth";
+import { useSelector } from "react-redux";
 
 const RatingStars = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -36,28 +37,46 @@ const CourseCard = ({
   imageUrl,
   price,
   rating = 3.6,
-  author = {
-    avatar: "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    name: "prince",
-  },
   owner='',
+  category="",
 }) => {
-  const [ownerData, setOwnerData] = useState({avatar:"", name:""});
-  console.log("ownerData", ownerData)
+  const [ownerData, setOwnerData] = useState({avatar:"", name:"", email:""});
+  const currentUser = useSelector((state) => state.auth.userData.email);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const toggleMenu = (e) => {
+    e.stopPropagation();
+    e.preventDefault(); // prevent <Link> click if inside
+    setMenuVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setMenuVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await authService.getUserById(owner);
-        console.log("userData card",userData.message.profilePicture);
         if(userData){
           setOwnerData({
             avatar:userData.message.profilePicture,
-            name:`${userData.message.firstName} ${userData.message.lastName}`
-          })
+            name:`${userData.message.firstName} ${userData.message.lastName}`,
+            email:userData.message.email
+           })
         }
-        
-        
       } catch (error) {
         console.log("card::userFetch error", error)
       }
@@ -67,22 +86,54 @@ const CourseCard = ({
       fetchData();
     }
   }, [])
-  console.log('owner_id', owner)
+
+
   return (
     <Link to={`/course/preview/${_id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
           <img src={imageUrl} alt="" className="w-full h-full object-cover" />
-          <button className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#4339F2] transition-colors duration-200 group">
-            <ShoppingCart className="w-4 h-4 text-[#4339F2] group-hover:text-gray-500 transition-colors duration-200" />
+          <button ref={buttonRef} onClick={toggleMenu} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
+          {(ownerData.email===currentUser)?
+            <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />:
+            <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+          }
           </button>
         </div>
+        {(menuVisible && ownerData.email===currentUser)?
+        (
+          <div
+          ref={menuRef}
+          className="absolute top-[38px] right-8 md:top-[72px] md:right-12 z-20 bg-white border shadow-md rounded-md w-32 text-sm"
+        >
+          <Link
+            to={`/course/edit/${_id}`}
+            className="block p-2 rounded hover:bg-gray-100"
+          >
+            Edit Course
+          </Link>
+          <Link
+            to={`/course/module/edit/${_id}`}
+            className="block p-2 rounded hover:bg-gray-100"
+          >
+            Edit Modules
+          </Link>
+        </div>
+        )
+        :null}
         <div className="w-2/3 md:w-full flex flex-col">
+        <button ref={buttonRef} onClick={toggleMenu} className="absolute md:hidden top-3 right-3 w-8 h-8 bg-white flex items-center justify-center hover:scale-125 transition-colors duration-200 group">
+        {(currentUser===ownerData.email)?
+            <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />
+         :
+            <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+        }
+          </button>
           <div className="flex items-center gap-2 mb-3">
             <img src={ownerData.avatar} alt={ownerData.name} className="w-8 h-8 rounded-full object-cover" />
             <div className="flex flex-col">
               <span className="text-sm font-medium text-[#14142B]">{ownerData.name}</span>
-              <span className="text-xs text-[#6E7191]">{author.role}</span>
+              <span className="text-xs text-[#6E7191]">{category}</span>
             </div>
           </div>
           <h3 className="text-[#14142B] text-lg md:text-2xl font-semibold mb-2 md:mb-3 hover:text-[#4339F2] transition-colors duration-200">{title}</h3>

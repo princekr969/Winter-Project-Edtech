@@ -39,7 +39,7 @@ function CourseList({type}) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map((course, index) => (
         <div className='flex flex-col gap-2'>
-          <CourseCard key={index} {...course}/>
+          <CourseCard key={course._id} {...course}/>
           {type!=='purchased' ?(
                 <Link
                 to={`/course/editor/${course.id}`}

@@ -5,12 +5,12 @@ import {
   Image as ImageIcon,
   Video,
 } from "lucide-react";
-import courseService from '../services/course';
+import courseService from '../../services/course';
 import { useNavigate } from 'react-router-dom';
-import { ErrorPopup } from '../components';
+import { ErrorPopup } from '../../components';
 
 
-function AddNewCourse() {
+function CourseEditor() {
     const [formData, setFormData] = useState({
       title: "",
       description: "",
@@ -246,4 +246,4 @@ function AddNewCourse() {
   )
 }
 
-export default AddNewCourse
+export default CourseEditor
