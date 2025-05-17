@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'; // <-- import jsonwebtoken
+import { type } from "os";
 
 const userSchema = new mongoose.Schema({
+    googleId: {
+        type: String,
+        unique:true
+    },
     firstName: {
         type: String,
         required: true
@@ -18,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        // required: true
     },
     phoneNumber: {
         type: String

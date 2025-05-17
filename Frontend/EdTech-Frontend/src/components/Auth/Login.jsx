@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import authService from "../../services/auth.js"
 import {login as authLogin} from "../../store/authSlice.js"
@@ -14,8 +14,6 @@ function OtpModal({ isOpen, onClose }) {
   const [otp, setOtp] = useState(['', '', '', '']);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-
   
   const inputRefs = Array(4).fill(null).map(() => React.useRef(null));
 
@@ -123,6 +121,8 @@ function Login() {
   const {register, handleSubmit} = useForm();  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [forgetPassword, setForgetPassword] = useState(false);
+  const navigate = useNavigate();
+
   
 
   const login = async (data) => {
@@ -149,6 +149,22 @@ function Login() {
       setForgetPassword(true);
     }
 
+    const handleGoogleLogin = async () => {
+    window.location.href = "http://localhost:8012/api/v1/users/google/login"
+    console.log("google login",res);
+  }
+
+    useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("error");
+    if(token==="oautha7X9vB2qLmTZ0kPf"){
+      setError("Already login with email and password")
+      navigate("/auth/signin")
+    }
+    console.log("error msg", error);
+    console.log("Token from query:", token);
+  }, [])
+
     
     return (   <>
       
@@ -164,9 +180,9 @@ function Login() {
 
 
           {/* Google Login */}
-          <a
-            href="#"
-            className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+          <div
+            onClick={handleGoogleLogin}
+            className="flex items-center cursor-pointer justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <div className="px-4 py-2">
               <svg className="w-6 h-6" viewBox="0 0 40 40">
@@ -189,10 +205,10 @@ function Login() {
               </svg>
             </div>
 
-            <span className="w-5/6 px-4 py-3 font-bold text-center">
+            <span className="w-5/6 px-4 py-3 font-bold  text-center">
               Sign in with Google
             </span>
-          </a>
+          </div>
           
           <div className="grid grid-cols-1 mt-4">
             
@@ -319,14 +335,20 @@ function Login() {
         <OtpModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}/>
-        {(error !== "")?<ErrorPopup
+
+        {(error !== "")?
+        <>
+        <ErrorPopup
           message={error}
-        />:null}
+          duration={5000}
+        /></>
+        :null}
 
         <ForgetPasswordEmailForm
           onClose={() => {setForgetPassword(false)}}
           isOpen={forgetPassword}
         />
+        
         </> 
 
 

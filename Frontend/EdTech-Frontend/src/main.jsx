@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown, ForgetPasswordForm} from './components/index.js'
+import { CreatedCourseList, Login, Profile, PurchasedCoursesList, SignUp, Dashboard, CartDropdown, ForgetPasswordForm, AuthSuccess} from './components/index.js'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
@@ -33,7 +33,7 @@ createRoutesFromElements(
       <Route path="auth/" element={<AuthLayout/>}>
         <Route path='signin' element={<Login/>}></Route>
         <Route path='signup' element={<SignUp/>}></Route>
-
+        <Route path='google/oauth/success/:token' element={<AuthSuccess/>}></Route>
       </Route>
     </Route>
       <Route path='forget-password/:token' element={<ForgetPasswordForm/>}></Route>
@@ -46,6 +46,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
       <Provider store={store}>
         <RouterProvider router={router}/>
-      </Provider>,
-  </StrictMode>,
+      </Provider>
+  </StrictMode>
 )

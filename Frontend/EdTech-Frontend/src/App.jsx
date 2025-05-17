@@ -17,12 +17,6 @@ function App() {
   const refreshToken = Cookies.get("refreshToken");
   const isUserActive = useSelector(state => state.auth.status);
  
-  // let userCart = [];
-  // let userEnrolledCourseId = [];
-  // if(isUserActive){
-  //   userCart = useSelector(state => state.auth.userData.cart);
-  //   userEnrolledCourseId = useSelector(state => state.auth.userData.purchasedCourses);
-  // }
   console.log("app")
   const Loader = () => {
     return (
@@ -35,28 +29,7 @@ function App() {
       </div>
     );
   };
-
-// useEffect(() => {
-//     const fetchCourseData = async () => {
-//       if(isUserActive && courses){
-//         const purchasedCourseIdSet = new Set(userEnrolledCourseId.map(item => item.id));
-//         const enrolledCourse = courses.filter(course => purchasedCourseIdSet.has(course.id));
-//         dispatch(initializeEnrolledCourses([...enrolledCourse]))
-//       }
-//         dispatch(initializeCourses([...courses]))
-//     };
-
-//     const fetchCartData = async () => {
-//       const userCartIdSet = new Set(userCart.map(item => item.id));
-//       const cartItems = courses.filter(course => userCartIdSet.has(course.id))
-//       dispatch(initializeCart(cartItems))
-//     }
-
-//     fetchCourseData();    
-//     fetchCartData();
-// },[])
-
-      
+  
   useEffect(() => {
     
     const fetchData = async () => {

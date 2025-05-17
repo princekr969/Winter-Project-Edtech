@@ -21,6 +21,7 @@ import CartDropdown from "./Dropdown/CartDropDown";
 import CartItem from "./Cart/CartItem";
 import ErrorPopup from "./ErrorPopup.jsx"
 import ForgetPasswordForm from "./Auth/ForgetPassword.jsx";
+import AuthSuccess from "./Auth/AuthSuccess.jsx";
 
 export 
 {
@@ -46,5 +47,6 @@ export
     CartDropdown,
     CartItem,
     ErrorPopup,
-    ForgetPasswordForm
+    ForgetPasswordForm,
+    AuthSuccess
 };

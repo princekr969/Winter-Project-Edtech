@@ -41,7 +41,7 @@ const CourseCard = ({
   category="",
 }) => {
   const [ownerData, setOwnerData] = useState({avatar:"", name:"", email:""});
-  const currentUser = useSelector((state) => state.auth.userData.email);
+  const currentUser = useSelector((state) => state.auth.userData?.email);
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
