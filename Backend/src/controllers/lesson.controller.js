@@ -3,35 +3,58 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Lesson } from "../models/lesson.model.js";
 import { uploadVideoToCloudinary } from "../utils/cloudinary.js";
+import { Module } from "../models/module.model.js";
 
+
+
+const getAllLessons = asyncHandler(async (req, res) => {
+    const {moduleId} = req.body;
+    const module = await Module.findById(moduleId);
+    if(!module)
+    {
+        throw new ApiError(404, "Module not found");
+    }
+    console.log(module.lessons);
+    
+    //find all the lessons from the array of ids in module.lessons
+    const lessons = await Lesson.find({ _id: { $in: module.lessons } });
+    if(!lessons)
+    {
+        throw new ApiError(404, "Lessons not found");
+    }
+    res.json(new ApiResponse(200, "success", lessons));
+})
 
 const addLesson = asyncHandler(async (req, res) => {
-    const {lessonId, title,moduleId} = req.body;
+    const {title,moduleId} = req.body;
     const lesson = await Lesson.create({title});
+    
     if(!lesson)
     {
         throw new ApiError(500, "something went wrong when creating lesson");
     }
-
-    console.log(req.file.path);
-    
+  
     const url =await uploadVideoToCloudinary(req.file.path, "lessons");
+    console.log(url);
+    
     if(!url)
     {
         throw new ApiError(500, "something went wrong when uploading file");
     }
     lesson.videoUrl = url.secure_url;
     await lesson.save();
-
-    const module = await Lesson.findByIdAndUpdate(moduleId, {$push: {lessons: lesson._id}}, {new: true});
+    
+    
+    const module = await Module.findByIdAndUpdate(moduleId, {$push: {lessons: lesson._id}}, {new: true});
     if(!module)
     {
         throw new ApiError(500, "something went wrong when adding lesson to module");
     }
+    
     
     res.json(new ApiResponse(200, "success", lesson));
 })
 
 
 
-export {addLesson}
+export {addLesson, getAllLessons}

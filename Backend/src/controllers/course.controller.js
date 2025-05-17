@@ -13,13 +13,16 @@ const getAllCourses = asyncHandler(async (req, res) => {
 })   
 
 const getCourseById = asyncHandler(async (req, res) => {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.body.courseId.courseId);
+    
     if(!course)
     {
         throw new ApiError(404, "Course not found");
     }
     res.json(new ApiResponse(200, "success", course));
 })
+
+
 
 const getCoursesByIds = asyncHandler(async (req, res) => {
     const { courseIds } = req.body;

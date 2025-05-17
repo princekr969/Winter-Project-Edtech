@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 
 const moduleSchema = new mongoose.Schema({
+    id:{
+        type: Number
+    },
     title: {
         type: String,
         required: true
     },
-    course: {
+    courseId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
-        required: true
     },
     lessons:[{
         type: mongoose.Schema.Types.ObjectId,

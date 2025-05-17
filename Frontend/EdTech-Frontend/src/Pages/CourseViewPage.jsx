@@ -23,7 +23,7 @@ const CourseViewPage = () => {
         <div className="relative h-[500px]">
           <div className="absolute inset-0">
             <img
-              src={course[0].imageUrl}
+              src={course[0]?.imageUrl}
               alt="Course hero"
               className="w-full h-full object-cover"
             />
@@ -35,10 +35,10 @@ const CourseViewPage = () => {
                 Professional Certificate
               </span>
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                {course[0].title}
+                {course[0]?.title}
               </h1>
               <p className="mt-6 text-xl text-gray-100 max-w-3xl">
-                {course[0].description}
+                {course[0]?.description}
               </p>
             </div>
           </div>
@@ -80,7 +80,7 @@ const CourseViewPage = () => {
               <section className="bg-white rounded-lg shadow-sm p-6 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Course Overview</h2>
                 <p className="text-gray-600 mb-6">
-                  {course[0].description}
+                  {course[0]?.description}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -101,7 +101,7 @@ const CourseViewPage = () => {
               <section className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-6">Curriculum</h2>
                 <div className="space-y-4">
-                  {course[0].modules.map((module, index) => (
+                  {course[0]?.modules.map((module, index) => (
                   <Module module={module} index={index} courseId={id}/>
                   ))}
                 </div>
@@ -112,7 +112,7 @@ const CourseViewPage = () => {
             <div className=" lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                 <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-blue-600">₹{course[0].price}</div>
+                  <div className="text-5xl font-bold text-blue-600">₹{course[0]?.price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
                 <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mb-4">

@@ -40,6 +40,117 @@ class CourseService {
         }
       }
 
+      async getCourseById(courseId)
+      {
+        try {
+          const url = this.baseUrl + `/get-course-by-id`;
+          const res = await axios.post(url, {courseId},{withCredentials:true});
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log("Backend service :: getCourseById :: error", error.response.data);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: getCourseById :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+      }
+
+      async addModule(newModule)
+      {
+        try {
+          const url = this.baseUrl + `/add-module`;
+          // console.log(newModule);
+          // console.log(url);
+          
+          
+          const res = await axios.post(url, newModule,{withCredentials:true});
+          // console.log("Module added:", res);
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log( error.response);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: addModule :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+
+      }
+
+      async getAllModules(courseId)
+      {
+        try {
+          const url = this.baseUrl + `/get-all-modules`;
+          const res = await axios.post(url, {courseId},{withCredentials:true});
+          // console.log("All modules:", res);
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log("Backend service :: getAllModules :: error", error.response.data);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: getAllModules :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+      }
+
+      async getAllLessons(moduleId)
+      {
+        try {
+          console.log("serviceee",moduleId);
+          
+          const url = this.baseUrl + `/get-all-lessons`;
+          const res = await axios.post(url, {moduleId},{withCredentials:true});
+          console.log("All modules:", res);
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log("Backend service :: getAllLessons :: error", error.response.data);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: getAllLessons :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+      }
+      async addLesson(formData)
+      {
+        try {
+          console.log("servicess",formData);
+          
+          const url = this.baseUrl + `/add-lesson`;
+          const res = await axios.post(url, formData,{withCredentials:true,headers:{"Content-Type": "multipart/form-data"}});
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log("Backend service :: addLesson :: error", error.response.data);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: addLesson :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+      }
+
       async getAllCourse() {
         try {
           const url = this.baseUrl + "/get-all-course";

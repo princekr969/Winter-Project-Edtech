@@ -4,9 +4,13 @@ import CourseInfo from "./CourseInfo";
 import ModuleList from "./ModuleList";
 import EditLessonPage from "./EditLessonPage";
 import AddModulePage from "./AddModulePage";
+import { use } from "react";
+import courseService from "../../services/course";
+import { useParams } from "react-router-dom";
+import AddLessonPage from "./AddLessonPage";
 
 const course = {
-  id: 2,
+  _id: 2,
   title: "Mastering Digital Marketing",
   description:
     "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
@@ -69,27 +73,76 @@ const categories = [
 ];
 
 
-const CourseEditorPage = ({ onSave, onClose }) => {
+const CourseEditorPage = ({ onSave, onClose, }) => {
+  const courseId = useParams();
   const [formData, setFormData] = useState(course);
   const [isAddingModule, setIsAddingModule] = useState(false);
+  const [isAddingLesson, setIsAddingLesson] = useState(false);
+  const [courseModules, setCourseModules] = useState(formData.modules);
   const [editingState, setEditingState] = useState({
     moduleId: null,
     lessonId: null,
   });
 
+useEffect(() => {
+  const fetchCourseData = async () => {
+    try {
+      // Step 1: Fetch course
+      const courseResponse = await courseService.getCourseById(courseId);
+      const courseData = courseResponse.data;
+
+      // Step 2: Fetch modules
+      const modulesResponse = await courseService.getAllModules(courseId);
+      const modules = modulesResponse.data;
+
+      // Step 3: Fetch lessons for each module
+      const modulesWithLessons = await Promise.all(
+        modules.map(async (module) => {
+          const lessonsResponse = await courseService.getAllLessons(module._id);
+          return {
+            ...module,
+            lessons: lessonsResponse.data, // add lessons array to each module
+          };
+        })
+      );
+
+      // Step 4: Set all in formData
+      setFormData({
+        ...courseData,
+        modules: modulesWithLessons,
+      });
+
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
+
+  fetchCourseData();
+}, []);
+
+  
   const handleAddModule = () => {
     setIsAddingModule(true);
   };
 
   const handleSaveModule = (moduleData) => {
     const newModule = {
-      id: crypto.randomUUID(),
       ...moduleData,
+      ...courseId
     };
-    setFormData({
-      ...formData,
-      modules: [...formData.modules, newModule],
-    });
+    const saveModule = async ()=>{
+      const response = await courseService.addModule(newModule);
+      console.log("here",response);
+      setFormData({
+        ...formData,
+        modules: [...formData.modules, response.data],
+      });
+      console.log(newModule);
+      
+    }
+    saveModule();
+    
+    
     setIsAddingModule(false);
   };
 
@@ -98,41 +151,51 @@ const CourseEditorPage = ({ onSave, onClose }) => {
   };
 
   const handleAddLesson = (moduleId) => {
+    console.log("moduleId",moduleId);
+    
     const newLesson = {
       id: crypto.randomUUID(),
       title: "New Lesson",
       videoUrl: "",
     };
 
-    setFormData({
-      ...formData,
-      modules: formData.modules.map((module) =>
-        module.id === moduleId
-          ? {
-              ...module,
-              lessons: [...module.lessons, newLesson],
-            }
-          : module
-      ),
-    });
+    // setFormData({
+    //   ...formData,
+    //   modules: formData.modules.map((module) =>
+    //     module._id === moduleId
+    //       ? {
+    //           ...module,
+    //           lessons: [...module.lessons, newLesson],
+    //         }
+    //       : module
+    //   ),
+    // });
 
-    setEditingState({ moduleId: null, lessonId: newLesson.id });
+    setEditingState({ moduleId: moduleId, lessonId: null });
   };
 
-  const handleUpdateLesson = (moduleId, lessonId, updates) => {
-    setFormData({
+  const handleUpdateLesson = (formDat) => {
+    console.log("formDataa",formDat)
+
+    const uploadLesson = async ()=>{
+      const moduleId=editingState.moduleId;
+      const response = await courseService.addLesson({...formDat,moduleId});
+      console.log("hereee",response.data);
+      console.log("hereee",formData.modules);
+      setFormData({
       ...formData,
       modules: formData.modules.map((module) =>
-        module.id === moduleId
+        module._id === moduleId
           ? {
               ...module,
-              lessons: module.lessons.map((lesson) =>
-                lesson.id === lessonId ? { ...lesson, ...updates } : lesson
-              ),
+              lessons: [...module.lessons, response.data],
             }
           : module
       ),
     });
+    }
+    uploadLesson();
+    
     setEditingState({ moduleId: null, lessonId: null });
   };
 
@@ -178,28 +241,27 @@ const CourseEditorPage = ({ onSave, onClose }) => {
     window.scrollTo(0, 0);
   }, []);
 
+
+
   if (isAddingModule) {
     return <AddModulePage onSave={handleSaveModule} onCancel={handleCancelModule} />;
   }
 
-  if (editingState.lessonId) {
-    const moduleWithLesson = formData.modules.find((module) =>
-      module.lessons.some((lesson) => lesson.id === editingState.lessonId)
-    );
-    const lessonToEdit = moduleWithLesson?.lessons.find(
-      (lesson) => lesson.id === editingState.lessonId
-    );
-
-    if (moduleWithLesson && lessonToEdit) {
+  if (editingState.moduleId) 
+  {
+    const lessonToEdit = {
+      id: crypto.randomUUID(),
+      title: "New Lesson",
+    };
       return (
         <EditLessonPage
           lesson={lessonToEdit}
-          moduleId={moduleWithLesson.id}
-          onSave={(updates) => handleUpdateLesson(moduleWithLesson.id, lessonToEdit.id, updates)}
+          moduleId={editingState.moduleId}
+          onSave={handleUpdateLesson}
           onCancel={handleCancelLesson}
         />
       );
-    }
+    
   }
 
 
@@ -210,7 +272,6 @@ const CourseEditorPage = ({ onSave, onClose }) => {
 
           <div className="bg-white space-y-6 shadow">
             <div className="p-6 space-y-6">
-              
                 <h2 className="text-xl font-bold text-gray-800">{formData.title}</h2> 
               <ModuleList
                 modules={formData.modules}

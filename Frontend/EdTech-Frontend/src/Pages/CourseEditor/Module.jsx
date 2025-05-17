@@ -36,7 +36,7 @@ const Module = ({
           </div>
       </div>
 
-      {module.lessons.map((lesson) => (
+      {module.lessons && module.lessons.map((lesson) => (
         <Lesson
           key={lesson.id}
           lesson={lesson}

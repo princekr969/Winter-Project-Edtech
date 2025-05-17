@@ -41,9 +41,6 @@ export const uploadVideoToCloudinary = async (localFilePath, folder = 'videos') 
             resource_type: 'video' // Important for video uploads
         });
 
-        // Clean up local file after upload
-        fs.unlinkSync(localFilePath);
-
         return result;
     } catch (error) {
         // Ensure cleanup even on failure

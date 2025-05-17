@@ -14,12 +14,12 @@ function CourseVideoPlayerPage() {
   const {courses} = useSelector(state => state.courses);
   console.log("preview:", courses)
   const course = courses.filter(course => course.id === courseId)
-  const activeModule = course[0].modules.filter(module => module.id === moduleId)
-  const activeLesson = activeModule[0].lessons.filter(lesson => lesson.id === lessonId)
+  const activeModule = course[0]?.modules.filter(module => module.id === moduleId)
+  const activeLesson = activeModule[0]?.lessons.filter(lesson => lesson.id === lessonId)
   const selectedLesson = activeLesson[0];
-  const videoUrl = activeLesson[0].videoUrl
+  const videoUrl = activeLesson[0]?.videoUrl
   console.log("courses",course)
-  console.log("courses_title",course[0].title)
+  console.log("courses_title",course[0]?.title)
   console.log("module", activeModule)
   console.log("lesson", activeLesson)
 

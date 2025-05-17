@@ -3,7 +3,7 @@ import { Video, Save, X } from 'lucide-react';
 
 const EditLessonPage = ({ lesson, moduleId, onSave, onCancel }) => {
   const videoInputRef = useRef(null);
-  const [formData, setFormData] = useState(lesson);
+  const [formData, setFormData] = useState({...lesson,video:null});
 
   const handleVideoUpload = (event) => {
     const file = event.target.files?.[0];
@@ -65,7 +65,9 @@ const EditLessonPage = ({ lesson, moduleId, onSave, onCancel }) => {
                   ref={videoInputRef}
                   type="file"
                   accept="video/*"
-                  onChange={handleVideoUpload}
+                  onChange={(e) => 
+                    setFormData({...formData,video:e.target.files[0]}) 
+                  }
                   className="hidden"
                 />
                 {formData.videoUrl && (
