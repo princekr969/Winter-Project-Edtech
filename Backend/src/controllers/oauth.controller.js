@@ -161,7 +161,7 @@ const googleCallback = async (req, res) => {
         }else{
             if(!user.googleId){
                 console.log("already register with email and password");
-                throw Error("")
+                throw Error("a7X9vB2qLmTZ0kPf")
             }
         }
 
@@ -174,8 +174,8 @@ const googleCallback = async (req, res) => {
         console.log("successful")
         return res.redirect(`http://localhost:5173/auth/google/oauth/success/${refreshToken}`);
     } catch (error) {
-        console.log("OAuth Callback Error:",error.response?.data || error.message);
-        if(error==a7X9vB2qLmTZ0kPf){
+        console.log("OAuth Callback Error:",error.message);
+        if(error.message==='a7X9vB2qLmTZ0kPf'){
             res.redirect(`http://localhost:5173/auth/google/oauth/success/a7X9vB2qLmTZ0kPf`);
         }
     } 
