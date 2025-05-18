@@ -39,7 +39,7 @@ function Module({module, index, courseId}) {
         {module.lessons.map((lesson, lessonIndex) => (
            
             <Link 
-                to={`/course/video/${courseId}/${moduleId}/${lesson.id}`}
+                to={`/course/video/${courseId}/${module._id}/${lesson._id}`}
                 key={lessonIndex}
                 onClick={() => setSelectedLesson(lesson)}
                 className="w-full text-left  text-sm hover:bg-gray-50 rounded-md transition-colors duration-150"

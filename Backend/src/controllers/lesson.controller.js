@@ -14,7 +14,7 @@ const getAllLessons = asyncHandler(async (req, res) => {
     {
         throw new ApiError(404, "Module not found");
     }
-    console.log(module.lessons);
+    // console.log(module.lessons);
     
     //find all the lessons from the array of ids in module.lessons
     const lessons = await Lesson.find({ _id: { $in: module.lessons } });
@@ -55,6 +55,22 @@ const addLesson = asyncHandler(async (req, res) => {
     res.json(new ApiResponse(200, "success", lesson));
 })
 
+const deleteLesson = asyncHandler(async (req,res) =>{
+    const {moduleId,lessonId} =req.body;
+    // console.log(moduleId,lessonId);    
+    const module = await Module.findByIdAndUpdate(moduleId, {$pull: {lessons: lessonId}}, {new: true});
+    if(!module)
+    {
+        throw new ApiError(500, "something went wrong when deleting lesson from module");
+    }
+    const lesson = await Lesson.findByIdAndDelete(lessonId);
+    if(!lesson)
+    {
+        throw new ApiError(500, "something went wrong when deleting lesson");
+    }
+    res.json(new ApiResponse(200, "success",lesson));
+})
 
 
-export {addLesson, getAllLessons}
+
+export {addLesson, getAllLessons, deleteLesson}

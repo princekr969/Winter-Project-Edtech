@@ -14,7 +14,7 @@ function OtpModal({ isOpen, onClose }) {
   const [otp, setOtp] = useState(['', '', '', '']);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  
+  const navigate = useNavigate();
   const inputRefs = Array(4).fill(null).map(() => React.useRef(null));
 
   const handleChange = (index, value) => {

@@ -3,7 +3,7 @@ import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { addCourse, getAllCourses, updateCourse, deleteCourse, getCourseById, getCoursesByIds } from "../controllers/course.controller.js";
 import { addModule, getAllModules } from "../controllers/module.controller.js";
-import { addLesson, getAllLessons } from "../controllers/lesson.controller.js";
+import { addLesson, deleteLesson, getAllLessons } from "../controllers/lesson.controller.js";
 
 
 const router = Router();
@@ -18,6 +18,7 @@ router.route("/get-all-course").get(getAllCourses);
 router.route("/add-module").post(verifyJWT,addModule)
 router.route("/get-all-modules").post(getAllModules)
 router.route("/get-all-lessons").post(getAllLessons)
+router.route("/delete-lesson").post(deleteLesson)
 router.route("/add-lesson").post(upload.single("video"),addLesson)
 
 export default router

@@ -36,13 +36,13 @@ const Module = ({
           </div>
       </div>
 
-      {module.lessons && module.lessons.map((lesson) => (
+      {module.lessons && module.lessons.map((lesson,index) => (
         <Lesson
-          key={lesson.id}
+          key={index}
           lesson={lesson}
           moduleId={module.id}
           isEditing={editingLessonId === lesson.id}
-          onDelete={() => onDeleteLesson(lesson.id)}
+          onDelete={() => onDeleteLesson(lesson._id)}
           onUpdate={(updates) => onUpdateLesson(lesson.id, updates)}
           onSave={() => onSaveLesson(lesson.id)}
           onCancel={onCancelLesson}

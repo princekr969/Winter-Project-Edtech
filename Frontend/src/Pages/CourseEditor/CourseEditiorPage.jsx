@@ -121,6 +121,7 @@ useEffect(() => {
 }, []);
 
   
+
   const handleAddModule = () => {
     setIsAddingModule(true);
   };
@@ -151,26 +152,6 @@ useEffect(() => {
   };
 
   const handleAddLesson = (moduleId) => {
-    console.log("moduleId",moduleId);
-    
-    const newLesson = {
-      id: crypto.randomUUID(),
-      title: "New Lesson",
-      videoUrl: "",
-    };
-
-    // setFormData({
-    //   ...formData,
-    //   modules: formData.modules.map((module) =>
-    //     module._id === moduleId
-    //       ? {
-    //           ...module,
-    //           lessons: [...module.lessons, newLesson],
-    //         }
-    //       : module
-    //   ),
-    // });
-
     setEditingState({ moduleId: moduleId, lessonId: null });
   };
 
@@ -180,8 +161,8 @@ useEffect(() => {
     const uploadLesson = async ()=>{
       const moduleId=editingState.moduleId;
       const response = await courseService.addLesson({...formDat,moduleId});
-      console.log("hereee",response.data);
-      console.log("hereee",formData.modules);
+      // console.log("hereee",response.data);
+      // console.log("hereee",formData.modules);
       setFormData({
       ...formData,
       modules: formData.modules.map((module) =>
@@ -207,19 +188,24 @@ useEffect(() => {
   };
 
   const handleDeleteLesson = (moduleId, lessonId) => {
-    setFormData({
-      ...formData,
-      modules: formData.modules.map((module) =>
-        module.id === moduleId
-          ? {
-              ...module,
-              lessons: module.lessons.filter(
-                (lesson) => lesson.id !== lessonId
-              ),
-            }
-          : module
-      ),
-    });
+    console.log("moduleId",moduleId);
+    console.log("lessonId",lessonId);
+    const deleteLesson = async ()=>{
+      const response = await courseService.deleteLesson({moduleId,lessonId});
+      console.log("hereeeeeee",response.data);
+      setFormData({
+        ...formData,
+        modules: formData.modules.map((module) =>
+          module._id === moduleId
+            ? {
+                ...module,
+                lessons: module.lessons.filter((lesson) => lesson._id !== lessonId),
+              }
+            : module
+        ),
+      })
+    }
+    deleteLesson();
   };
 
   const handleCancelLesson = () => {

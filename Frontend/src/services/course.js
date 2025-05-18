@@ -110,11 +110,11 @@ class CourseService {
       async getAllLessons(moduleId)
       {
         try {
-          console.log("serviceee",moduleId);
+          // console.log("serviceee",moduleId);
           
           const url = this.baseUrl + `/get-all-lessons`;
           const res = await axios.post(url, {moduleId},{withCredentials:true});
-          console.log("All modules:", res);
+          // console.log("All modules:", res);
           return res.data;
         } catch (error) {
           if(error.response)
@@ -132,7 +132,7 @@ class CourseService {
       async addLesson(formData)
       {
         try {
-          console.log("servicess",formData);
+          // console.log("servicess",formData);
           
           const url = this.baseUrl + `/add-lesson`;
           const res = await axios.post(url, formData,{withCredentials:true,headers:{"Content-Type": "multipart/form-data"}});
@@ -146,6 +146,26 @@ class CourseService {
           else
           {
             console.log("Backend service :: addLesson :: error", error.message);
+            return {message: "Something went wrong"}
+          }
+        }
+      }
+
+      async deleteLesson(formdata)
+      {
+        try {
+          const url = this.baseUrl + `/delete-lesson`;
+          const res = await axios.post(url, formdata,{withCredentials:true});
+          return res.data;
+        } catch (error) {
+          if(error.response)
+          {
+            console.log("Backend service :: deleteLesson :: error", error.response.data);
+            return error
+          }
+          else
+          {
+            console.log("Backend service :: deleteLesson :: error", error.message);
             return {message: "Something went wrong"}
           }
         }

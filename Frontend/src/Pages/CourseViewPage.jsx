@@ -4,26 +4,109 @@ import {Module} from "../components/index.js"
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ScrollToTop from "../utils/scrollButton.jsx";
+import courseService from "../services/course.js";
 
 const CourseViewPage = () => {
-    const {id} = useParams();
-    console.log(typeof id)
+    const courseId = useParams();
+    // const course = courses.filter(course => course.id===id)
+    const [course, setCourse] = useState(
+       {
+  _id: 2,
+  title: "Mastering Digital Marketing",
+  description:
+    "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
+  imageUrl:
+    "https://images.pexels.com/photos/1181336/pexels-photo-1181336.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  price: 899.00,
+  category: "dsa",
+  author: {
+    avatar:
+      "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    name: "suyash",
+  },
+  modules: [
+    {
+      _id: 1,
+      title: "Introduction to Digital Marketing",
+      lessons: [
+        {
+          _id: 1,
+          title: "What is Digital Marketing?",
+          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+        },
+        {
+          _id: 2,
+          title: "Setting Goals",
+          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+        },
+      ],
+    },
+    {
+      _id: 2,
+      title: "SEO and Content Strategy",
+      lessons: [
+        {
+          _id: 3,
+          title: "SEO Basics",
+          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+        },
+        {
+          _id: 4,
+          title: "Content Planning",
+          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+        },
+      ],
+    },
+  ],
+}
+    );
+  //  console.log(course)
+useEffect(() => {
+  const fetchCourseData = async () => {
+    window.scrollTo(0, 0);
+    try {
+      // Step 1: Fetch course
+      console.log("here courseId",courseId);
+      courseId.courseId = courseId.id
+      const courseResponse = await courseService.getCourseById(courseId);
+      const courseData = courseResponse.data;
 
-    const {courses} = useSelector(state => state.courses)
-    console.log("course preview",courses)
-    const course = courses.filter(course => course.id===id)
-   console.log(course)
+      // Step 2: Fetch modules
+      const modulesResponse = await courseService.getAllModules(courseId);
+      const modules = modulesResponse.data;
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+      // Step 3: Fetch lessons for each module
+      const modulesWithLessons = await Promise.all(
+        modules.map(async (module) => {
+          const lessonsResponse = await courseService.getAllLessons(module._id);
+          return {
+            ...module,
+            lessons: lessonsResponse.data, // add lessons array to each module
+          };
+        })
+      );
+
+      // Step 4: Set all in formData
+      setCourse({
+        ...courseData,
+        modules: modulesWithLessons,
+      });
+
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
+
+  fetchCourseData();
+}, []);
+
   return (
     <>
       <div className="min-h-screen bg-gray-50 mt-26">
         <div className="relative h-[500px]">
           <div className="absolute inset-0">
             <img
-              src={course[0]?.imageUrl}
+              src={course?.imageUrl}
               alt="Course hero"
               className="w-full h-full object-cover"
             />
@@ -35,10 +118,10 @@ const CourseViewPage = () => {
                 Professional Certificate
               </span>
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                {course[0]?.title}
+                {course?.title}
               </h1>
               <p className="mt-6 text-xl text-gray-100 max-w-3xl">
-                {course[0]?.description}
+                {course?.description}
               </p>
             </div>
           </div>
@@ -101,8 +184,8 @@ const CourseViewPage = () => {
               <section className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-6">Curriculum</h2>
                 <div className="space-y-4">
-                  {course[0]?.modules.map((module, index) => (
-                  <Module module={module} index={index} courseId={id}/>
+                  {course?.modules.map((module, index) => (
+                  <Module module={module} index={index} courseId={course._id}/>
                   ))}
                 </div>
               </section>
@@ -112,7 +195,7 @@ const CourseViewPage = () => {
             <div className=" lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                 <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-blue-600">₹{course[0]?.price}</div>
+                  <div className="text-5xl font-bold text-blue-600">₹{course?.price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
                 <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mb-4">

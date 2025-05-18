@@ -17,7 +17,7 @@ function App() {
   const refreshToken = Cookies.get("refreshToken");
   const isUserActive = useSelector(state => state.auth.status);
  
-  console.log("app")
+  // console.log("app")
   const Loader = () => {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
@@ -36,7 +36,7 @@ function App() {
       try {
         setLoading(true);
         const res = await authService.getCurrentUser(refreshToken)
-        console.log("App.js",res)
+        // console.log("App.js",res)
         if(res.success){    
           dispatch(login(res.message.user))
         }else{

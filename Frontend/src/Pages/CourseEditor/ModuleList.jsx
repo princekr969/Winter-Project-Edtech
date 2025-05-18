@@ -33,9 +33,9 @@ const ModuleList = ({
       </div>
 
       <div className="space-y-4">
-        {modules.map((module) => (
+        {modules.map((module,index) => (
           <Module
-            key={module.id}
+            key={index}
             module={module}
             isEditing={editingState.moduleId === module.id}
             isAddingLesson={module.lessons?.some((l) => !l.title)}
@@ -45,7 +45,7 @@ const ModuleList = ({
             onSaveLesson={onSaveLesson}
             onCancelLesson={onCancelLesson}
             onUpdateLesson={(lessonId, updates) => onUpdateLesson(module.id, lessonId, updates)}
-            onDeleteLesson={(lessonId) => onDeleteLesson(module.id, lessonId)}
+            onDeleteLesson={(lessonId) => onDeleteLesson(module._id, lessonId)}
             onSaveModule={() => onSaveModule(module.id)}
             onCancelModule={onCancelModule}
             onDeleteModule={() => onDeleteModule(module.id)}
