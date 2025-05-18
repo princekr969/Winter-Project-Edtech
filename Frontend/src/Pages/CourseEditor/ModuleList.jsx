@@ -33,7 +33,7 @@ const ModuleList = ({
       </div>
 
       <div className="space-y-4">
-        {modules.map((module,index) => (
+        {modules?.map((module,index) => (
           <Module
             key={index}
             module={module}

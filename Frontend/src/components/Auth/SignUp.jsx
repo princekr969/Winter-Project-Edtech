@@ -21,7 +21,6 @@ function SignUp() {
   const password = watch("password")
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
 
   const handleGoogleLogin = async () => {
     window.location.href = "http://localhost:8012/api/v1/users/google/login"

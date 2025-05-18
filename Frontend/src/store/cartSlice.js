@@ -18,7 +18,7 @@ const cartSlice = createSlice({
         },
 
         removeItem: (state, action) => {
-            state.items.filter(item => item.id !== action.payload)
+            state.items = state.items.filter(item => item._id !== action.payload)
             state.totalItems -= 1
         },
 
@@ -27,8 +27,7 @@ const cartSlice = createSlice({
             state.items = courses;
             state.totalItems = courses.length;
             state.totalPrice = courses.reduce((acc, course) => acc + course.price, 0)
-        console.log("initialize cart", state.items)
-
+            console.log("initialize cart", state.items)
         },
     }
 })

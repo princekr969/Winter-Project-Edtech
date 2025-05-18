@@ -5,38 +5,48 @@ import { GraduationCap } from 'lucide-react';
 import { logout } from '../store/authSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
-import avatar from "./../assets/avatar.svg"
+import { ShoppingCart} from 'lucide-react';
+import CartIcon from './Cart/CartIcon.jsx';
 
 const Navbar = () => {
+  const cartIconRef = useRef(null);
+  const navRef = useRef(null)
+  const dropDownRef = useRef(null)
+
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
   const authStatus = useSelector((state) => state.auth.status)
-  const navRef = useRef(null)
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: "Advanced Web Development Course",
-      price: 99.99,
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: 2,
-      title: "Data Science Fundamentals",
-      price: 149.99,
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    }
-  ]);
+
+  // Cart
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  // const [cartItemCount, setCartItemCount] = useState(0);
+  const cartItemCount = useSelector((state) => state.cart.totalItems)
+  
 
   useEffect(() => {
       const handleClickOutside = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
-        setIsNavbarOpen(false)
+        setIsNavbarOpen(false);
+      }
+      if(cartIconRef.current && dropDownRef.current && !dropDownRef.current.contains(event.target) && !cartIconRef.current.contains(event.target)){
+        setIsCartOpen(false)
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-  })
+      const handleScroll = () => {
+        setIsCartOpen(false)
+        setIsNavbarOpen(false);
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [])
+
   
   return (
 
@@ -53,7 +63,8 @@ const Navbar = () => {
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         
         <div className="relative">  
-            <CartDropdown/>
+          <CartIcon ref={cartIconRef} isOpen={isCartOpen} setIsCartOpen={setIsCartOpen} itemCount={cartItemCount}/>
+          {isCartOpen && <CartDropdown ref={dropDownRef} setIsCartOpen={setIsCartOpen}/>}
         </div>
           
         {/*UserProfile  */}

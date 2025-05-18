@@ -7,7 +7,6 @@ import {useForm} from "react-hook-form"
 import { GraduationCap, KeySquare } from 'lucide-react'
 import ErrorPopup from '../ErrorPopup.jsx'
 import ForgetPasswordEmailForm from './ForgetPasswordEmail.jsx'
-
 let email = ""
 
 function OtpModal({ isOpen, onClose }) {
@@ -45,6 +44,7 @@ function OtpModal({ isOpen, onClose }) {
         if(userData){
           dispatch(authLogin(userData));
           navigate("/")
+          window.location.reload();
         } 
 
       } catch (error) {

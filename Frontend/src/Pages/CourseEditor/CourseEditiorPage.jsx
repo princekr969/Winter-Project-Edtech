@@ -9,55 +9,55 @@ import courseService from "../../services/course";
 import { useParams } from "react-router-dom";
 import AddLessonPage from "./AddLessonPage";
 
-const course = {
-  _id: 2,
-  title: "Mastering Digital Marketing",
-  description:
-    "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
-  imageUrl:
-    "https://images.pexels.com/photos/1181336/pexels-photo-1181336.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  price: 899.00,
-  category: "dsa",
-  author: {
-    avatar:
-      "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    name: "suyash",
-  },
-  modules: [
-    {
-      id: 1,
-      title: "Introduction to Digital Marketing",
-      lessons: [
-        {
-          id: 1,
-          title: "What is Digital Marketing?",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-        {
-          id: 2,
-          title: "Setting Goals",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: "SEO and Content Strategy",
-      lessons: [
-        {
-          id: 3,
-          title: "SEO Basics",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-        {
-          id: 4,
-          title: "Content Planning",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-      ],
-    },
-  ],
-};
+// const course = {
+//   _id: 2,
+//   title: "Mastering Digital Marketing",
+//   description:
+//     "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
+//   imageUrl:
+//     "https://images.pexels.com/photos/1181336/pexels-photo-1181336.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+//   price: 899.00,
+//   category: "dsa",
+//   author: {
+//     avatar:
+//       "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+//     name: "suyash",
+//   },
+//   modules: [
+//     {
+//       id: 1,
+//       title: "Introduction to Digital Marketing",
+//       lessons: [
+//         {
+//           id: 1,
+//           title: "What is Digital Marketing?",
+//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+//         },
+//         {
+//           id: 2,
+//           title: "Setting Goals",
+//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+//         },
+//       ],
+//     },
+//     {
+//       id: 2,
+//       title: "SEO and Content Strategy",
+//       lessons: [
+//         {
+//           id: 3,
+//           title: "SEO Basics",
+//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+//         },
+//         {
+//           id: 4,
+//           title: "Content Planning",
+//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 const categories = [
   { id: "dsa", name: "Data Structures & Algorithms" },
@@ -75,19 +75,24 @@ const categories = [
 
 const CourseEditorPage = ({ onSave, onClose, }) => {
   const courseId = useParams();
-  const [formData, setFormData] = useState(course);
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
   const [isAddingModule, setIsAddingModule] = useState(false);
   const [isAddingLesson, setIsAddingLesson] = useState(false);
-  const [courseModules, setCourseModules] = useState(formData.modules);
+  const [courseModules, setCourseModules] = useState();
   const [editingState, setEditingState] = useState({
     moduleId: null,
     lessonId: null,
   });
 
-useEffect(() => {
-  const fetchCourseData = async () => {
-    try {
-      // Step 1: Fetch course
+  console.log("formData1", formData);
+  
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        setLoading(true);
+        // Step 1: Fetch course
+        console.log("courseId", courseId)
       const courseResponse = await courseService.getCourseById(courseId);
       const courseData = courseResponse.data;
 
@@ -114,6 +119,8 @@ useEffect(() => {
 
     } catch (error) {
       console.error("Error fetching course data:", error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -156,28 +163,34 @@ useEffect(() => {
   };
 
   const handleUpdateLesson = (formDat) => {
-    console.log("formDataa",formDat)
 
     const uploadLesson = async ()=>{
-      const moduleId=editingState.moduleId;
-      const response = await courseService.addLesson({...formDat,moduleId});
-      // console.log("hereee",response.data);
-      // console.log("hereee",formData.modules);
-      setFormData({
-      ...formData,
-      modules: formData.modules.map((module) =>
-        module._id === moduleId
-          ? {
-              ...module,
-              lessons: [...module.lessons, response.data],
-            }
-          : module
-      ),
-    });
+      try {
+        const moduleId=editingState.moduleId;
+        const response = await courseService.addLesson({...formDat,moduleId});
+  
+        // console.log("hereee",response);
+        // console.log("hereee",formData.modules);
+        setFormData({
+        ...formData,
+        modules: formData.modules.map((module) =>
+          module._id === moduleId
+            ? {
+                ...module,
+                lessons: [...module.lessons, response.data],
+              }
+            : module
+        ),
+      });
+        if(response.success){
+          setEditingState({ moduleId: null, lessonId: null });
+        }
+      } catch (error) {
+        console.log("add lesson error", error);
+      }
     }
     uploadLesson();
     
-    setEditingState({ moduleId: null, lessonId: null });
   };
 
   const handleDeleteModule = (moduleId) => {
@@ -213,7 +226,7 @@ useEffect(() => {
   };
 
   const handleFormCancel = () => {
-    setFormData(course);
+    setFormData({});
     setIsAddingModule(false);
     setEditingState({ moduleId: null, lessonId: null });
   };
@@ -245,22 +258,34 @@ useEffect(() => {
           moduleId={editingState.moduleId}
           onSave={handleUpdateLesson}
           onCancel={handleCancelLesson}
+          addingLesson={(editingState.moduleId===null)?true:false}
         />
       );
     
   }
 
 
-  return (
+  const Loader = ({ size = '8', color = 'blue-500', text = 'Loading...' }) => {
+    return (
+      <div className="flex flex-col items-center justify-center p-4">
+        <div
+          className={`animate-spin rounded-full h-${size} w-${size} border-t-4 border-b-4 border-${color}`}
+        ></div>
+        {text && <p className="mt-2 text-gray-600">{text}</p>}
+      </div>
+    );
+  };
+
+  return (!loading)? (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
 
           <div className="bg-white space-y-6 shadow">
             <div className="p-6 space-y-6">
-                <h2 className="text-xl font-bold text-gray-800">{formData.title}</h2> 
+                <h2 className="text-xl font-bold text-gray-800">{formData?.title}</h2> 
               <ModuleList
-                modules={formData.modules}
+                modules={formData?.modules}
                 editingState={editingState}
                 isAddingModule={isAddingModule}
                 onAddModule={handleAddModule}
@@ -291,7 +316,7 @@ useEffect(() => {
 
       </main>
     </div>
-  );
+  ):<Loader/>;
 };
 
 export default CourseEditorPage;

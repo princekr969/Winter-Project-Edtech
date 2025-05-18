@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
     }],
+    cartItems: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cart"
+    }],
     refreshToken: {
         type: String
     },

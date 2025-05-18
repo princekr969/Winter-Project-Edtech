@@ -8,14 +8,9 @@ function CartPage() {
   const items = useSelector(state => state.cart.items)
   const total = useSelector(state => state.cart.totalItems)
   const totalPrice = useSelector(state => state.cart.totalPrice)
-  
-  const removeItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
 
   return (
-    <div className="min-h-screen mt-20 bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
        
         <h1 className="text-2xl font-bold mb-6">Shopping Cart ({total} items)</h1>
@@ -24,7 +19,7 @@ function CartPage() {
             
             <div className="bg-white rounded-lg shadow-sm">
               {items.map((item) => (
-                <CartItem key={item.id} item={item} from={"page"}/>
+                <CartItem key={item.id} item={item}/>
               ))}
             </div>
           </div>
@@ -36,7 +31,7 @@ function CartPage() {
                 items.map((item, index) => (
                   <div key={item.id} className="space-y-3 mb-1">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Item {index+1}</span>
+                    <span className="text-gray-600">{item.title}</span>
                     <span>₹{item.price.toFixed(2)}</span>
                   </div>
                   </div>

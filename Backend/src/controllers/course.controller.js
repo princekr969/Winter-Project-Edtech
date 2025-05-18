@@ -35,6 +35,8 @@ const getCoursesByIds = asyncHandler(async (req, res) => {
         _id: { $in: courseIds },
     });
 
+    console.log("courses", courses);
+
     if (!courses || courses.length === 0) {
         throw new ApiError(404, "No courses found for the provided IDs");
     }

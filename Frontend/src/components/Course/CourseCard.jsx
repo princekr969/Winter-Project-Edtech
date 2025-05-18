@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { ShoppingCart, ChevronRight, Star, EllipsisVertical } from "lucide-react";
+import { ShoppingCart, ChevronRight, Star, EllipsisVertical, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import authService from "../../services/auth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import cartService from "../../services/cart";
+import {addItem} from "../../store/cartSlice.js"
 
 const RatingStars = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -42,14 +44,29 @@ const CourseCard = ({
 }) => {
   const [ownerData, setOwnerData] = useState({avatar:"", name:"", email:""});
   const currentUser = useSelector((state) => state.auth.userData?.email);
+  const cartItems = useSelector((state) => state.cart?.items)
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
+  const dispatch = useDispatch();
+
   const toggleMenu = (e) => {
     e.stopPropagation();
     e.preventDefault(); // prevent <Link> click if inside
     setMenuVisible((prev) => !prev);
   };
+
+  const handleAddItem = async (courseId) => {
+    console.log("handleAddItem", courseId);
+    try {
+      const res = await cartService.addItem(courseId)
+      if(res.data.success){
+        dispatch(addItem(res.data.data));
+      }
+    } catch (error) {
+      console.log("Error in add cart item", error)
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -93,12 +110,19 @@ const CourseCard = ({
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
           <img src={imageUrl} alt="" className="w-full h-full object-cover" />
-          <button ref={buttonRef} onClick={toggleMenu} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
           {(ownerData.email===currentUser)?
-            <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />:
-            <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+          <button ref={buttonRef} onClick={toggleMenu} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
+            <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />
+            </button>
+            :
+            <button onClick={() => handleAddItem(_id)} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
+                {cartItems.every(item => item.courseId === _id)?
+              <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />:
+              <Check className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+            }
+            </button>
+
           }
-          </button>
         </div>
         {(menuVisible && ownerData.email===currentUser)?
         (
@@ -122,13 +146,17 @@ const CourseCard = ({
         )
         :null}
         <div className="w-2/3 md:w-full flex flex-col">
-        <button ref={buttonRef} onClick={toggleMenu} className="absolute md:hidden top-3 right-3 w-8 h-8 bg-white flex items-center justify-center hover:scale-125 transition-colors duration-200 group">
         {(currentUser===ownerData.email)?
+        <button ref={buttonRef} onClick={toggleMenu} className="absolute md:hidden top-3 right-3 w-8 h-8 bg-white flex items-center justify-center hover:scale-125 transition-colors duration-200 group">
             <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />
-         :
-            <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+        </button>:
+        <button onClick={() => handleAddItem(_id)} className="absolute md:hidden top-3 right-3 w-8 h-8 bg-white flex items-center justify-center hover:scale-125 transition-colors duration-200 group">
+          {(cartItems.every(item => item.courseId === _id))?
+            <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />:
+            <Check className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+            }
+        </button>
         }
-          </button>
           <div className="flex items-center gap-2 mb-3">
             <img src={ownerData.avatar} alt={ownerData.name} className="w-8 h-8 rounded-full object-cover" />
             <div className="flex flex-col">

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Video, Save, X } from 'lucide-react';
 
-const EditLessonPage = ({ lesson, moduleId, onSave, onCancel }) => {
+const EditLessonPage = ({ lesson, moduleId, onSave, onCancel, addingLesson }) => {
   const videoInputRef = useRef(null);
   const [formData, setFormData] = useState({...lesson,video:null});
 
@@ -90,7 +90,6 @@ const EditLessonPage = ({ lesson, moduleId, onSave, onCancel }) => {
                 type="submit"
                 className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center gap-2 font-medium transition-colors"
               >
-                <Save className="w-4 h-4" />
                 Add Lesson
               </button>
             </div>
