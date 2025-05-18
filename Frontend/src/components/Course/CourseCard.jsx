@@ -49,13 +49,16 @@ const CourseCard = ({
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const dispatch = useDispatch();
+  const isInCart = (id) =>{
+    return cartItems.some(item => item.courseId?.toString() === id.toString())
+  }
 
   const toggleMenu = (e) => {
     e.stopPropagation();
     e.preventDefault(); // prevent <Link> click if inside
     setMenuVisible((prev) => !prev);
   };
-
+  
   const handleAddItem = async (courseId) => {
     console.log("handleAddItem", courseId);
     try {
@@ -114,13 +117,18 @@ const CourseCard = ({
           <button ref={buttonRef} onClick={toggleMenu} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
             <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />
             </button>
-            :
-            <button onClick={() => handleAddItem(_id)} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
-                {cartItems.every(item => item.courseId === _id)?
-              <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />:
-              <Check className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
-            }
-            </button>
+            :<div>
+              {!(isInCart(_id))?
+              <button onClick={() => handleAddItem(_id)} className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
+                  
+                <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+              </button>:
+              <button className="absolute max-md:hidden top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-125 shadow-md hover:bg-slate-200 hover:transition-transform transition-colors duration-200">
+  
+                <Check className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
+              </button>
+              }
+            </div>
 
           }
         </div>
@@ -151,7 +159,7 @@ const CourseCard = ({
             <EllipsisVertical className="w-4 h-4 text-[#4339F2] transition-colors hover:scale-125 duration-200" />
         </button>:
         <button onClick={() => handleAddItem(_id)} className="absolute md:hidden top-3 right-3 w-8 h-8 bg-white flex items-center justify-center hover:scale-125 transition-colors duration-200 group">
-          {(cartItems.every(item => item.courseId === _id))?
+          {(cartItems.find(item => item.courseId === _id) === undefined)?
             <ShoppingCart className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />:
             <Check className="w-4 h-4 text-[#4339F2] hover:scale-125 transition-colors duration-200" />
             }
