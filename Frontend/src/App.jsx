@@ -36,6 +36,7 @@ function App() {
       try {
         setLoading(true);
         const res = await authService.getCurrentUser(refreshToken)
+        console.log("App.js",res)
         if(res.success){    
           dispatch(login(res.message.user))
         }else{
