@@ -190,6 +190,6 @@ export class AuthService {
   
 };
 
-const authService = new AuthService("http://localhost:8012/api/v1/users");
+const authService = new AuthService("https://winter-project-edtech.onrender.com/api/v1/users");
 
 export default authService

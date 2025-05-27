@@ -57,5 +57,5 @@ export class CartService{
     }
 }
 
-const cartService = new CartService("http://localhost:8012/api/v1/cart");
+const cartService = new CartService("https://winter-project-edtech.onrender.com/api/v1/cart");
 export default cartService;

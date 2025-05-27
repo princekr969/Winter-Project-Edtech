@@ -200,6 +200,6 @@ class CourseService {
   }
   
 
-  const courseService = new CourseService("http://localhost:8012/api/v1/course");
+  const courseService = new CourseService("https://winter-project-edtech.onrender.com/api/v1/course");
   export default courseService
   
