@@ -4,10 +4,12 @@ import {Module} from "../components/index.js"
 import { useParams } from "react-router-dom";
 import ScrollToTop from "../utils/ScrollButton.jsx";
 import courseService from "../services/course.js";
+import Loader from "../utils/Loader.jsx";
 
 const CourseViewPage = () => {
     const courseId = useParams();
     // const course = courses.filter(course => course.id===id)
+    const [loading, setLoading] = useState(true)
     const [course, setCourse] = useState(
        {
   _id: 2,
@@ -94,11 +96,15 @@ useEffect(() => {
     } catch (error) {
       console.error("Error fetching course data:", error);
     }
+    setLoading(false);
   };
 
   fetchCourseData();
 }, []);
-
+  if(loading)
+  {
+    return <Loader />
+  }
   return (
     <>
       <div className="min-h-screen bg-gray-50 mt-26">
