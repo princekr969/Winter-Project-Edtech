@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Cookies from "js-cookie" 
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
+
+
 import authService from "./services/auth.js"
 import {login, logout} from "./store/authSlice.js"
 import {initializeEnrolledCourses, initializeCourses} from './store/coursesSlice.js'
