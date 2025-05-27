@@ -312,7 +312,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const options={
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite:"None"
     }
 
     return res
@@ -359,7 +360,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      const { accessToken, refreshToken } = tokens;
      const options={
          httpOnly: true,
-         secure: false
+         secure: false,
+         sameSite:"None"
      } 
  
      return res
@@ -486,6 +488,7 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         const options={
             httpOnly: true,
             secure: true,
+            sameSite:"None"
         }
 
         return res
