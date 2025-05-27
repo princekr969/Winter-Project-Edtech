@@ -493,7 +493,7 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
             sameSite:"None",
             maxAge: 7 * 24 * 60 * 60 * 1000
         }
-
+        console.log("access Token",accessToken)
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
