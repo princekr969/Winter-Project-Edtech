@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { HeroSection, CourseSection, AboutSection} from '../components'
-import ScrollToTop from '../utils/scrollButton';
-import courseService from '../services/course';
-import { initializeCourses } from '../store/coursesSlice';
+import ScrollToTop from '../utils/scrollButton.jsx';
+import courseService from '../services/course.js';
+import { initializeCourses } from '../store/coursesSlice.js';
 
 
 function Home() {

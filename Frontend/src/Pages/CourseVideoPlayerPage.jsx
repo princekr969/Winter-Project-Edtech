@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {BookOpen, PlayCircle, GraduationCap } from 'lucide-react';
+import  { useState, useEffect } from 'react';
+import {BookOpen, PlayCircle } from 'lucide-react';
 import Module from '../components/Course/Module';
 import ReactPlayer from 'react-player';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import ScrollToTop from '../utils/scrollButton';
-import courseService from '../services/course';
+import ScrollToTop from '../utils/scrollButton.jsx';
+import courseService from '../services/course.js';
 
 
 function CourseVideoPlayerPage() {

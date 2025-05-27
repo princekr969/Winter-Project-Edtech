@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sidebar } from '../components/index';
+import { Sidebar } from '../components/index.js';
 import { Outlet } from 'react-router-dom';
 
 function DashboardPage() {

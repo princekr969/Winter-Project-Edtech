@@ -1,9 +1,8 @@
-import React from 'react';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Users, Target, Lightbulb } from 'lucide-react';
 import { AboutPageHeroSection, AboutSection } from '../components';
-import ScrollToTop from '../utils/scrollButton';
+import ScrollToTop from '../utils/scrollButton.jsx';
 
 function App() {
   const fadeIn = {
