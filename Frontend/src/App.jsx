@@ -10,15 +10,15 @@ import {initializeEnrolledCourses, initializeCourses} from './store/coursesSlice
 import {initializeCart} from './store/cartSlice.js'
 import { Footer, Navbar } from './components/index.js'
 import { Outlet } from 'react-router-dom'
-import Loader from './utils/Loader.jsx'
 import cartService from './services/cart.js'
+import courseService from './services/course.js';
+
 
 
 function App() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const refreshToken = Cookies.get("refreshToken");
-  const isUserActive = useSelector(state => state.auth.status);
  
   const Loader = () => {
     return (
@@ -42,9 +42,7 @@ function App() {
         if(res.success){    
           dispatch(login(res.message.user))
           const cartItemIds = res.message.user.cartItems;
-          console.log("cartItm", cartItemIds);
           if(cartItemIds.length!==0){
-            console.log("hhell")
             const cartItems = await cartService.getAllUserCartItem(cartItemIds);
             if(cartItems.success){
               
@@ -65,6 +63,22 @@ function App() {
 
     fetchData();
 
+  }, [])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const courses = await courseService.getAllCourse();
+        if(courses.data){
+          dispatch(initializeCourses(courses.data))
+        }        
+      } catch (error) {
+        console.log("HomePageError", error)
+      }
+    }
+
+    fetchData()
   }, [])
   
   return !loading ? (

@@ -41,6 +41,7 @@ function OtpModal({ isOpen, onClose }) {
     if (otpValue.length === 4) {
       try {
         const userData = await authService.otpVerify({otpValue, email})
+        console.log("otp", userData);
         if(userData){
           dispatch(authLogin(userData));
           navigate("/")
@@ -150,7 +151,7 @@ function Login() {
     }
 
     const handleGoogleLogin = async () => {
-    window.location.href = "http://localhost:8012/api/v1/users/google/login"
+    window.location.href = "https://winter-project-edtech.onrender.com/api/v1/users/google/login"
     console.log("google login",res);
   }
 

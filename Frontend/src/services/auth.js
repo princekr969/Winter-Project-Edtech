@@ -173,7 +173,7 @@ export class AuthService {
         try {
             const url = this.baseUrl + "/get-user";
             const userAccount = await axios.post(url, {userId},{withCredentials:true});
-            console.log("getUserById",userAccount.data)
+            // console.log("getUserById",userAccount.data)
             return userAccount.data
         } catch (error) {
             if(error.response){

@@ -7,24 +7,9 @@ import courseService from '../services/course.js';
 import { initializeCourses } from '../store/coursesSlice.js';
 
 
-function Home() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const courses = await courseService.getAllCourse();
-        if(courses.data){
-          dispatch(initializeCourses(courses.data))
-        }
-        console.log("Homepage courses", courses);
-        
-      } catch (error) {
-        console.log("HomePageError", error)
-      }
-    }
 
-    fetchData()
-  }, [])
+function Home() {
+  
   return (
     <>  
           <HeroSection/>

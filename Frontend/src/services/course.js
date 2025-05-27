@@ -175,7 +175,7 @@ class CourseService {
         try {
           const url = this.baseUrl + "/get-all-course";
           const res = await axios.get(url,{withCredentials:true});
-          console.log("All course:", res);
+          // console.log("All course:", res);
           return res.data;
         } catch (error) {
           if(error.response){
