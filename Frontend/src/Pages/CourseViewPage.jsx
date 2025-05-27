@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {BookOpen,Clock,Globe,PlayCircle,Star,Trophy, Users2} from "lucide-react";
 import {Module} from "../components/index.js" 
 import { useParams } from "react-router-dom";
-import ScrollToTop from "../utils/scrollButton.jsx";
+import ScrollToTop from "../utils/ScrollButton.jsx";
 import courseService from "../services/course.js";
 
 const CourseViewPage = () => {

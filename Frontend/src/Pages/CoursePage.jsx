@@ -3,7 +3,7 @@ import { Users2, Star, BookOpen, } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { CourseCard } from '../components';
 import {CourseHeroSection} from '../components';
-import ScrollToTop from '../utils/scrollButton.jsx';
+import ScrollToTop from '../utils/ScrollButton.jsx';
 
 const categories = [
   { id: 'all', name: 'All Courses' },

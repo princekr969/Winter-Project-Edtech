@@ -3,7 +3,7 @@ import {BookOpen, PlayCircle } from 'lucide-react';
 import Module from '../components/Course/Module';
 import ReactPlayer from 'react-player';
 import { useParams } from 'react-router-dom';
-import ScrollToTop from '../utils/scrollButton.jsx';
+import ScrollToTop from '../utils/ScrollButton.jsx';
 import courseService from '../services/course.js';
 
 
