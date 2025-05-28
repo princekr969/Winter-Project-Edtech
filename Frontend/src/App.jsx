@@ -65,7 +65,7 @@ function App() {
 
     const timer = setTimeout(() => {
       fetchData();
-    }, 100); 
+    }, 1000); 
     
 
   }, [])
