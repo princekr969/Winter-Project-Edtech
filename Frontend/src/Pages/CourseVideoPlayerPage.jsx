@@ -5,11 +5,13 @@ import ReactPlayer from 'react-player';
 import { useParams } from 'react-router-dom';
 import ScrollToTop from '../utils/ScrollButton.jsx';
 import courseService from '../services/course.js';
+import Loader from '../utils/Loader.jsx';
 
 
 function CourseVideoPlayerPage() {
   const {courseId, lessonId, moduleId} = useParams()
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [loading, setLoading] = useState(true);
   // console.log("moduleId",moduleId);
   // console.log("lessonId",lessonId);
   // console.log("courseId",courseId);
@@ -105,6 +107,7 @@ function CourseVideoPlayerPage() {
           (les) => String(les._id) === String(lessonId)
         );
         setSelectedLesson(lesson || null);
+        setLoading(false)
       }
 
     } catch (error) {
@@ -125,7 +128,12 @@ function CourseVideoPlayerPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
+  if(loading)
+  {
+    return <Loader />
+  }
+
   return (
     <>
     {(selectedLesson &&<>

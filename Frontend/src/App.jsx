@@ -18,7 +18,10 @@ import courseService from './services/course.js';
 function App() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
   const refreshToken = Cookies.get("refreshToken");
+  const isUserActive = useSelector(state => state.auth.status);
+
  
   const Loader = () => {
     return (
@@ -34,15 +37,21 @@ function App() {
   
   useEffect(() => {
     
+    setLoading(true);
+    
     const fetchData = async () => {
       try {
-        setLoading(true);
+        
+        const refreshToken = Cookies.get("refreshToken");
         const res = await authService.getCurrentUser(refreshToken)
 
         if(res.success){    
           dispatch(login(res.message.user))
           const cartItemIds = res.message.user.cartItems;
+
+          // console.log("cartItm", cartItemIds);
           if(cartItemIds.length!==0){
+            // console.log("hhell")
             const cartItems = await cartService.getAllUserCartItem(cartItemIds);
             if(cartItems.success){
               
@@ -55,13 +64,16 @@ function App() {
           dispatch(logout())
         }
       } catch (error) {
-        console.log("refreshToken:",error);
+        console.log("refreshToken error:",error);
       } finally{
         setLoading(false)
       }
     }
 
-    fetchData();
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 3000); 
+    
 
   }, [])
 

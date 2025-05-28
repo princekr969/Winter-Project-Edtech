@@ -109,7 +109,7 @@ const CourseCard = ({
 
 
   return (
-    <Link to={`/course/preview/${_id}`} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+    <div className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
           <img src={imageUrl} alt="" className="w-full h-full object-cover" />
@@ -184,14 +184,14 @@ const CourseCard = ({
               </div> */}
               <span className="font-semibold text-md md:text-lg">₹ {price}</span>
             </div>
-            <button className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#4339F2]/10 rounded-full text-[#4339F2] hover:bg-[#4339F2] hover:text-white transition-all duration-300">
+            <Link to={`/course/preview/${_id}`} className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#4339F2]/10 rounded-full text-[#4339F2] hover:bg-[#4339F2] hover:text-white transition-all duration-300">
               Explore Course
               <ChevronRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

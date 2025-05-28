@@ -9,7 +9,7 @@ export class CartService{
         const url = this.baseUrl + '/add-item';
         try {
             const res = await axios.post(url, {courseId}, {withCredentials:true});
-            console.log("addItemRes", res);
+            // console.log("addItemRes", res);
             return res;
         } catch (error) {
             if(error.response){
@@ -26,7 +26,7 @@ export class CartService{
         const url = this.baseUrl + '/delete-item';
         try {
             const res = await axios.post(url, {cartItemId}, {withCredentials:true});
-            console.log("addItemRes", res);
+            // console.log("addItemRes", res);
             return res;
         } catch (error) {
             if(error.response){

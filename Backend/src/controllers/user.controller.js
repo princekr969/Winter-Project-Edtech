@@ -313,7 +313,8 @@ const logoutUser = asyncHandler(async (req, res) => {
     const options={
         httpOnly: true,
         secure: true,
-        sameSite:"None"
+        sameSite:"None",
+        maxAge: 7 * 24 * 60 * 60 * 1000
     }
 
     return res
@@ -326,8 +327,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-    console.log("refreshAccessToken");
-    const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+    const incomingRefreshToken = req.cookies?.refreshToken;
+    console.log("refreshAccessToken, incomingRefreshToken", incomingRefreshToken);
+    console.log(req.body);
+    
     if(!incomingRefreshToken)
     {
         throw new ApiError(401, "Unauthorized");
@@ -343,25 +346,26 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      }
      
      console.log("done2")
+     console.log("decodedToken",decodedToken);
      const user = await User.findById(decodedToken._id);
      
      if(!user)
      {
          throw new ApiError(401, "Unauthorized");
      }
- 
-     if(user.refreshToken !== incomingRefreshToken)
-     {
-         throw new ApiError(401, "Refresh Token is expired or used");
-     }
- 
+     console.log("done3");
+     console.log("user",user);
+     console.log("user",user)
      const tokens= await generateAccessAndRefreshTokens(user._id);
+     console.log("tokens",tokens);
+     
  
      const { accessToken, refreshToken } = tokens;
      const options={
          httpOnly: true,
          secure: false,
-         sameSite:"None"
+         sameSite:"None",
+         maxAge: 7 * 24 * 60 * 60 * 1000
      } 
  
      return res
@@ -420,7 +424,7 @@ const getUserById = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid user id");
     }
     
-    console.log("UserId", user);
+    // console.log("UserId", user);
 
   return res
   .status(200)
@@ -467,10 +471,10 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         {
             throw new ApiError(404, "User not found");
         }
-        console.log(req.body);
+        // console.log(req.body);
         
-        console.log(req.body.otpValue);
-        console.log(user.otp);
+        // console.log(req.body.otpValue);
+        // console.log(user.otp);
            
         if(Number(req.body.otpValue)!==Number(user.otp))
         {
@@ -488,9 +492,10 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         const options={
             httpOnly: true,
             secure: true,
-            sameSite:"None"
+            sameSite:"None",
+            maxAge: 7 * 24 * 60 * 60 * 1000
         }
-
+        // console.log("access Token",accessToken)
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
@@ -503,7 +508,7 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         );
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).json(new ApiResponse(500, error.message));
     }
 })

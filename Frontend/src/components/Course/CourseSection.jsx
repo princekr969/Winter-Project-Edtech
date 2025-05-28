@@ -29,15 +29,15 @@ export default function App() {
     <div className=" px-5 md:px-16 lg:px-24 py-10 ">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <div>
-            <h2 className="text-[#14142B] text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+          <div className="md:mr-2">
+            <h2 className="text-[#14142B] text-2xl md:text-3xl  lg:text-4xl font-bold mb-4">
             Everything you need to succeed, all in one place
             </h2>
-            <p className="text-[#6E7191] md:text-sm ">
+            <p className="text-[#6E7191] text-pretty md:text-sm ">
             From essential skills to advanced technical topics, EduMaxi empowers your professional growth every step of the way.
             </p>
           </div>
-          <Link to={"./courses"} className="hidden md:block border-2 border-[#4339F2] text-[#4339F2] px-6 py-3 rounded-full hover:bg-[#4339F2] hover:text-white transition-colors">
+          <Link to={"./courses"} className="hidden text-nowrap md:block border-2 border-[#4339F2] text-[#4339F2] px-4 lg:px-6 py-3 rounded-full hover:bg-[#4339F2] hover:text-white transition-colors">
             ALL COURSES
           </Link>
         </div>

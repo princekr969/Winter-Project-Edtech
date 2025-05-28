@@ -37,7 +37,7 @@ const addItem = async (req, res) => {
         { new: true }
       );
 
-      console.log("Add cart", user);
+    //   console.log("Add cart", user);
 
       return res.json(new ApiResponse(201, "success", newCartItem))
 }
@@ -47,12 +47,12 @@ const getCartItems = async (req, res) => {
     if (!Array.isArray(cartItemIds)) {
         throw new ApiError(404, "cart id is required");
     }   
-    console.log("user Cart getCart items2", cartItemIds);
+    // console.log("user Cart getCart items2", cartItemIds);
     
     const cartItems = await Cart.find({
         _id: { $in: cartItemIds },
     });
-    console.log("user Cart getCart items2", cartItems);
+    // console.log("user Cart getCart items2", cartItems);
 
 
     res.json(new ApiResponse(200, "success", cartItems));
