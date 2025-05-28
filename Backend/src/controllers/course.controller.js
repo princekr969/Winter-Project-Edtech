@@ -35,7 +35,7 @@ const getCoursesByIds = asyncHandler(async (req, res) => {
         _id: { $in: courseIds },
     });
 
-    console.log("courses", courses);
+    // console.log("courses", courses);
 
     if (!courses || courses.length === 0) {
         throw new ApiError(404, "No courses found for the provided IDs");
@@ -47,7 +47,7 @@ const getCoursesByIds = asyncHandler(async (req, res) => {
 
 const addCourse = asyncHandler(async (req, res) => {
     const {title, description, price, category} = req.body;
-    console.log("req come");
+    // console.log("req come");
 
     if (!req.file) {
         throw new ApiError(400, "Course image is required");
@@ -70,7 +70,7 @@ const addCourse = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  console.log("user", user);
+//   console.log("user", user);
 
     if(!course)
     {

@@ -327,15 +327,25 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
+    const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+    console.log("refreshAccessToken, incomingRefreshToken", incomingRefreshToken);
+    console.log(req.body);
+    
+    if(!incomingRefreshToken)
+    {
+        throw new ApiError(401, "Unauthorized");
+    }
+    console.log("done1")
 
    try {
-     const decodedToken = jwt.verify(req.body.refreshToken, process.env.REFRESH_TOKEN_SECRET);
+     const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
  
      if(!decodedToken)
      {
          throw new ApiError(401, "Unauthorized");
      }
      
+     console.log("done2")
      const user = await User.findById(decodedToken._id);
      
      if(!user)
@@ -343,7 +353,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
          throw new ApiError(401, "Unauthorized");
      }
  
-     if(user.req.refreshToken !== incomingRefreshToken)
+     if(user.refreshToken !== incomingRefreshToken)
      {
          throw new ApiError(401, "Refresh Token is expired or used");
      }
@@ -461,10 +471,10 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         {
             throw new ApiError(404, "User not found");
         }
-        console.log(req.body);
+        // console.log(req.body);
         
-        console.log(req.body.otpValue);
-        console.log(user.otp);
+        // console.log(req.body.otpValue);
+        // console.log(user.otp);
            
         if(Number(req.body.otpValue)!==Number(user.otp))
         {
@@ -485,7 +495,7 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
             sameSite:"None",
             maxAge: 7 * 24 * 60 * 60 * 1000
         }
-        console.log("access Token",accessToken)
+        // console.log("access Token",accessToken)
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
@@ -498,7 +508,7 @@ const sendOTPVerificationEmail = asyncHandler(async (req, res) => {
         );
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).json(new ApiResponse(500, error.message));
     }
 })
