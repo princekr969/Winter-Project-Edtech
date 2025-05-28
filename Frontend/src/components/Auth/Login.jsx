@@ -150,7 +150,7 @@ function Login() {
     }
 
     const handleGoogleLogin = async () => {
-    window.location.href = "http://localhost:8012/api/v1/users/google/login"
+    window.location.href = "https://winter-project-edtech.onrender.com/api/v1/users/google/login"
     console.log("google login",res);
   }
 
