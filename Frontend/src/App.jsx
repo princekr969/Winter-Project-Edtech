@@ -34,9 +34,9 @@ function App() {
   
   useEffect(() => {
     
+    setLoading(true);
     const fetchData = async () => {
       try {
-        setLoading(true);
         const res = await authService.getCurrentUser(refreshToken)
 
         if(res.success){    
@@ -65,7 +65,7 @@ function App() {
 
     const timer = setTimeout(() => {
       fetchData();
-    }, 1000); 
+    }, 3000); 
     
 
   }, [])
