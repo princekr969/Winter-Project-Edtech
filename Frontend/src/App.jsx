@@ -34,8 +34,9 @@ function App() {
   
   useEffect(() => {
     
-    setLoading(true);
+    
     const fetchData = async () => {
+      setLoading(true);
       try {
         const res = await authService.getCurrentUser(refreshToken)
 
