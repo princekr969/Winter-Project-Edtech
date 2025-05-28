@@ -45,6 +45,8 @@ function App() {
         const refreshToken = Cookies.get("refreshToken");
         const res = await authService.getCurrentUser(refreshToken)
 
+
+
         if(res.success){    
           dispatch(login(res.message.user))
           const cartItemIds = res.message.user.cartItems;
@@ -58,6 +60,12 @@ function App() {
               dispatch(initializeCart(cartItems.data))
             }            
           }
+
+        const courses = await courseService.getAllCourse();
+        if(courses.data){
+          dispatch(initializeCourses(courses.data))
+        }
+        console.log("Homepage courses", courses);
           
         
         }else{
