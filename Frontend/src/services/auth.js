@@ -79,7 +79,7 @@ export class AuthService {
         try {
             const url = this.baseUrl + "/refresh-Token";
             console.log("refreshToken",refreshToken)
-            const userAccount = await axios.post(url, {refreshToken}, {
+            const userAccount = await axios.get(url, {
                 withCredentials:true
             });
             console.log('Data successfully sent from  getCurrentUser:', userAccount.data.message.user);
