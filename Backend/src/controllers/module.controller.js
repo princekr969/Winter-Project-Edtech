@@ -10,7 +10,7 @@ const addModule = asyncHandler(async (req, res) => {
     const module = await Module.create({title,courseId});
     if(!module)
     {
-        console.log("herewe");
+        // console.log("herewe");
         
         throw new ApiError(500, "something went wrong when creating module");
     }

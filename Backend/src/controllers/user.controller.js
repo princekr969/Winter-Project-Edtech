@@ -359,6 +359,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      }
  
      const tokens= await generateAccessAndRefreshTokens(user._id);
+     console.log("tokens",tokens);
+     
  
      const { accessToken, refreshToken } = tokens;
      const options={

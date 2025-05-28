@@ -44,9 +44,9 @@ function App() {
         if(res.success){    
           dispatch(login(res.message.user))
           const cartItemIds = res.message.user.cartItems;
-          console.log("cartItm", cartItemIds);
+          // console.log("cartItm", cartItemIds);
           if(cartItemIds.length!==0){
-            console.log("hhell")
+            // console.log("hhell")
             const cartItems = await cartService.getAllUserCartItem(cartItemIds);
             if(cartItems.success){
               
@@ -59,7 +59,7 @@ function App() {
           dispatch(logout())
         }
       } catch (error) {
-        console.log("refreshToken:",error);
+        console.log("refreshToken error:",error);
       } finally{
         setLoading(false)
       }

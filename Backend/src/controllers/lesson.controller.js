@@ -35,7 +35,7 @@ const addLesson = asyncHandler(async (req, res) => {
     }
   
     const url =await uploadVideoToCloudinary(req.file.path, "lessons");
-    console.log(url);
+    // console.log(url);
     
     if(!url)
     {
