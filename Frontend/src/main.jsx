@@ -6,7 +6,7 @@ import App from './App'
 import { Provider } from 'react-redux'
 import store from './store/store'
 import "./index.css"
-import {HomePage, CoursesPage, AboutPage, DashboardPage, CourseEditorPage, CourseVideoPlayerPage, CourseViewPage, CartPage, CourseEditor} from "./Pages/index.js"
+import {HomePage, CoursesPage, AboutPage, PaymentPage, DashboardPage, CourseEditorPage, CourseVideoPlayerPage, CourseViewPage, CartPage, CourseEditor} from "./Pages/index.js"
 import AuthLayout from './Layout/AuthLayout.jsx'
 
 const router = createBrowserRouter(
@@ -37,6 +37,7 @@ createRoutesFromElements(
       </Route>
     </Route>
       <Route path='forget-password/:token' element={<ForgetPasswordForm/>}></Route>
+      <Route path='payment/:amount/:courseId/' element={<PaymentPage/>}></Route>
   </Route>
  
   )

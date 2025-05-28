@@ -1,67 +1,28 @@
 import React, { useState, useEffect } from "react";
 import {BookOpen,Clock,Globe,PlayCircle,Star,Trophy, Users2} from "lucide-react";
 import {Module} from "../components/index.js" 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ScrollToTop from "../utils/ScrollButton.jsx";
 import courseService from "../services/course.js";
 import Loader from "../utils/Loader.jsx";
+import { useSelector } from "react-redux";
 
 const CourseViewPage = () => {
     const courseId = useParams();
     // const course = courses.filter(course => course.id===id)
     const [loading, setLoading] = useState(true)
-    const [course, setCourse] = useState(
-       {
-  _id: 2,
-  title: "Mastering Digital Marketing",
-  description:
-    "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
-  imageUrl:
-    "https://images.pexels.com/photos/1181336/pexels-photo-1181336.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  price: 899.00,
-  category: "dsa",
-  author: {
-    avatar:
-      "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    name: "suyash",
-  },
-  modules: [
-    {
-      _id: 1,
-      title: "Introduction to Digital Marketing",
-      lessons: [
-        {
-          _id: 1,
-          title: "What is Digital Marketing?",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-        {
-          _id: 2,
-          title: "Setting Goals",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-      ],
-    },
-    {
-      _id: 2,
-      title: "SEO and Content Strategy",
-      lessons: [
-        {
-          _id: 3,
-          title: "SEO Basics",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-        {
-          _id: 4,
-          title: "Content Planning",
-          videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-        },
-      ],
-    },
-  ],
-}
-    );
-  //  console.log(course)
+    const [course, setCourse] = useState("");
+    const [lessonCnt, setLessonCnt] = useState(0);
+    const [purchased, setPurchased] = useState(false);
+
+    const enrolledCourses = useSelector(state => state.auth.userData?.coursesEnrolled);
+    const found = enrolledCourses?.find(course => course === courseId);
+    if(found){
+      setPurchased(true);
+    }
+
+
+   console.log('hello',course)
 useEffect(() => {
   const fetchCourseData = async () => {
     window.scrollTo(0, 0);
@@ -88,6 +49,13 @@ useEffect(() => {
       );
 
       // Step 4: Set all in formData
+        const lessonCount = modulesWithLessons.reduce((total, module) => {
+          return total + (module.lessons?.length || 0);
+        }, 0);
+
+    setLessonCnt(lessonCount);
+
+
       setCourse({
         ...courseData,
         modules: modulesWithLessons,
@@ -107,8 +75,8 @@ useEffect(() => {
   }
   return (
     <>
-      <div className="min-h-screen bg-gray-50 mt-26">
-        <div className="relative h-[500px]">
+      <div className="min-h-screen bg-gray-50">
+        <div className="relative h-[400px] bg-gray-50">
           <div className="absolute inset-0">
             <img
               src={course?.imageUrl}
@@ -117,12 +85,9 @@ useEffect(() => {
             />
             <div className="absolute inset-0 bg-black/50"></div>
           </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40">
             <div className="max-w-3xl">
-              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-4">
-                Professional Certificate
-              </span>
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
                 {course?.title}
               </h1>
               <p className="mt-6 text-xl text-gray-100 max-w-3xl">
@@ -133,7 +98,7 @@ useEffect(() => {
         </div>
 
         {/* Course Info */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
+        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
           <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-center space-x-3">
               <Clock className="w-6 h-6 text-blue-600" />
@@ -157,7 +122,7 @@ useEffect(() => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -165,17 +130,17 @@ useEffect(() => {
             {/* Left Column */}
             <div className="lg:col-span-2">
               {/* Course Overview */}
-              <section className="bg-white rounded-lg shadow-sm p-6 mb-8">
+              <section className="bg-white shadow-sm p-6 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Course Overview</h2>
                 <p className="text-gray-600 mb-6">
-                  {course[0]?.description}
+                  {course?.description}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { icon: <BookOpen className="w-5 h-5" />, text: "24 Modules" },
-                    { icon: <PlayCircle className="w-5 h-5" />, text: "120+ Video Lessons" },
-                    { icon: <Trophy className="w-5 h-5" />, text: "Certificate of Completion" },
-                    { icon: <Star className="w-5 h-5" />, text: "Project-Based Learning" },
+                    { icon: <BookOpen className="w-5 h-5" />, text: `${course?.modules.length} Modules` },
+                    { icon: <PlayCircle className="w-5 h-5" />, text:  `${lessonCnt} Video Lessons` },
+                    // { icon: <Trophy className="w-5 h-5" />, text: "Certificate of Completion" },
+                    // { icon: <Star className="w-5 h-5" />, text: "Project-Based Learning" },
                   ].map((item, index) => (
                     <div key={index} className="flex items-center space-x-2 text-gray-700">
                       {item.icon}
@@ -186,30 +151,31 @@ useEffect(() => {
               </section>
 
               {/* Curriculum */}
-              <section className="bg-white rounded-lg shadow-sm p-6">
+              <section className="bg-white shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-6">Curriculum</h2>
                 <div className="space-y-4">
                   {course?.modules.map((module, index) => (
-                  <Module module={module} index={index} courseId={course._id}/>
+                  <Module key={module._id} purchased module={module} index={index} courseId={course._id}/>
                   ))}
                 </div>
               </section>
             </div>
 
             {/* Right Column - Course Card */}
-            <div className=" lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+            {(!purchased) ?
+            <div className="lg:col-span-1">
+              <div className="bg-white shadow-sm p-6 sticky top-8">
                 <div className="text-center mb-6">
                   <div className="text-5xl font-bold text-blue-600">₹{course?.price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
-                <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mb-4">
+                <Link to={`/payment/${course?.price}/${course?._id}`} className="w-full bg-blue-600 text-white py-3 px-4 block text-center font-medium hover:bg-blue-700 transition-colors mb-4">
                   Enroll Now
-                </button>
-                <button className="w-full border border-blue-600 text-blue-600 py-3 px-4 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                </Link>
+                <button className="w-full border border-blue-600 text-blue-600 py-3 px-4 font-medium hover:bg-blue-50 transition-colors">
                   Try Free Demo
                 </button>
-                <div className="mt-6 space-y-4 text-sm text-gray-600">
+                {/* <div className="mt-6 space-y-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-2">
                     <PlayCircle className="w-5 h-5 text-green-500" />
                     <span>Lifetime Access</span>
@@ -222,9 +188,10 @@ useEffect(() => {
                     <Users2 className="w-5 h-5 text-green-500" />
                     <span>Community Support</span>
                   </div>
-                </div>
+                </div> */}
               </div>
-            </div>
+            </div>:null
+            }
           </div>
         </div>
       </div>

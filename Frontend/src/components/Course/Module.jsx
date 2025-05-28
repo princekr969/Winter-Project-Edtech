@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { useState } from 'react';
-import { ChevronDown, PlayCircle, ChevronUp } from 'lucide-react';
+import { ChevronDown, PlayCircle, ChevronUp, LockKeyhole } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-function Module({module, index, courseId}) {
+function Module({module,purchased, index, courseId}) {
     const [openModule, setOpenModule] = useState(null);
     const moduleId = module.id
     console.log("module",moduleId)
@@ -12,7 +12,7 @@ function Module({module, index, courseId}) {
   return (
     <div
         key={index}
-        className="border border-gray-200 rounded-lg overflow-hidden"
+        className="border border-gray-200 overflow-hidden"
     >
 
         <button
@@ -42,10 +42,12 @@ function Module({module, index, courseId}) {
                 to={`/course/video/${courseId}/${module._id}/${lesson._id}`}
                 key={lessonIndex}
                 onClick={() => setSelectedLesson(lesson)}
-                className="w-full text-left  text-sm hover:bg-gray-50 rounded-md transition-colors duration-150"
+                className="w-full text-left text-sm hover:bg-gray-50 transition-colors duration-150"
                 >
-                <div className="flex pl-6 py-2 items-center hover:bg-gray-100">
+                <div className="flex pl-6 py-2 border-b border-black items-center hover:bg-gray-100">
+                    {(!purchased)?
                     <PlayCircle className="h-4 w-4 mr-2 text-gray-400" />
+                    :<LockKeyhole className="h-4 w-4 mr-2 text-gray-400" />}
                     <span className="text-gray-600">{lesson.title}</span>
                 </div>
             </Link>

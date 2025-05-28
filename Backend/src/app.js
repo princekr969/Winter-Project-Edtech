@@ -22,12 +22,14 @@ import userRoutes from "./routes/user.routes.js"
 import courseRoutes from "./routes/course.routes.js"
 import lessonRoutes from "./routes/lesson.routes.js"
 import cartRoutes from "./routes/cart.routes.js"
+import paymentRoutes from "./routes/payment.routes.js"
 
 //routes declaration
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/lesson", lessonRoutes);
 app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 app.get("/", (req, res) => {
     console.log("hello");

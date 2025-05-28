@@ -7,6 +7,7 @@ import CourseViewPage from "./CourseViewPage";
 import CartPage from "./CartPage";
 import CourseEditor from "./CourseEditor/AddNewCourse";
 import CourseEditorPage from "./CourseEditor/CourseEditiorPage";
+import PaymentPage from "./payment.page";
 
 export {
     HomePage,
@@ -17,5 +18,6 @@ export {
     CourseViewPage, 
     CourseEditorPage,
     CartPage,
-    CourseEditor
+    CourseEditor,
+    PaymentPage
 };
