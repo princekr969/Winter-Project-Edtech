@@ -171,11 +171,11 @@ const googleCallback = async (req, res) => {
         await user.save();
         
         // console.log("successful")
-        return res.redirect(`http://localhost:5173/auth/google/oauth/success/${refreshToken}`);
+        return res.redirect(`${process.env.FRONTEND_URL}/auth/google/oauth/success/${refreshToken}`);
     } catch (error) {
         // console.log("OAuth Callback Error:",error.message);
         if(error.message==='a7X9vB2qLmTZ0kPf'){
-            res.redirect(`http://localhost:5173/auth/google/oauth/success/a7X9vB2qLmTZ0kPf`);
+            res.redirect(`${process.env.FRONTEND_URL}/auth/google/oauth/success/a7X9vB2qLmTZ0kPf`);
         }
     } 
 };
