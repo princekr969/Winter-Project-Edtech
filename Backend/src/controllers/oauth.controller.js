@@ -68,12 +68,9 @@ const verifyPrivateGoogleToken = async (token) => {
 
 // Redirect user to google login
 const googleLogin = (req, res) => {
-    // console.log("done1")
-    // Generate state and nonce for CSRF protection and reply attack prevention
     const state = crypto.randomBytes(32).toString("hex");
     const nonce = crypto.randomBytes(32).toString("hex");
 
-    // Store in cookie for reverification
     res.cookie("oauth_state", state, {
         httpOnly: true,
         maxAge: 600000,
@@ -85,13 +82,15 @@ const googleLogin = (req, res) => {
         sameSite: "lax"
     });
 
-    // redirect url
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URL}&response_type=code&scope=email%20profile%20openid&state=${state}&nonce=${nonce}`;
+    const redirectUri = encodeURIComponent(process.env.GOOGLE_REDIRECT_URL);
 
-    // console.log("googleRedirect:",googleAuthUrl)
-    // redirect the user to google login
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email%20profile%20openid&state=${state}&nonce=${nonce}`;
+
+    console.log("Redirecting to Google Auth URL:", googleAuthUrl);
+
     res.redirect(googleAuthUrl);
-}
+};
+
 
 // Handle google callback and exchange the code for token
 const googleCallback = async (req, res) => {
