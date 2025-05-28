@@ -61,7 +61,7 @@ function App() {
             }            
           }
 
-        const courses = await courseService.getAllCourse();
+          const courses = await courseService.getAllCourse();
         if(courses.data){
           dispatch(initializeCourses(courses.data))
         }
