@@ -17,7 +17,6 @@ import cartService from './services/cart.js'
 function App() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const refreshToken = Cookies.get("refreshToken");
   const isUserActive = useSelector(state => state.auth.status);
  
   const Loader = () => {
@@ -38,6 +37,8 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
       try {
+        
+        const refreshToken = Cookies.get("refreshToken");
         const res = await authService.getCurrentUser(refreshToken)
 
         if(res.success){    
