@@ -33,9 +33,9 @@ function App() {
   
   useEffect(() => {
     
+    setLoading(true);
     
     const fetchData = async () => {
-      setLoading(true);
       try {
         
         const refreshToken = Cookies.get("refreshToken");
