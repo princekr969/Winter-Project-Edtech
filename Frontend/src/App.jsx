@@ -63,10 +63,13 @@ function App() {
       }
     }
 
-    fetchData();
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 100); 
+    
 
   }, [])
-  
+
   return !loading ? (
     <div className='min-h-screen flex flex-wrap content-between '>
       <div className='w-full block'>
