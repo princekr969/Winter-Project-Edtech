@@ -24,6 +24,6 @@ export class PaymentServices{
     }
 }
 
-const paymentService = new PaymentServices("http://localhost:8012/api/v1/payment");
+const paymentService = new PaymentServices("https://winter-project-edtech.onrender.com/api/v1/course");
 
 export default paymentService;
