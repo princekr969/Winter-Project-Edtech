@@ -357,7 +357,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
      {
          throw new ApiError(401, "Refresh Token is expired or used");
      }
- 
+     console.log("user",user)
      const tokens= await generateAccessAndRefreshTokens(user._id);
      console.log("tokens",tokens);
      
@@ -426,7 +426,7 @@ const getUserById = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid user id");
     }
     
-    console.log("UserId", user);
+    // console.log("UserId", user);
 
   return res
   .status(200)
