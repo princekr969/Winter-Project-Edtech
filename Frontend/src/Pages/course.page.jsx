@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Users2, Star, BookOpen, } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { CourseCard } from '../components';
-import {CourseHeroSection} from '../components';
+import { CourseCard } from '../components/index.js';
+import {CourseHeroSection} from '../components/index.js';
 import ScrollToTop from '../utils/ScrollButton.jsx';
 
 const categories = [

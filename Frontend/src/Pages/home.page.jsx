@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { HeroSection, CourseSection, AboutSection} from '../components'
+import { HeroSection, CourseSection, AboutSection} from '../components/index.js'
 import ScrollToTop from '../utils/ScrollButton.jsx';
 import courseService from '../services/course.js';
 import { initializeCourses } from '../store/coursesSlice.js';

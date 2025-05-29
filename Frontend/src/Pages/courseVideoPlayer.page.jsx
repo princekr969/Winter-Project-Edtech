@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
 import {BookOpen, PlayCircle } from 'lucide-react';
-import Module from '../components/Course/Module';
+import Module from '../components/Course/Module.jsx';
 import ReactPlayer from 'react-player';
 import { useParams } from 'react-router-dom';
 import ScrollToTop from '../utils/ScrollButton.jsx';
