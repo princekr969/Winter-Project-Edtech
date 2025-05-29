@@ -37,6 +37,6 @@ export const {
   courses,
   enrolledCourse,
   initializeEnrolledCourses,
-  initializeCourses
+  initializeCourses,
 } = coursesSlice.actions;
 export default coursesSlice.reducer;

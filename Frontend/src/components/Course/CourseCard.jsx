@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ShoppingCart, ChevronRight, Star, EllipsisVertical, Check } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import cartService from "../../services/cart";
@@ -44,11 +44,13 @@ const CourseCard = ({
 }) => {
   const [ownerData, setOwnerData] = useState({avatar:"", name:"", email:""});
   const currentUser = useSelector((state) => state.auth.userData?.email);
+  const authStatus = useSelector((state) => state.auth.status)
   const cartItems = useSelector((state) => state.cart?.items)
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isInCart = (id) =>{
     return cartItems.some(item => item.courseId?.toString() === id.toString())
   }
@@ -61,6 +63,9 @@ const CourseCard = ({
   
   const handleAddItem = async (courseId) => {
     console.log("handleAddItem", courseId);
+    if(!authStatus){
+      navigate('/auth/signin')
+    }
     try {
       const res = await cartService.addItem(courseId)
       if(res.data.success){

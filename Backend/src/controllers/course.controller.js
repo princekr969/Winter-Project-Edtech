@@ -23,7 +23,6 @@ const getCourseById = asyncHandler(async (req, res) => {
 })
 
 
-
 const getCoursesByIds = asyncHandler(async (req, res) => {
     const { courseIds } = req.body;
 

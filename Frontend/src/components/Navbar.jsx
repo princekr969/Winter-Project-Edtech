@@ -52,7 +52,7 @@ const Navbar = () => {
   
   return (
 
-    <nav ref={navRef} className={`relative bg-gradient-to-b from-indigo-50 to-white w-full`}>
+    <nav ref={navRef} className={`relative shadow-sm w-full`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         
         <Link to="/" className="flex items-center ">
@@ -65,7 +65,7 @@ const Navbar = () => {
  
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         
-        <div className="relative">  
+        <div className={` relative`}>  
           <CartIcon ref={cartIconRef} isOpen={isCartOpen} setIsCartOpen={setIsCartOpen} itemCount={cartItemCount}/>
           {isCartOpen && <CartDropdown ref={dropDownRef} setIsCartOpen={setIsCartOpen}/>}
         </div>
@@ -109,12 +109,12 @@ const Navbar = () => {
 
         {/* Links */}
           <div
-            className={`items-center bg-gradient-to-b from-indigo-50 to-white  justify-between ${
+            className={`items-center bg-white  justify-between ${
               isNavbarOpen ? "relative" : "hidden"
             }  w-full md:flex md:w-auto md:order-1`}
             id="navbar-user"
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 bg-gradient-to-b from-indigo-50 to-white border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4  border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <NavLink
                   to="/"

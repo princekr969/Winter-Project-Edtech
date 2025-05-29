@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Users2, Star, BookOpen, } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CourseCard } from '../components/index.js';
 import {CourseHeroSection} from '../components/index.js';
 import ScrollToTop from '../utils/ScrollButton.jsx';
@@ -37,7 +37,7 @@ function CoursesPage() {
   return (
     <>
     <div>
-      <CourseHeroSection id={courseSectionId}/>
+      {/* <CourseHeroSection id={courseSectionId}/> */}
     
       <div id={courseSectionId}  className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-5">
       

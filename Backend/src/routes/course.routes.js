@@ -8,7 +8,6 @@ import { addLesson, deleteLesson, getAllLessons } from "../controllers/lesson.co
 
 const router = Router();
 
-
 router.route("/add-course").post(verifyJWT,upload.single("imageUrl"),addCourse)
 router.route("/get-course-by-id").post(getCourseById)
 router.route("/update-course").post(verifyJWT,upload.single("imageUrl"),updateCourse)
