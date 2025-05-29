@@ -108,8 +108,7 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
   };
 
   const handleUpdateLesson = (formDat) => {
-    
-    setLoading(true);
+
     const uploadLesson = async ()=>{
       try {
         const moduleId=editingState.moduleId;
@@ -136,7 +135,6 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
       }
     }
     uploadLesson();
-    setLoading(false);
     
   };
 
@@ -182,10 +180,7 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  if(loading)
-  {
-    return <Loader />
-  }
+
 
   if (isAddingModule) {
     return <AddModulePage onSave={handleSaveModule} onCancel={handleCancelModule} />;
