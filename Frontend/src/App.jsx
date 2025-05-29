@@ -58,14 +58,6 @@ function App() {
               dispatch(initializeCart(cartItems.data))
             }            
           }
-
-          const courses = await courseService.getAllCourse();
-        if(courses.data){
-          dispatch(initializeCourses(courses.data))
-        }
-        console.log("Homepage courses", courses);
-          
-        
         }else{
           dispatch(logout())
         }
@@ -75,10 +67,20 @@ function App() {
         setLoading(false)
       }
     }
-
+    const fetchCourses = async () =>{
+      try {
+        const courses = await courseService.getAllCourse();
+        if(courses.data){
+          dispatch(initializeCourses(courses.data))
+        }        
+      } catch (error) {
+        console.log("HomePageError", error)
+      }
+    }
+    fetchCourses();
     const timer = setTimeout(() => {
-      fetchData();
-    }, 700); 
+        fetchData();   
+    }, 1); 
     
 
   }, [])
