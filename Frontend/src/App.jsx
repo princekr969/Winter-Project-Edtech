@@ -80,7 +80,7 @@ function App() {
     fetchCourses();
     const timer = setTimeout(() => {
         fetchData();   
-    }, 1); 
+    }, 0); 
     
 
   }, [])
