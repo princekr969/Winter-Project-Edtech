@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart} from 'lucide-react';
 import CartIcon from './Cart/CartIcon.jsx';
+import image from "./../assets/edumaxi-logo.svg"
+
 
 const Navbar = () => {
   const cartIconRef = useRef(null);
@@ -53,10 +55,11 @@ const Navbar = () => {
     <nav ref={navRef} className={`relative bg-gradient-to-b from-indigo-50 to-white w-full`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         
-        <Link to="/" className="flex items-center  rtl:space-x-reverse">
-        <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" />
-          <span className="self-center text-2xl  font-bold whitespace-nowrap">
-            EduMaxi
+        <Link to="/" className="flex items-center ">
+        {/* <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" /> */}
+        <img className='h-25 w-25' src={image} alt="" />
+          <span className="self-center text-3xl pt-[7px] font-bold whitespace-nowrap">
+            duMaxi
           </span>
         </Link>
  

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { GraduationCap } from 'lucide-react'
+import image from "./../assets/edumaxi-logo.svg"
+
 
 function Footer() {
   return (
@@ -10,11 +12,13 @@ function Footer() {
             
             <Link
               to="#"
-              className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+              className="flex items-center mb-4 sm:mb-0 rtl:space-x-reverse"
             >
-              <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                EduMaxi
+              {/* <GraduationCap className="h-8 w-8 text-indigo-600 mr-3" /> */}
+                      <img className='h-25 w-25' src={image} alt="" />
+              
+              <span className="self-center pt-[8px] text-3xl font-semibold whitespace-nowrap dark:text-white">
+                duMaxi
               </span>
             </Link>
 
