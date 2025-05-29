@@ -108,7 +108,8 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
   };
 
   const handleUpdateLesson = (formDat) => {
-
+    
+    setLoading(true);
     const uploadLesson = async ()=>{
       try {
         const moduleId=editingState.moduleId;
@@ -135,6 +136,7 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
       }
     }
     uploadLesson();
+    setLoading(false);
     
   };
 
