@@ -80,7 +80,7 @@ function App() {
 
     const timer = setTimeout(() => {
       fetchData();
-    }, 1000); 
+    }, 700); 
     
 
   }, [])
