@@ -1,6 +1,5 @@
 
 import Module from "./Module";
-import { Plus } from "lucide-react";
 
 const ModuleList = ({
   modules,

@@ -1,63 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Save } from "lucide-react";
-import CourseInfo from "./CourseInfo";
 import ModuleList from "./ModuleList";
 import EditLessonPage from "./EditLessonPage";
 import AddModulePage from "./AddModulePage";
-import { use } from "react";
 import courseService from "../../services/course";
 import { useParams } from "react-router-dom";
-import AddLessonPage from "./AddLessonPage";
-
-// const course = {
-//   _id: 2,
-//   title: "Mastering Digital Marketing",
-//   description:
-//     "Dive into the world of digital marketing, SEO, content strategy, and advertising.",
-//   imageUrl:
-//     "https://images.pexels.com/photos/1181336/pexels-photo-1181336.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-//   price: 899.00,
-//   category: "dsa",
-//   author: {
-//     avatar:
-//       "https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-//     name: "suyash",
-//   },
-//   modules: [
-//     {
-//       id: 1,
-//       title: "Introduction to Digital Marketing",
-//       lessons: [
-//         {
-//           id: 1,
-//           title: "What is Digital Marketing?",
-//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-//         },
-//         {
-//           id: 2,
-//           title: "Setting Goals",
-//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-//         },
-//       ],
-//     },
-//     {
-//       id: 2,
-//       title: "SEO and Content Strategy",
-//       lessons: [
-//         {
-//           id: 3,
-//           title: "SEO Basics",
-//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-//         },
-//         {
-//           id: 4,
-//           title: "Content Planning",
-//           videoUrl: "https://youtu.be/1OAjeECW90E?si=pJ3gBSMikivIbrpk",
-//         },
-//       ],
-//     },
-//   ],
-// };
 
 const categories = [
   { id: "dsa", name: "Data Structures & Algorithms" },
@@ -78,8 +25,6 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [isAddingModule, setIsAddingModule] = useState(false);
-  const [isAddingLesson, setIsAddingLesson] = useState(false);
-  const [courseModules, setCourseModules] = useState();
   const [editingState, setEditingState] = useState({
     moduleId: null,
     lessonId: null,
@@ -229,11 +174,6 @@ const CourseEditorPage = ({ onSave, onClose, }) => {
     setFormData({});
     setIsAddingModule(false);
     setEditingState({ moduleId: null, lessonId: null });
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (onSave) onSave();
   };
 
   useEffect(() => {

@@ -16,6 +16,7 @@ const CourseViewPage = () => {
     const [purchased, setPurchased] = useState(false);
 
     const enrolledCourses = useSelector(state => state.auth.userData?.coursesEnrolled);
+    const userLogin = useSelector(state => state.auth.status);
     const found = enrolledCourses?.find(course => course === courseId);
     if(found){
       setPurchased(true);
@@ -169,7 +170,7 @@ useEffect(() => {
                   <div className="text-5xl font-bold text-blue-600">₹{course?.price}</div>
                   <p className="text-gray-500 mt-2">One-time payment</p>
                 </div>
-                <Link to={`/payment/${course?.price}/${course?._id}`} className="w-full bg-blue-600 text-white py-3 px-4 block text-center font-medium hover:bg-blue-700 transition-colors mb-4">
+                <Link to={(userLogin)?`/payment/${course?.price}/${course?._id}`:"/auth/signin"} className="w-full bg-blue-600 text-white py-3 px-4 block text-center font-medium hover:bg-blue-700 transition-colors mb-4">
                   Enroll Now
                 </Link>
                 <button className="w-full border border-blue-600 text-blue-600 py-3 px-4 font-medium hover:bg-blue-50 transition-colors">

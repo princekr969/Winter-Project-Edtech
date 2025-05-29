@@ -57,6 +57,10 @@ function OtpModal({ isOpen, onClose }) {
     }
   };
 
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  }, [])
+
   if (!isOpen) return null;
 
   return (

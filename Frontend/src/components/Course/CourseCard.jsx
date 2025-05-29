@@ -109,7 +109,7 @@ const CourseCard = ({
 
 
   return (
-    <div className="bg-white rounded-3xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
+    <div className="bg-white rounded-3xl p-4 md:p-6 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn">
       <div className="flex flex-row md:flex-col gap-4 md:gap-0">
         <div className="relative w-1/3 md:w-full aspect-[4/3] bg-[#4339f2] rounded-2xl md:mb-6 flex items-center justify-center shrink-0 group overflow-hidden">
           <img src={imageUrl} alt="" className="w-full h-full object-cover" />

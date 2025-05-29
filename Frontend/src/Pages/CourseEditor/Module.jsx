@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import Lesson from "./Lesson";
-import { Plus, Trash2, Save, X } from "lucide-react";
 
 const Module = ({
   module,
