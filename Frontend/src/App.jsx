@@ -37,10 +37,10 @@ function App() {
   
   useEffect(() => {
     
-    setLoading(true);
     
     const fetchData = async () => {
       try {
+        setLoading(true);
         
         const refreshToken = Cookies.get("refreshToken");
         const res = await authService.getCurrentUser(refreshToken)
