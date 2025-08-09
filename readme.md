@@ -16,7 +16,7 @@ The platform focuses on providing a simple, user-friendly interface, secure tran
 
 
 ## Tech Stack
-- **Frontend**: React.js, Tailwind CSS (or other CSS framework if used)
+- **Frontend**: React.js, Tailwind CSS
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Other Tools**: JWT authentication, REST API
