@@ -1,5 +1,6 @@
 
 # EduMaxi
+Live Demo: [[https://winter-project-edtech.vercel.com](https://winter-project-edtech.vercel.app/)
 
 EduMaxi is a web-based learning management system designed for both instructors and students.
 Instructors can create and manage their courses with ease, while students can explore a variety of subjects, purchase the courses they need, and learn at their own pace.
@@ -20,7 +21,6 @@ The platform focuses on providing a simple, user-friendly interface, secure tran
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Other Tools**: JWT authentication, REST API
-
 
 ## Installation
 
